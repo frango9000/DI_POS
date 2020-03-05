@@ -14,6 +14,9 @@ class Cliente:
     def insert(self):
         return Database.db_insert_cliente(self)
 
+    def remove(self):
+        return Database.db_remove_cliente(self)
+
     def __str__(self) -> str:
         return 'Cliente { ' + str(self.idd) + ', ' + self.dni + ', ' + self.nombre + ', ' + self.apellido + ', ' + str(
             self.telefono) + ', ' + self.direccion + ' };'
