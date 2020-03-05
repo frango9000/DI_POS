@@ -1,5 +1,7 @@
 import gi
 
+from app.ClientesUI import ClientesUI
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -8,17 +10,20 @@ class MainUi(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self)
-        self.set_default_size(400, 200
-                              )
+        self.set_default_size(400, 200)
+
+        self.active_pane = None
+
         builder = Gtk.Builder()
         builder.add_from_file("../../res/MainUI.glade")
         self.grid = builder.get_object("home_buttons_grid")
 
-        self.add(self.grid)
+        self.set_active_pane(self.grid)
 
         signals = {
             "btn_caja_act": self.on_btn_activate,
             "btn_clientes_act": self.on_btn_activate,
+            "btn_clientes_click": self.on_btn_clientes,
             "btn_productos_act": self.on_btn_activate,
             "btn_reportes_act": self.on_btn_activate,
             "btn_documentacion_act": self.on_btn_activate,
@@ -29,6 +34,16 @@ class MainUi(Gtk.Window):
 
     def on_btn_activate(self, button):
         print("Click" + self.label)
+
+    def on_btn_clientes(self, button):
+        clientesui = ClientesUI(self)
+        self.set_active_pane(clientesui)
+
+    def set_active_pane(self, pane):
+        if self.active_pane is not None:
+            self.remove(self.active_pane)
+        self.active_pane = pane
+        self.add(self.active_pane)
 
 
 if __name__ == "__main__":

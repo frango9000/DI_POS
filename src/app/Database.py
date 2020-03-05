@@ -2,10 +2,10 @@ import sqlite3
 
 from app.model.Cliente import Cliente
 
-dbsrc = 'pos.db'
+dbsrc = '../../res/pos.db'
 
 
-def get_db_clientes():
+def get_db_clientes() -> list:
     clientes = []
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("SELECT * FROM clientes")
