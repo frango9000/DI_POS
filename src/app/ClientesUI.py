@@ -22,10 +22,11 @@ class ClientesUI(Gtk.Box):
         # Creating the ListStore model
         self.clientes_liststore = Gtk.ListStore(int, str, str, str, int, str)
         for cliente in self.clientes:
-            self.clientes_liststore.append(
-                [cliente.idd, cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono, cliente.direccion])
+            cliente_detalles = [cliente.idd, cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono,
+                                cliente.direccion]
+            self.clientes_liststore.append(cliente_detalles)
 
-        self.treeview = Gtk.TreeView.new()
+        self.treeview = Gtk.TreeView(model=self.clientes_liststore)
         for i, column_title in enumerate(["ID", "DNI", "Nombre", "Apellido", "Telefono", "Direccion"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
