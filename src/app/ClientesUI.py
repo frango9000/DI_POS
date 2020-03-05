@@ -1,6 +1,6 @@
 import gi
 
-from app import Database
+from app import ClientesDao
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -10,7 +10,7 @@ class ClientesUI(Gtk.Box):
 
     def __init__(self, parent=None):
         Gtk.Box.__init__(self)
-        self.clientes = Database.get_db_clientes()
+        self.clientes = ClientesDao.get_db_clientes()
         self.parent = parent
         builder = Gtk.Builder()
         builder.add_from_file("../../res/ClientesUI.glade")

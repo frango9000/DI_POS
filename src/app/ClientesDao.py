@@ -24,7 +24,7 @@ def db_get_cliente(idd):
     return cliente
 
 
-def db_insert_cliente(cliente):
+def db_insert_cliente(cliente) -> int:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
     sql = 'INSERT INTO clientes(dni, nombre, apellido, telefono, direccion) VALUES ( ?,?,?,?,?)'
@@ -45,3 +45,14 @@ def db_remove_cliente_id(idd) -> int:
 
 def db_remove_cliente(cliente) -> int:
     return db_remove_cliente_id(cliente.idd)
+
+
+def db_update_cliente(cliente) -> bool:
+    conn = sqlite3.connect(dbsrc)
+    cursor = conn.cursor()
+    sql = 'UPDATE clientes SET dni=?, nombre=?, apellido=?, telefono=?, direccion=? WHERE id = ?'
+    values = (cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono, cliente.direccion, cliente.idd)
+    cursor.execute(sql, values)
+    conn.commit()
+    print("Cliente actualizado: " + str(cliente))
+    return cursor.rowcount > 0

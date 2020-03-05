@@ -1,4 +1,4 @@
-from app import Database
+from app import ClientesDao
 
 
 class Cliente:
@@ -12,10 +12,13 @@ class Cliente:
         self.direccion = direccion
 
     def insert(self):
-        return Database.db_insert_cliente(self)
+        return ClientesDao.db_insert_cliente(self)
 
     def remove(self):
-        return Database.db_remove_cliente(self)
+        return ClientesDao.db_remove_cliente(self)
+
+    def update(self):
+        return ClientesDao.db_update_cliente(self)
 
     def __str__(self) -> str:
         return 'Cliente { ' + str(self.idd) + ', ' + self.dni + ', ' + self.nombre + ', ' + self.apellido + ', ' + str(
