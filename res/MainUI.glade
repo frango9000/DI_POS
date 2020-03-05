@@ -18,7 +18,7 @@
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
         <signal name="activate" handler="btn_clientes_act" swapped="no"/>
-        <signal name="clicked" handler="btn_clientes_click" swapped="no"/>
+        <signal name="clicked" handler="btn_clientes_act" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">0</property>
@@ -32,6 +32,7 @@
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
         <signal name="activate" handler="btn_productos_act" swapped="no"/>
+        <signal name="clicked" handler="btn_productos_act" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">0</property>

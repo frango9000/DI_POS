@@ -1,16 +1,16 @@
 import gi
 
-from app.data import ClientesDao
+from app.data import ClientesDao, ProductosDao
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 
-class ClientesUI(Gtk.Box):
+class ProductosUI(Gtk.Box):
 
     def __init__(self, parent=None):
         Gtk.Box.__init__(self)
-        self.clientes = ClientesDao.get_db_clientes()
+        self.productos = ProductosDao.get_db_productos()
         self.parent = parent
         builder = Gtk.Builder()
         builder.add_from_file("../../res/ListaUI.glade")
@@ -22,19 +22,18 @@ class ClientesUI(Gtk.Box):
         }
         builder.connect_signals(signals)
 
-        self.box_clientes_ui = builder.get_object("box_ui")
-        self.add(self.box_clientes_ui)
+        self.box_productos_ui = builder.get_object("box_ui")
+        self.add(self.box_productos_ui)
         self.treeview_container = builder.get_object("tree_view_container")
 
         # Creating the ListStore model
-        self.clientes_liststore = Gtk.ListStore(int, str, str, str, int, str)
-        for cliente in self.clientes:
-            cliente_detalles = [cliente.idd, cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono,
-                                cliente.direccion]
-            self.clientes_liststore.append(cliente_detalles)
+        self.productos_liststore = Gtk.ListStore(int, str, str, int, int)
+        for producto in self.productos:
+            producto_detalles = [producto.idd, producto.nombre, producto.descripcion, producto.precio, producto.stock]
+            self.productos_liststore.append(producto_detalles)
 
-        self.treeview = Gtk.TreeView(model=self.clientes_liststore)
-        for i, column_title in enumerate(["ID", "DNI", "Nombre", "Apellido", "Telefono", "Direccion"]):
+        self.treeview = Gtk.TreeView(model=self.productos_liststore)
+        for i, column_title in enumerate(["ID", "Nombre", "Precio", "Stock", "Descripcion"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             column.set_resizable(True)
