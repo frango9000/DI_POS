@@ -1,4 +1,4 @@
-from app import ProductosDao
+from app.data import ProductosDao
 
 
 class Producto:

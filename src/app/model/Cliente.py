@@ -1,4 +1,4 @@
-from app import ClientesDao
+from app.data import ClientesDao
 
 
 class Cliente:
