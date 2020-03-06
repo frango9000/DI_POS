@@ -20,6 +20,7 @@ class ClientesUI(Gtk.Box):
             "btn_editar": self.on_btn_editar,
             "btn_remover": self.on_btn_remover,
             "btn_volver": self.on_btn_volver,
+            "btn_refrescar": self.on_btn_refrescar
         }
         builder.connect_signals(signals)
 
@@ -65,13 +66,46 @@ class ClientesUI(Gtk.Box):
         self.cliente_editor_ui.show()
 
     def on_btn_editar(self, button):
-        self.parent.show_main_menu()
+        selected_id = self.get_selected_id()
+        if selected_id > 0:
+            selected_cliente = ClientesDao.db_get_cliente(int(selected_id))
+            self.cliente_editor_ui = ClienteEditor(self, selected_cliente)
+            self.cliente_editor_ui.show()
 
     def on_btn_remover(self, button):
-        self.parent.show_main_menu()
+        selected_id = self.get_selected_id()
+        if selected_id > 0:
+            dialog = Gtk.MessageDialog(self.parent, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK_CANCEL,
+                                       "Eliminando Cliente")
+            dialog.format_secondary_text("Estas seguro que deseas eliminar el cliente con id: " + str(selected_id))
+            response = dialog.run()
+            dialog.destroy()
+            if response == Gtk.ResponseType.OK:
+                print("Eliminando cliente " + str(selected_id))
+                eliminado = ClientesDao.db_remove_cliente_id(selected_id)
+                dialog2 = Gtk.MessageDialog(self.parent, 0, Gtk.MessageType.INFO,
+                                            Gtk.ButtonsType.OK, "Eliminando Cliente")
+                elim = " " if eliminado else " no "
+                dialog2.format_secondary_text("Cliente" + elim + "eliminado.")
+                dialog2.run()
+                dialog2.destroy()
+                self.refrescar_tabla()
+
+            elif response == Gtk.ResponseType.CANCEL:
+                print("Cancelado")
+
+    def on_btn_refrescar(self, button):
+        self.refrescar_tabla()
 
     def return_from_child(self):
         self.set_sensitive(True)
         self.refrescar_tabla()
         self.cliente_editor_ui.destroy()
         self.cliente_editor_ui = None
+
+    def get_selected_id(self) -> int:
+        model, treeiter = self.treeview.get_selection().get_selected()
+        if treeiter is not None:
+            selected_id = model[treeiter][0]
+            return selected_id
+        return 0

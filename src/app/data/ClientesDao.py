@@ -16,9 +16,9 @@ def get_db_clientes() -> list:
     return clientes
 
 
-def db_get_cliente(idd):
+def db_get_cliente(idd) -> Cliente:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("SELECT * FROM clientes where id = " + idd)
+    cursor = conn.execute("SELECT * FROM clientes where id = " + str(idd))
     row = cursor.fetchone()
     cliente = Cliente(row[1], row[2], row[3], row[4], row[5], row[0])
     return cliente
@@ -36,14 +36,16 @@ def db_insert_cliente(cliente) -> int:
     return cliente.idd
 
 
-def db_remove_cliente_id(idd) -> int:
+def db_remove_cliente_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("DELETE FROM clientes where id = " + idd)
-    print('Cliente eliminado: ' + cursor.rowcount)
+    print('Eliminando Cliente ' + str(idd))
+    cursor = conn.execute("DELETE FROM clientes where id = ?", str(idd))
+    print('Cliente eliminado: ' + str(cursor.rowcount))
+    conn.commit()
     return cursor.rowcount > 0
 
 
-def db_remove_cliente(cliente) -> int:
+def db_remove_cliente(cliente) -> bool:
     return db_remove_cliente_id(cliente.idd)
 
 

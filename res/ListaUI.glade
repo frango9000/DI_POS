@@ -56,6 +56,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <signal name="activate" handler="btn_editar" swapped="no"/>
+            <signal name="clicked" handler="btn_editar" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -70,11 +71,27 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <signal name="activate" handler="btn_remover" swapped="no"/>
+            <signal name="clicked" handler="btn_remover" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label" translatable="yes">Refrescar</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="activate" handler="btn_refrescar" swapped="no"/>
+            <signal name="clicked" handler="btn_refrescar" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -89,7 +106,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>

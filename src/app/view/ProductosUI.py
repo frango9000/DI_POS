@@ -19,6 +19,7 @@ class ProductosUI(Gtk.Box):
             "btn_editar": self.on_btn_editar,
             "btn_remover": self.on_btn_remover,
             "btn_volver": self.on_btn_volver,
+            "btn_refrescar": self.on_btn_refrescar
         }
         builder.connect_signals(signals)
 
@@ -60,3 +61,6 @@ class ProductosUI(Gtk.Box):
 
     def on_btn_remover(self, button):
         self.parent.show_main_menu()
+
+    def on_btn_refrescar(self, button):
+        self.refrescar_tabla()
