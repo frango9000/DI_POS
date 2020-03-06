@@ -1,5 +1,6 @@
 import gi
 
+from app.view.CajaUI import CajaUI
 from app.view.ClientesUI import ClientesUI
 from app.view.ProductosUI import ProductosUI
 from app.view.VendidosUI import VendidosUI
@@ -23,7 +24,7 @@ class MainUi(Gtk.Window):
         self.show_main_menu()
 
         signals = {
-            "btn_caja_act": self.on_btn_activate,
+            "btn_caja_act": self.on_btn_caja,
             "btn_clientes_act": self.on_btn_clientes,
             "btn_productos_act": self.on_btn_productos,
             "btn_ventas_act": self.on_btn_ventas,
@@ -54,6 +55,10 @@ class MainUi(Gtk.Window):
     def on_btn_vendidos(self, button):
         vendidos_ui = VendidosUI(self)
         self.set_active_pane(vendidos_ui)
+
+    def on_btn_caja(self, button):
+        caja_ui = CajaUI(self)
+        self.set_active_pane(caja_ui)
 
     def set_active_pane(self, pane):
         if self.active_pane is not None:

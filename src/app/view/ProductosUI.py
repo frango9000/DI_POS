@@ -24,8 +24,8 @@ class ProductosUI(Gtk.Box):
         }
         builder.connect_signals(signals)
 
-        self.box_productos_ui = builder.get_object("box_ui")
-        self.add(self.box_productos_ui)
+        self.box_ui = builder.get_object("box_ui")
+        self.add(self.box_ui)
         self.treeview_container = builder.get_object("tree_view_container")
 
         # Creating the ListStore model
