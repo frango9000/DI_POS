@@ -54,7 +54,6 @@ class ClienteEditor(Gtk.Window):
         self.cliente.direccion = self.field_cliente_direccion.get_text()
         if self.creating:
             self.cliente.insert()
-            self.field_cliente_id.set_text(str(self.cliente.idd))
         else:
             self.cliente.update()
         self.parent.return_from_child()

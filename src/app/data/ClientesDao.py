@@ -38,10 +38,9 @@ def db_insert_cliente(cliente) -> int:
 
 def db_remove_cliente_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
-    print('Eliminando Cliente ' + str(idd))
     cursor = conn.execute("DELETE FROM clientes where id = ?", str(idd))
-    print('Cliente eliminado: ' + str(cursor.rowcount))
     conn.commit()
+    print('Cliente eliminado: ' + str(cursor.rowcount))
     return cursor.rowcount > 0
 
 

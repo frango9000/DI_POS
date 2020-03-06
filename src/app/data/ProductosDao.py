@@ -16,9 +16,9 @@ def get_db_productos() -> list:
     return productos
 
 
-def db_get_producto(idd):
+def db_get_producto(idd) -> Producto:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("SELECT * FROM productos where id = " + idd)
+    cursor = conn.execute("SELECT * FROM productos where id = ?", str(idd))
     row = cursor.fetchone()
     producto = Producto(row[1], row[2], row[3], row[4], row[0])
     return producto
@@ -38,12 +38,13 @@ def db_insert_producto(producto) -> int:
 
 def db_remove_producto_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("DELETE FROM productos where id = " + idd)
-    print('Producto eliminado: ' + cursor.rowcount)
+    cursor = conn.execute("DELETE FROM productos where id = ?", str(idd))
+    conn.commit()
+    print('Producto eliminado: ' + str(cursor.rowcount))
     return cursor.rowcount > 0
 
 
-def db_remove_producto(producto) -> int:
+def db_remove_producto(producto) -> bool:
     return db_remove_producto_id(producto.idd)
 
 

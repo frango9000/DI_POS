@@ -12,7 +12,7 @@ class ClientesUI(Gtk.Box):
     def __init__(self, parent=None):
         Gtk.Box.__init__(self)
         self.parent = parent
-        self.cliente_editor_ui: ClienteEditor = None
+        self.editor_ui: ClienteEditor = None
         builder = Gtk.Builder()
         builder.add_from_file("../../res/ListaUI.glade")
         signals = {
@@ -62,15 +62,16 @@ class ClientesUI(Gtk.Box):
 
     def on_btn_agregar(self, button):
         self.set_sensitive(False)
-        self.cliente_editor_ui = ClienteEditor(self)
-        self.cliente_editor_ui.show()
+        self.editor_ui = ClienteEditor(self)
+        self.editor_ui.show()
 
     def on_btn_editar(self, button):
+        self.set_sensitive(False)
         selected_id = self.get_selected_id()
         if selected_id > 0:
-            selected_cliente = ClientesDao.db_get_cliente(int(selected_id))
-            self.cliente_editor_ui = ClienteEditor(self, selected_cliente)
-            self.cliente_editor_ui.show()
+            selected_object = ClientesDao.db_get_cliente(int(selected_id))
+            self.editor_ui = ClienteEditor(self, selected_object)
+            self.editor_ui.show()
 
     def on_btn_remover(self, button):
         selected_id = self.get_selected_id()
@@ -100,8 +101,8 @@ class ClientesUI(Gtk.Box):
     def return_from_child(self):
         self.set_sensitive(True)
         self.refrescar_tabla()
-        self.cliente_editor_ui.destroy()
-        self.cliente_editor_ui = None
+        self.editor_ui.destroy()
+        self.editor_ui = None
 
     def get_selected_id(self) -> int:
         model, treeiter = self.treeview.get_selection().get_selected()
