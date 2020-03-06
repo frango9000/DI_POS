@@ -2,6 +2,7 @@ import gi
 
 from app.view.ClientesUI import ClientesUI
 from app.view.ProductosUI import ProductosUI
+from app.view.VendidosUI import VendidosUI
 from app.view.VentasUI import VentasUI
 
 gi.require_version('Gtk', '3.0')
