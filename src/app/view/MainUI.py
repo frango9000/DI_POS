@@ -19,8 +19,7 @@ class MainUi(Gtk.Window):
 
         builder = Gtk.Builder()
         builder.add_from_file("../../res/MainUI.glade")
-        self.grid = builder.get_object("home_buttons_grid")
-
+        self.box_ui = builder.get_object("box_ui")
         self.show_main_menu()
 
         signals = {
@@ -60,7 +59,8 @@ class MainUi(Gtk.Window):
         if self.active_pane is not None:
             self.remove(self.active_pane)
         self.active_pane = pane
-        self.add(self.active_pane)
+        if self.active_pane is not None:
+            self.add(self.active_pane)
 
     def show_main_menu(self):
-        self.set_active_pane(self.grid)
+        self.set_active_pane(self.box_ui)
