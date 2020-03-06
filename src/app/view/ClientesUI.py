@@ -1,6 +1,7 @@
 import gi
 
 from app.data import ClientesDao
+from app.view.ClienteEditor import ClienteEditor
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -10,8 +11,8 @@ class ClientesUI(Gtk.Box):
 
     def __init__(self, parent=None):
         Gtk.Box.__init__(self)
-        self.clientes = ClientesDao.get_db_clientes()
         self.parent = parent
+        self.cliente_editor_ui: ClienteEditor = None
         builder = Gtk.Builder()
         builder.add_from_file("../../res/ListaUI.glade")
         signals = {
@@ -22,16 +23,13 @@ class ClientesUI(Gtk.Box):
         }
         builder.connect_signals(signals)
 
-        self.box_clientes_ui = builder.get_object("box_ui")
-        self.add(self.box_clientes_ui)
+        self.box_ui = builder.get_object("box_ui")
+        self.add(self.box_ui)
         self.treeview_container = builder.get_object("tree_view_container")
 
         # Creating the ListStore model
         self.clientes_liststore = Gtk.ListStore(int, str, str, str, int, str)
-        for cliente in self.clientes:
-            cliente_detalles = [cliente.idd, cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono,
-                                cliente.direccion]
-            self.clientes_liststore.append(cliente_detalles)
+        self.refrescar_tabla()
 
         self.treeview = Gtk.TreeView(model=self.clientes_liststore)
         for i, column_title in enumerate(["ID", "DNI", "Nombre", "Apellido", "Telefono", "Direccion"]):
@@ -50,14 +48,30 @@ class ClientesUI(Gtk.Box):
 
         self.show_all()
 
+    def refrescar_tabla(self):
+        self.clientes_liststore.clear()
+        clientes = ClientesDao.get_db_clientes()
+        for cliente in clientes:
+            cliente_detalles = [cliente.idd, cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono,
+                                cliente.direccion]
+            self.clientes_liststore.append(cliente_detalles)
+
     def on_btn_volver(self, button):
         self.parent.show_main_menu()
 
     def on_btn_agregar(self, button):
-        self.parent.show_main_menu()
+        self.set_sensitive(False)
+        self.cliente_editor_ui = ClienteEditor(self)
+        self.cliente_editor_ui.show()
 
     def on_btn_editar(self, button):
         self.parent.show_main_menu()
 
     def on_btn_remover(self, button):
         self.parent.show_main_menu()
+
+    def return_from_child(self):
+        self.set_sensitive(True)
+        self.refrescar_tabla()
+        self.cliente_editor_ui.destroy()
+        self.cliente_editor_ui = None

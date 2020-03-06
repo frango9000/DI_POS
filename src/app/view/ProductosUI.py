@@ -1,6 +1,6 @@
 import gi
 
-from app.data import ClientesDao, ProductosDao
+from app.data import ProductosDao
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk

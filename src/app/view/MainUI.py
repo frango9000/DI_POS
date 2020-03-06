@@ -11,7 +11,7 @@ class MainUi(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self)
-        self.set_default_size(400, 200)
+        self.set_default_size(200, 200)
 
         self.active_pane = None
 
