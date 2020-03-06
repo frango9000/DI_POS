@@ -31,6 +31,7 @@ class MainUi(Gtk.Window):
         }
         builder.connect_signals(signals)
         self.show_all()
+        self.connect("destroy", Gtk.main_quit)
 
     def on_btn_activate(self, button):
         print("Click" + self.label)
