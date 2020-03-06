@@ -18,7 +18,7 @@ def get_all() -> list:
 
 def get_id(idd) -> Producto:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("SELECT * FROM productos where id = ?", str(idd))
+    cursor = conn.execute("SELECT * FROM productos where id = ?", (str(idd),))
     row = cursor.fetchone()
     producto = Producto(row[1], row[2], row[3], row[4], row[0])
     return producto
@@ -38,7 +38,7 @@ def insert(producto) -> int:
 
 def remove_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("DELETE FROM productos where id = ?", str(idd))
+    cursor = conn.execute("DELETE FROM productos where id = ?", (str(idd),))
     conn.commit()
     print('Producto eliminado: ' + str(cursor.rowcount))
     return cursor.rowcount > 0

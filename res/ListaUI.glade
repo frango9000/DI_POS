@@ -29,11 +29,12 @@
       </packing>
     </child>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="btns_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">8</property>
+        <property name="homogeneous">True</property>
         <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">Agregar</property>
@@ -95,6 +96,9 @@
           </packing>
         </child>
         <child>
+          <placeholder/>
+        </child>
+        <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">Volver</property>
             <property name="visible">True</property>
@@ -106,7 +110,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
       </object>

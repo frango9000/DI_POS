@@ -3,7 +3,7 @@ from app.data import VentasDao
 
 class Venta:
 
-    def __init__(self, id_cliente, fecha_hora, idd=0):
+    def __init__(self, id_cliente, fecha_hora=None, idd=0):
         self.idd: int = idd
         self.id_cliente: int = id_cliente
         self.fecha_hora: str = fecha_hora

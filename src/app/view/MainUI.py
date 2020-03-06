@@ -57,7 +57,7 @@ class MainUi(Gtk.Window):
         self.set_active_pane(vendidos_ui)
 
     def on_btn_caja(self, button):
-        caja_ui = CajaUI(self)
+        caja_ui = CajaUI(self, None)
         self.set_active_pane(caja_ui)
 
     def set_active_pane(self, pane):

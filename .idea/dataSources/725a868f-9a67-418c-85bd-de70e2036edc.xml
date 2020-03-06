@@ -49,12 +49,10 @@
     </column>
     <index id="18" parent="6" name="clientes_id_uindex">
       <ColNames>id</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="19" parent="6" name="clientes_dni_uindex">
       <ColNames>dni</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="20" parent="6" name="clientes_pk">
@@ -86,7 +84,6 @@
     </column>
     <index id="26" parent="7" name="productos_id_uindex">
       <ColNames>id</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="27" parent="7" name="productos_pk">
@@ -147,15 +144,12 @@
     </column>
     <index id="40" parent="10" name="vendidos_id_index">
       <ColNames>id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="41" parent="10" name="vendidos_id_venta_index">
       <ColNames>id_venta</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="42" parent="10" name="vendidos_id_producto_index">
       <ColNames>id_producto</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="43" parent="10" name="vendidos_pk">
       <ColNames>id</ColNames>
@@ -195,12 +189,10 @@
     </column>
     <index id="49" parent="11" name="ventas_id_uindex">
       <ColNames>id</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="50" parent="11" name="ventas_id_cliente_index">
       <ColNames>id_cliente</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="51" parent="11" name="ventas_pk">
       <ColNames>id</ColNames>

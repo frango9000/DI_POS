@@ -16,9 +16,20 @@ def get_all() -> list:
     return vendidos
 
 
+def get_id_venta(id_venta) -> list:
+    vendidos = []
+    conn = sqlite3.connect(dbsrc)
+    cursor = conn.execute("SELECT * FROM vendidos where id_venta = ?", (str(id_venta),))
+    for row in cursor:
+        vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
+        vendidos.append(vendido)
+        print(str(vendido))
+    return vendidos
+
+
 def get_id(idd) -> Vendido:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("SELECT * FROM vendidos where id = ?", str(idd))
+    cursor = conn.execute("SELECT * FROM vendidos where id = ?", (str(idd),))
     row = cursor.fetchone()
     vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
     return vendido
@@ -38,7 +49,7 @@ def insert(vendido) -> int:
 
 def remove_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
-    cursor = conn.execute("DELETE FROM vendidos where id = ?", str(idd))
+    cursor = conn.execute("DELETE FROM vendidos where id = ?", (str(idd),))
     conn.commit()
     print('Vendido eliminado: ' + str(cursor.rowcount))
     return cursor.rowcount > 0
