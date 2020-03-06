@@ -1,18 +1,18 @@
 import gi
+from app.view.VentaEditor import VentaEditor
 
-from app.data import ClientesDao
-from app.view.ClienteEditor import ClienteEditor
+from app.data import VentasDao
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 
-class ClientesUI(Gtk.Box):
+class VentasUI(Gtk.Box):
 
     def __init__(self, parent=None):
         Gtk.Box.__init__(self)
         self.parent = parent
-        self.editor_ui: ClienteEditor = None
+        self.editor_ui: VentaEditor = None
         builder = Gtk.Builder()
         builder.add_from_file("../../res/ListaUI.glade")
         signals = {
@@ -29,10 +29,10 @@ class ClientesUI(Gtk.Box):
         self.treeview_container = builder.get_object("tree_view_container")
 
         # Creating the ListStore model
-        self.clientes_liststore = Gtk.ListStore(int, str, str, str, int, str)
+        self.ventas_liststore = Gtk.ListStore(int, str, str, str, int, str)
         self.refrescar_tabla()
 
-        self.treeview = Gtk.TreeView(model=self.clientes_liststore)
+        self.treeview = Gtk.TreeView(model=self.ventas_liststore)
         for i, column_title in enumerate(["ID", "DNI", "Nombre", "Apellido", "Telefono", "Direccion"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
@@ -50,44 +50,44 @@ class ClientesUI(Gtk.Box):
         self.show_all()
 
     def refrescar_tabla(self):
-        self.clientes_liststore.clear()
-        clientes = ClientesDao.get_all()
-        for cliente in clientes:
-            cliente_detalles = [cliente.idd, cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono,
-                                cliente.direccion]
-            self.clientes_liststore.append(cliente_detalles)
+        self.ventas_liststore.clear()
+        ventas = VentasDao.get_all()
+        for venta in ventas:
+            venta_detalles = [venta.idd, venta.dni, venta.nombre, venta.apellido, venta.telefono,
+                              venta.direccion]
+            self.ventas_liststore.append(venta_detalles)
 
     def on_btn_volver(self, button):
         self.parent.show_main_menu()
 
     def on_btn_agregar(self, button):
         self.set_sensitive(False)
-        self.editor_ui = ClienteEditor(self)
+        self.editor_ui = VentaEditor(self)
         self.editor_ui.show()
 
     def on_btn_editar(self, button):
         self.set_sensitive(False)
         selected_id = self.get_selected_id()
         if selected_id > 0:
-            selected_object = ClientesDao.get_id(int(selected_id))
-            self.editor_ui = ClienteEditor(self, selected_object)
+            selected_object = VentasDao.get_id(int(selected_id))
+            self.editor_ui = VentaEditor(self, selected_object)
             self.editor_ui.show()
 
     def on_btn_remover(self, button):
         selected_id = self.get_selected_id()
         if selected_id > 0:
             dialog = Gtk.MessageDialog(self.parent, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK_CANCEL,
-                                       "Eliminando Cliente")
-            dialog.format_secondary_text("Estas seguro que deseas eliminar el cliente con id: " + str(selected_id))
+                                       "Eliminando Venta")
+            dialog.format_secondary_text("Estas seguro que deseas eliminar el venta con id: " + str(selected_id))
             response = dialog.run()
             dialog.destroy()
             if response == Gtk.ResponseType.OK:
-                print("Eliminando cliente " + str(selected_id))
-                eliminado = ClientesDao.remove_id(selected_id)
+                print("Eliminando venta " + str(selected_id))
+                eliminado = VentasDao.remove_id(selected_id)
                 dialog2 = Gtk.MessageDialog(self.parent, 0, Gtk.MessageType.INFO,
-                                            Gtk.ButtonsType.OK, "Eliminando Cliente")
+                                            Gtk.ButtonsType.OK, "Eliminando Venta")
                 elim = " " if eliminado else " no "
-                dialog2.format_secondary_text("Cliente" + elim + "eliminado.")
+                dialog2.format_secondary_text("Venta" + elim + "eliminado.")
                 dialog2.run()
                 dialog2.destroy()
                 self.refrescar_tabla()

@@ -11,13 +11,13 @@ class Producto:
         self.idd = idd
 
     def insert(self):
-        return ProductosDao.db_insert_producto(self)
+        return ProductosDao.insert(self)
 
     def remove(self):
-        return ProductosDao.db_remove_producto(self)
+        return ProductosDao.remove(self)
 
     def update(self):
-        return ProductosDao.db_update_producto(self)
+        return ProductosDao.update(self)
 
     def __str__(self) -> str:
         return 'Producto { ' + str(self.idd) + ', ' + self.nombre + ', ' + str(

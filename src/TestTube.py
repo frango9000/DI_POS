@@ -7,4 +7,4 @@ cliente1.insert()
 # Db.db_insert_cliente(cliente1)
 
 
-str(Db.get_db_clientes())
+str(Db.get_all())

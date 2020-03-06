@@ -51,7 +51,7 @@ class ProductosUI(Gtk.Box):
 
     def refrescar_tabla(self):
         self.productos_liststore.clear()
-        productos = ProductosDao.get_db_productos()
+        productos = ProductosDao.get_all()
         for producto in productos:
             producto_detalles = [producto.idd, producto.nombre, producto.descripcion, producto.precio, producto.stock]
             self.productos_liststore.append(producto_detalles)
@@ -68,7 +68,7 @@ class ProductosUI(Gtk.Box):
         self.set_sensitive(False)
         selected_id = self.get_selected_id()
         if selected_id > 0:
-            selected_object = ProductosDao.db_get_producto(int(selected_id))
+            selected_object = ProductosDao.get_id(int(selected_id))
             self.editor_ui = ProductoEditor(self, selected_object)
             self.editor_ui.show()
 
@@ -82,7 +82,7 @@ class ProductosUI(Gtk.Box):
             dialog.destroy()
             if response == Gtk.ResponseType.OK:
                 print("Eliminando producto " + str(selected_id))
-                eliminado = ProductosDao.db_remove_producto_id(selected_id)
+                eliminado = ProductosDao.remove_id(selected_id)
                 dialog2 = Gtk.MessageDialog(self.parent, 0, Gtk.MessageType.INFO,
                                             Gtk.ButtonsType.OK, "Eliminando Producto")
                 elim = " " if eliminado else " no "

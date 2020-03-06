@@ -5,7 +5,7 @@ from app.model.Producto import Producto
 dbsrc = '../../res/pos.db'
 
 
-def get_db_productos() -> list:
+def get_all() -> list:
     productos = []
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("SELECT * FROM productos")
@@ -16,7 +16,7 @@ def get_db_productos() -> list:
     return productos
 
 
-def db_get_producto(idd) -> Producto:
+def get_id(idd) -> Producto:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("SELECT * FROM productos where id = ?", str(idd))
     row = cursor.fetchone()
@@ -24,7 +24,7 @@ def db_get_producto(idd) -> Producto:
     return producto
 
 
-def db_insert_producto(producto) -> int:
+def insert(producto) -> int:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
     sql = 'INSERT INTO productos(nombre, descripcion, precio, stock) VALUES (?,?,?,?)'
@@ -36,7 +36,7 @@ def db_insert_producto(producto) -> int:
     return producto.idd
 
 
-def db_remove_producto_id(idd) -> bool:
+def remove_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("DELETE FROM productos where id = ?", str(idd))
     conn.commit()
@@ -44,11 +44,11 @@ def db_remove_producto_id(idd) -> bool:
     return cursor.rowcount > 0
 
 
-def db_remove_producto(producto) -> bool:
-    return db_remove_producto_id(producto.idd)
+def remove(producto) -> bool:
+    return remove_id(producto.idd)
 
 
-def db_update_producto(producto) -> bool:
+def update(producto) -> bool:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
     sql = 'UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id = ?'

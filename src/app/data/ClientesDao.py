@@ -5,7 +5,7 @@ from app.model.Cliente import Cliente
 dbsrc = '../../res/pos.db'
 
 
-def get_db_clientes() -> list:
+def get_all() -> list:
     clientes = []
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("SELECT * FROM clientes")
@@ -16,7 +16,7 @@ def get_db_clientes() -> list:
     return clientes
 
 
-def db_get_cliente(idd) -> Cliente:
+def get_id(idd) -> Cliente:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("SELECT * FROM clientes where id = " + str(idd))
     row = cursor.fetchone()
@@ -24,7 +24,7 @@ def db_get_cliente(idd) -> Cliente:
     return cliente
 
 
-def db_insert_cliente(cliente) -> int:
+def insert(cliente) -> int:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
     sql = 'INSERT INTO clientes(dni, nombre, apellido, telefono, direccion) VALUES ( ?,?,?,?,?)'
@@ -36,7 +36,7 @@ def db_insert_cliente(cliente) -> int:
     return cliente.idd
 
 
-def db_remove_cliente_id(idd) -> bool:
+def remove_id(idd) -> bool:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.execute("DELETE FROM clientes where id = ?", str(idd))
     conn.commit()
@@ -44,11 +44,11 @@ def db_remove_cliente_id(idd) -> bool:
     return cursor.rowcount > 0
 
 
-def db_remove_cliente(cliente) -> bool:
-    return db_remove_cliente_id(cliente.idd)
+def remove(cliente) -> bool:
+    return remove_id(cliente.idd)
 
 
-def db_update_cliente(cliente) -> bool:
+def update(cliente) -> bool:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
     sql = 'UPDATE clientes SET dni=?, nombre=?, apellido=?, telefono=?, direccion=? WHERE id = ?'

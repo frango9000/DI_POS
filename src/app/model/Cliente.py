@@ -12,13 +12,13 @@ class Cliente:
         self.direccion = direccion
 
     def insert(self):
-        return ClientesDao.db_insert_cliente(self)
+        return ClientesDao.insert(self)
 
     def remove(self):
-        return ClientesDao.db_remove_cliente(self)
+        return ClientesDao.remove(self)
 
     def update(self):
-        return ClientesDao.db_update_cliente(self)
+        return ClientesDao.update(self)
 
     def __str__(self) -> str:
         return 'Cliente { ' + str(self.idd) + ', ' + self.dni + ', ' + self.nombre + ', ' + self.apellido + ', ' + str(
