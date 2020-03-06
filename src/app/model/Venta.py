@@ -3,10 +3,10 @@ from app.data import VentasDao
 
 class Venta:
 
-    def __init__(self, id_cliente, fechahora, idd=0):
-        self.idd = idd
-        self.id_cliente = id_cliente
-        self.fechahora = fechahora
+    def __init__(self, id_cliente, fecha_hora, idd=0):
+        self.idd: int = idd
+        self.id_cliente: int = id_cliente
+        self.fecha_hora: str = fecha_hora
 
     def insert(self):
         return VentasDao.insert(self)
@@ -18,4 +18,7 @@ class Venta:
         return VentasDao.update(self)
 
     def __str__(self) -> str:
-        return 'Venta { ' + str(self.idd) + ', ' + str(self.id_cliente) + ', ' + str(self.fechahora) + ' };'
+        return 'Venta { ' + \
+               str(self.idd) + ', ' + \
+               str(self.id_cliente) + ', ' + \
+               str(self.fecha_hora) + ' };'

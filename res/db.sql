@@ -1,5 +1,3 @@
--- auto-generated definitions
-
 -- clientes
 create table clientes
 (
@@ -19,6 +17,7 @@ create unique index clientes_dni_uindex
 create unique index clientes_id_uindex
     on clientes (id);
 
+
 -- productos
 create table productos
 (
@@ -34,6 +33,7 @@ create table productos
 create unique index productos_id_uindex
     on productos (id);
 
+
 -- ventas
 create table ventas
 (
@@ -43,7 +43,7 @@ create table ventas
     id_cliente integer not null
         references clientes
             on delete cascade,
-    fechahora  text default datetime('now', 'localtime') not null
+    fecha_hora text default datetime('now', 'localtime') not null
 );
 
 create index ventas_id_cliente_index
@@ -52,11 +52,12 @@ create index ventas_id_cliente_index
 create unique index ventas_id_uindex
     on ventas (id);
 
--- contenido ventas
-create table ventas_contenido
+
+-- vendidos
+create table vendidos
 (
     id            integer not null
-        constraint ventas_contenido_pk
+        constraint vendidos_pk
             primary key autoincrement,
     id_venta      integer not null
         references ventas
@@ -68,12 +69,13 @@ create table ventas_contenido
     precio_unidad integer
 );
 
-create index ventas_contenido_id_producto_index
-    on ventas_contenido (id_producto);
+create index vendidos_id_index
+    on vendidos (id);
 
-create unique index ventas_contenido_id_uindex
-    on ventas_contenido (id);
+create index vendidos_id_producto_index
+    on vendidos (id_producto);
 
-create index ventas_contenido_id_venta_index
-    on ventas_contenido (id_venta);
+create index vendidos_id_venta_index
+    on vendidos (id_venta);
+
 

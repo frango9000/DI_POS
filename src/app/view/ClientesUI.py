@@ -66,9 +66,9 @@ class ClientesUI(Gtk.Box):
         self.editor_ui.show()
 
     def on_btn_editar(self, button):
-        self.set_sensitive(False)
         selected_id = self.get_selected_id()
         if selected_id > 0:
+            self.set_sensitive(False)
             selected_object = ClientesDao.get_id(int(selected_id))
             self.editor_ui = ClienteEditor(self, selected_object)
             self.editor_ui.show()

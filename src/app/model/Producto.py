@@ -20,5 +20,8 @@ class Producto:
         return ProductosDao.update(self)
 
     def __str__(self) -> str:
-        return 'Producto { ' + str(self.idd) + ', ' + self.nombre + ', ' + str(
-            self.precio) + ', ' + self.descripcion + ' };'
+        return 'Producto { ' + \
+               str(self.idd) + ', ' + \
+               self.nombre + ', ' + \
+               str(self.precio) + ', ' + \
+               self.descripcion + ' };'

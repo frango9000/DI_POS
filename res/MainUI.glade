@@ -41,15 +41,16 @@
     </child>
     <child>
       <object class="GtkButton">
-        <property name="label" translatable="yes">Reportes</property>
+        <property name="label" translatable="yes">Caja</property>
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
-        <signal name="activate" handler="btn_reportes_act" swapped="no"/>
+        <signal name="activate" handler="btn_caja_act" swapped="no"/>
+        <signal name="clicked" handler="btn_caja_act" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">3</property>
+        <property name="top_attach">0</property>
       </packing>
     </child>
     <child>
@@ -59,23 +60,53 @@
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
         <signal name="activate" handler="btn_documentacion_act" swapped="no"/>
+        <signal name="clicked" handler="btn_documentacion_act" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">4</property>
+        <property name="top_attach">6</property>
       </packing>
     </child>
     <child>
       <object class="GtkButton">
-        <property name="label" translatable="yes">Caja</property>
+        <property name="label" translatable="yes">Reportes</property>
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
-        <signal name="activate" handler="btn_caja_act" swapped="no"/>
+        <signal name="activate" handler="btn_reportes_act" swapped="no"/>
+        <signal name="clicked" handler="btn_reportes_act" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">0</property>
+        <property name="top_attach">5</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label" translatable="yes">Ventas</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <signal name="activate" handler="btn_ventas_act" swapped="no"/>
+        <signal name="clicked" handler="btn_ventas_act" swapped="no"/>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label" translatable="yes">Vendidos</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <signal name="activate" handler="btn_vendidos_act" swapped="no"/>
+        <signal name="clicked" handler="btn_vendidos_act" swapped="no"/>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">4</property>
       </packing>
     </child>
   </object>

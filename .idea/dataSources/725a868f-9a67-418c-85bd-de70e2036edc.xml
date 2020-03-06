@@ -18,8 +18,8 @@
     <table id="9" parent="2" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <table id="10" parent="2" name="ventas"/>
-    <table id="11" parent="2" name="ventas_contenido"/>
+    <table id="10" parent="2" name="vendidos"/>
+    <table id="11" parent="2" name="ventas"/>
     <column id="12" parent="6" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
@@ -126,94 +126,94 @@
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="36" parent="10" name="id_cliente">
+    <column id="36" parent="10" name="id_venta">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="37" parent="10" name="fechahora">
-      <Position>3</Position>
-      <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>datetime(&apos;now&apos;, &apos;localtime&apos;)</DefaultExpression>
-    </column>
-    <index id="38" parent="10" name="ventas_id_uindex">
-      <ColNames>id</ColNames>
-      <ColumnCollations></ColumnCollations>
-      <Unique>1</Unique>
-    </index>
-    <index id="39" parent="10" name="ventas_id_cliente_index">
-      <ColNames>id_cliente</ColNames>
-      <ColumnCollations></ColumnCollations>
-    </index>
-    <key id="40" parent="10" name="ventas_pk">
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>ventas_id_uindex</UnderlyingIndexName>
-    </key>
-    <foreign-key id="41" parent="10">
-      <ColNames>id_cliente</ColNames>
-      <RefTableName>clientes</RefTableName>
-      <RefKeyName>clientes_pk</RefKeyName>
-      <RefColNames>id</RefColNames>
-      <OnDelete>cascade</OnDelete>
-    </foreign-key>
-    <column id="42" parent="11" name="id">
-      <Position>1</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-    </column>
-    <column id="43" parent="11" name="id_venta">
-      <Position>2</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="44" parent="11" name="id_producto">
+    <column id="37" parent="10" name="id_producto">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="45" parent="11" name="cantidad">
+    <column id="38" parent="10" name="cantidad">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="46" parent="11" name="precio_unidad">
+    <column id="39" parent="10" name="precio_unidad">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <index id="47" parent="11" name="ventas_contenido_id_uindex">
+    <index id="40" parent="10" name="vendidos_id_index">
       <ColNames>id</ColNames>
       <ColumnCollations></ColumnCollations>
-      <Unique>1</Unique>
     </index>
-    <index id="48" parent="11" name="ventas_contenido_id_venta_index">
+    <index id="41" parent="10" name="vendidos_id_venta_index">
       <ColNames>id_venta</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="49" parent="11" name="ventas_contenido_id_producto_index">
+    <index id="42" parent="10" name="vendidos_id_producto_index">
       <ColNames>id_producto</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="50" parent="11" name="ventas_contenido_pk">
+    <key id="43" parent="10" name="vendidos_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>ventas_contenido_id_uindex</UnderlyingIndexName>
+      <UnderlyingIndexName>vendidos_id_index</UnderlyingIndexName>
     </key>
-    <foreign-key id="51" parent="11">
+    <foreign-key id="44" parent="10">
       <ColNames>id_venta</ColNames>
       <RefTableName>ventas</RefTableName>
       <RefKeyName>ventas_pk</RefKeyName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="52" parent="11">
+    <foreign-key id="45" parent="10">
       <ColNames>id_producto</ColNames>
       <RefTableName>productos</RefTableName>
       <RefKeyName>productos_pk</RefKeyName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="46" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="47" parent="11" name="id_cliente">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="11" name="fecha_hora">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>datetime(&apos;now&apos;, &apos;localtime&apos;)</DefaultExpression>
+    </column>
+    <index id="49" parent="11" name="ventas_id_uindex">
+      <ColNames>id</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="50" parent="11" name="ventas_id_cliente_index">
+      <ColNames>id_cliente</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="51" parent="11" name="ventas_pk">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>ventas_id_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="52" parent="11">
+      <ColNames>id_cliente</ColNames>
+      <RefTableName>clientes</RefTableName>
+      <RefKeyName>clientes_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
     </foreign-key>
   </database-model>
 </dataSource>

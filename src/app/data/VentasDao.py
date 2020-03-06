@@ -27,8 +27,8 @@ def get_id(idd) -> Venta:
 def insert(venta) -> int:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
-    sql = 'INSERT INTO ventas(id_cliente, fechahora) VALUES (?,?)'
-    values = (int(venta.id_cliente), str(venta.fechahora))
+    sql = 'INSERT INTO ventas(id_cliente) VALUES (?)'
+    values = (int(venta.id_cliente),)
     cursor.execute(sql, values)
     conn.commit()
     venta.idd = cursor.lastrowid
@@ -51,8 +51,8 @@ def remove(venta) -> bool:
 def update(venta) -> bool:
     conn = sqlite3.connect(dbsrc)
     cursor = conn.cursor()
-    sql = 'UPDATE ventas SET id_cliente=?, fechahora=? WHERE id = ?'
-    values = (venta.id_cliente, venta.fechahora, venta.idd)
+    sql = 'UPDATE ventas SET id_cliente=?, fecha_hora=? WHERE id = ?'
+    values = (venta.id_cliente, venta.fecha_hora, venta.idd)
     cursor.execute(sql, values)
     conn.commit()
     print("Venta actualizada: " + str(venta))

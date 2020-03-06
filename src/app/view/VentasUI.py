@@ -1,7 +1,7 @@
 import gi
-from app.view.VentaEditor import VentaEditor
 
 from app.data import VentasDao
+from app.view.VentaEditor import VentaEditor
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -29,15 +29,15 @@ class VentasUI(Gtk.Box):
         self.treeview_container = builder.get_object("tree_view_container")
 
         # Creating the ListStore model
-        self.ventas_liststore = Gtk.ListStore(int, str, str, str, int, str)
+        self.ventas_liststore = Gtk.ListStore(int, int, str)
         self.refrescar_tabla()
 
         self.treeview = Gtk.TreeView(model=self.ventas_liststore)
-        for i, column_title in enumerate(["ID", "DNI", "Nombre", "Apellido", "Telefono", "Direccion"]):
+        for i, column_title in enumerate(["ID", "ID Cliente", "Fecha Hora"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             column.set_resizable(True)
-            if column_title == "Direccion":
+            if column_title == "Fecha Hora":
                 column.set_min_width(900)
             self.treeview.append_column(column)
 
@@ -53,8 +53,7 @@ class VentasUI(Gtk.Box):
         self.ventas_liststore.clear()
         ventas = VentasDao.get_all()
         for venta in ventas:
-            venta_detalles = [venta.idd, venta.dni, venta.nombre, venta.apellido, venta.telefono,
-                              venta.direccion]
+            venta_detalles = [venta.idd, venta.id_cliente, venta.fecha_hora]
             self.ventas_liststore.append(venta_detalles)
 
     def on_btn_volver(self, button):
@@ -66,9 +65,9 @@ class VentasUI(Gtk.Box):
         self.editor_ui.show()
 
     def on_btn_editar(self, button):
-        self.set_sensitive(False)
         selected_id = self.get_selected_id()
         if selected_id > 0:
+            self.set_sensitive(False)
             selected_object = VentasDao.get_id(int(selected_id))
             self.editor_ui = VentaEditor(self, selected_object)
             self.editor_ui.show()

@@ -2,6 +2,7 @@ import gi
 
 from app.view.ClientesUI import ClientesUI
 from app.view.ProductosUI import ProductosUI
+from app.view.VentasUI import VentasUI
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -25,6 +26,8 @@ class MainUi(Gtk.Window):
             "btn_caja_act": self.on_btn_activate,
             "btn_clientes_act": self.on_btn_clientes,
             "btn_productos_act": self.on_btn_productos,
+            "btn_ventas_act": self.on_btn_ventas,
+            "btn_vendidos_act": self.on_btn_vendidos,
             "btn_reportes_act": self.on_btn_activate,
             "btn_documentacion_act": self.on_btn_activate,
             "btn_salir_act": Gtk.main_quit
@@ -37,12 +40,20 @@ class MainUi(Gtk.Window):
         print("Click" + self.label)
 
     def on_btn_clientes(self, button):
-        clientesui = ClientesUI(self)
-        self.set_active_pane(clientesui)
+        clientes_ui = ClientesUI(self)
+        self.set_active_pane(clientes_ui)
 
     def on_btn_productos(self, button):
-        productosui = ProductosUI(self)
-        self.set_active_pane(productosui)
+        productos_ui = ProductosUI(self)
+        self.set_active_pane(productos_ui)
+
+    def on_btn_ventas(self, button):
+        ventas_ui = VentasUI(self)
+        self.set_active_pane(ventas_ui)
+
+    def on_btn_vendidos(self, button):
+        vendidos_ui = VendidosUI(self)
+        self.set_active_pane(vendidos_ui)
 
     def set_active_pane(self, pane):
         if self.active_pane is not None:

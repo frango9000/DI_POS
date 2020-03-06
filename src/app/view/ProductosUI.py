@@ -65,9 +65,9 @@ class ProductosUI(Gtk.Box):
         self.editor_ui.show()
 
     def on_btn_editar(self, button):
-        self.set_sensitive(False)
         selected_id = self.get_selected_id()
         if selected_id > 0:
+            self.set_sensitive(False)
             selected_object = ProductosDao.get_id(int(selected_id))
             self.editor_ui = ProductoEditor(self, selected_object)
             self.editor_ui.show()
