@@ -13,4 +13,3 @@ def generador_de_facturas():
         Reportes.generar_factura(i, 'facturas/factura-' + str(i) + '.pdf')
 
 
-generador_de_facturas()
