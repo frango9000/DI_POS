@@ -1,3 +1,7 @@
+-- sqlite pragma
+PRAGMA foreign_keys=1;
+
+
 -- clientes
 create table clientes
 (
@@ -43,7 +47,7 @@ create table ventas
     id_cliente integer not null
         references clientes
             on delete cascade,
-    fecha_hora text default datetime('now', 'localtime') not null
+    fecha_hora text default (datetime('now', 'localtime')) not null
 );
 
 create index ventas_id_cliente_index

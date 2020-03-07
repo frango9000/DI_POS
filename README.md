@@ -38,9 +38,9 @@
 ### Usabilidad
 Tamén ter en conta os criterios de usabilidade para deseñara a aplicación: 
  
- [ ] Acesibilidade, 
+ [x] Acesibilidade, 
  
- [ ] facilidade de uso, 
+ [x] facilidade de uso, 
  
  [ ] xestión e prevención de erros, etc.
 
@@ -53,11 +53,11 @@ A aplicación haberá usar unha base de datos e conectarnos a ela. Mellor usar S
 ### Informes
 O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os informes terá que xeralos a aplicación dende o programa cos datos da base de datos. O tipo de informe poderá ser un listado, factura, ficha cliente, etc. A xeración dos informes se fará a través dalgunha acción nalgún control.
  
- [ ] Factura
+ [x] Factura
  
- [ ] reporte dia
+ [x] reporte dia
  
- [ ] reporte mes
+ [x] reporte mes
 
 
 ### Documentacion:
@@ -70,7 +70,7 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
  
  [ ] empaquetada e 
  
- [ ] funcional, 
+ [x] funcional, 
  
  [ ] preparada para instalar nun linux ubuntu.
 
@@ -86,3 +86,4 @@ sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-d
 pip install
         pycairo
         pygobject
+        reportlab

@@ -39,7 +39,7 @@ class MainUi(Gtk.Window):
         self.connect("destroy", Gtk.main_quit)
 
     def on_btn_reportes(self, button):
-        reportes_ui = ReportesUI()
+        reportes_ui = ReportesUI(self)
         self.set_active_pane(reportes_ui)
 
     def on_btn_documentacion(self, button):

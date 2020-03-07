@@ -29,7 +29,7 @@ class ProductosUI(Gtk.Box):
         self.treeview_container = builder.get_object("tree_view_container")
 
         # Creating the ListStore model
-        self.productos_liststore = Gtk.ListStore(int, str, str, int, int)
+        self.productos_liststore = Gtk.ListStore(int, str, int, int, str)
         self.refrescar_tabla()
 
         self.treeview = Gtk.TreeView(model=self.productos_liststore)

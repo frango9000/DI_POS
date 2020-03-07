@@ -3,6 +3,8 @@ import sqlite3
 from app import Globals
 from app.model.Cliente import Cliente
 
+debug: bool = False
+
 
 def get_all() -> list:
     clientes = []
@@ -11,7 +13,9 @@ def get_all() -> list:
     for row in cursor:
         cliente = Cliente(row[1], row[2], row[3], row[4], row[5], row[0])
         clientes.append(cliente)
-        print(str(cliente))
+        if debug:
+            print(str(cliente))
+    conn.close()
     return clientes
 
 
@@ -20,6 +24,9 @@ def get_id(idd) -> Cliente:
     cursor = conn.execute("SELECT * FROM clientes where id = ?", (str(idd),))
     row = cursor.fetchone()
     cliente = Cliente(row[1], row[2], row[3], row[4], row[5], row[0])
+    conn.close()
+    if debug:
+        print(str(cliente))
     return cliente
 
 
@@ -30,8 +37,10 @@ def insert(cliente) -> int:
     values = (cliente.dni, cliente.nombre, cliente.apellido, int(cliente.telefono), cliente.direccion)
     cursor.execute(sql, values)
     conn.commit()
+    conn.close()
     cliente.idd = cursor.lastrowid
-    print("Clientes insertado: " + str(cliente))
+    if debug:
+        print("Clientes insertado: " + str(cliente))
     return cliente.idd
 
 
@@ -39,7 +48,9 @@ def remove_id(idd) -> bool:
     conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("DELETE FROM clientes where id = ?", (str(idd),))
     conn.commit()
-    print('Cliente eliminado: ' + str(cursor.rowcount))
+    conn.close()
+    if debug:
+        print('Cliente eliminado: ' + str(cursor.rowcount))
     return cursor.rowcount > 0
 
 
@@ -54,5 +65,7 @@ def update(cliente) -> bool:
     values = (cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono, cliente.direccion, cliente.idd)
     cursor.execute(sql, values)
     conn.commit()
-    print("Cliente actualizado: " + str(cliente))
+    conn.close()
+    if debug:
+        print("Cliente actualizado: " + str(cliente))
     return cursor.rowcount > 0

@@ -1,7 +1,11 @@
+from pathlib import Path
+
 import gi
+from gi.repository.Gio import File
 
 from app.data import ClientesDao, ProductosDao, VendidosDao
 from app.model.Venta import Venta
+from app.reportes import Reportes
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -21,7 +25,8 @@ class CajaUI(Gtk.Box):
             "btn_limpiar": self.on_btn_limpiar,
             "btn_eliminar": self.on_btn_eliminar,
             "btn_cancelar": self.on_btn_cancelar,
-            "btn_guardar": self.on_btn_guardar
+            "btn_guardar": self.on_btn_guardar,
+            "btn_pdf": self.on_btn_pdf
         }
         builder.connect_signals(signals)
 
@@ -36,6 +41,7 @@ class CajaUI(Gtk.Box):
         self.btn_eliminar: Gtk.Button = builder.get_object("btn_eliminar")
         self.btn_agregar: Gtk.Button = builder.get_object("btn_agregar")
         self.btn_guardar: Gtk.Button = builder.get_object("btn_guardar")
+        self.btn_pdf: Gtk.Button = builder.get_object("btn_pdf")
 
         self.combo_box_cliente.set_entry_text_column(0)
         self.combo_box_producto.set_entry_text_column(0)
@@ -159,3 +165,15 @@ class CajaUI(Gtk.Box):
         self.btn_eliminar.set_sensitive(b)
         self.btn_agregar.set_sensitive(b)
         self.btn_guardar.set_sensitive(b)
+        self.btn_pdf.set_sensitive(not b)
+
+    def on_btn_pdf(self, btn):
+        dlg = Gtk.FileChooserDialog("Guardar en...", self.parent, Gtk.FileChooserAction.SAVE,
+                                    (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        dlg.set_current_name('Factura-' + str(self.venta.idd) + '.pdf')
+        dlg.set_filename(str(Path.home()))
+        response = dlg.run()
+        if response == Gtk.ResponseType.OK:
+            filename = dlg.get_filename()
+            Reportes.generar_factura(self.venta.idd, filename)
+        dlg.destroy()

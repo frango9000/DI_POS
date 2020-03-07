@@ -1,3 +1,3 @@
-from app.view import PyDialogs
+from app.data import VendidosDao
 
-print(PyDialogs.show_input_dialog(None, "Title", "msg", "entry"))
+print(VendidosDao.get_total(35))

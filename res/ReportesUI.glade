@@ -129,7 +129,6 @@
             <property name="can_focus">False</property>
             <property name="action">select-folder</property>
             <property name="title" translatable="yes"/>
-            <signal name="file-set" handler="folder_set" swapped="no"/>
           </object>
           <packing>
             <property name="left_attach">1</property>

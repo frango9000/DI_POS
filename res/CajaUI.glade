@@ -232,7 +232,19 @@
         <property name="spacing">8</property>
         <property name="homogeneous">True</property>
         <child>
-          <placeholder/>
+          <object class="GtkButton" id="btn_pdf">
+            <property name="label" translatable="yes">PDF</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="activate" handler="btn_pdf" swapped="no"/>
+            <signal name="clicked" handler="btn_pdf" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkButton" id="btn_volver">

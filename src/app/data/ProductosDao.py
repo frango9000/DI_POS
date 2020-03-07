@@ -3,7 +3,7 @@ import sqlite3
 from app import Globals
 from app.model.Producto import Producto
 
-dbsrc = '../../res/pos.db'
+debug: bool = False
 
 
 def get_all() -> list:
@@ -13,7 +13,9 @@ def get_all() -> list:
     for row in cursor:
         producto = Producto(row[1], row[2], row[3], row[4], row[0])
         productos.append(producto)
-        print(str(producto))
+        if debug:
+            print(str(producto))
+    conn.close()
     return productos
 
 
@@ -30,6 +32,10 @@ def get_id(idd) -> Producto:
     cursor = conn.execute("SELECT * FROM productos where id = ?", (str(idd),))
     row = cursor.fetchone()
     producto = Producto(row[1], row[2], row[3], row[4], row[0])
+    conn.close()
+
+    if debug:
+        print(str(producto))
     return producto
 
 
@@ -40,8 +46,11 @@ def insert(producto) -> int:
     values = (producto.nombre, producto.descripcion, int(producto.precio), int(producto.stock))
     cursor.execute(sql, values)
     conn.commit()
+    conn.close()
     producto.idd = cursor.lastrowid
-    print("Producto insertado: " + str(producto))
+
+    if debug:
+        print("Producto insertado: " + str(producto))
     return producto.idd
 
 
@@ -49,7 +58,9 @@ def remove_id(idd) -> bool:
     conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("DELETE FROM productos where id = ?", (str(idd),))
     conn.commit()
-    print('Producto eliminado: ' + str(cursor.rowcount))
+    conn.close()
+    if debug:
+        print('Producto eliminado: ' + str(cursor.rowcount))
     return cursor.rowcount > 0
 
 
@@ -64,5 +75,7 @@ def update(producto) -> bool:
     values = (producto.nombre, producto.descripcion, producto.precio, producto.stock, producto.idd)
     cursor.execute(sql, values)
     conn.commit()
-    print("Producto actualizado: " + str(producto))
+    conn.close()
+    if debug:
+        print("Producto actualizado: " + str(producto))
     return cursor.rowcount > 0

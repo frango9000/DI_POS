@@ -1,3 +1,11 @@
-from app.reportes import Factura
+from app.reportes import Reportes
 
-Factura.generar_factura(14, "Factura-14.pdf")
+
+def reporte_anual(ano: int):
+    for i in range(1, 13):
+        Reportes.generar_reporte_mensual(i, 2019, 'reportes/' + str(ano) + '-' + str(i) + '.pdf')
+        for j in range(1, 29):
+            Reportes.generar_reporte_diario(j, i, 2019, 'reportes/' + str(ano) + '-' + str(i) + '-' + str(j) + '.pdf')
+
+
+reporte_anual(2019)
