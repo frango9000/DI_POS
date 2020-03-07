@@ -8,4 +8,9 @@ def reporte_anual(ano: int):
             Reportes.generar_reporte_diario(j, i, 2019, 'reportes/' + str(ano) + '-' + str(i) + '-' + str(j) + '.pdf')
 
 
-reporte_anual(2019)
+def generador_de_facturas():
+    for i in range(1, 100):
+        Reportes.generar_factura(i, 'facturas/factura-' + str(i) + '.pdf')
+
+
+generador_de_facturas()
