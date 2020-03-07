@@ -11,7 +11,6 @@ def generar_factura(id_venta: int, nombre_archivo: str):
     cliente = ClientesDao.get_id(venta.id_cliente)
     vendidos = VendidosDao.get_id_venta(id_venta)
     productos_map = ProductosDao.get_mapped()
-    print(len(vendidos))
 
     hoja_estilo = getSampleStyleSheet()
     guion = []

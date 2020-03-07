@@ -3,7 +3,7 @@ import sqlite3
 from app import Globals
 from app.model.Venta import Venta
 
-debug: bool = True
+debug: bool = False
 
 
 def get_all() -> list:

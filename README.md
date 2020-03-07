@@ -81,9 +81,12 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
 
 # Comandos linux env:
  
-sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev  glade
+sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev glade python-sphinx
 
 pip install
         pycairo
         pygobject
         reportlab
+        
+sphinx-quickstart
+make html
