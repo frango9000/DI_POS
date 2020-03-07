@@ -1,8 +1,8 @@
-#DI_POS
+# DI_POS
 
-##Descrición do proxecto:
+## Descrición do proxecto:
 
-###Realizar unha aplicación 
+### Realizar unha aplicación 
 
  [x] con varias fiestras que 
  
@@ -15,7 +15,7 @@
  [x] permitindo a posibilidade de saír. 
  
 
-###No formulario de xestión de clientes dará a posibilidade de
+### No formulario de xestión de clientes dará a posibilidade de
  
  [x] Insertar,
   
@@ -26,7 +26,7 @@
  [x] Os datos persoais a gardar serán os habituais (non menos de 6).
  
 
-###No programa hai que inserir algún
+### No programa hai que inserir algún
 
  [x]  Treeview 
 
@@ -44,13 +44,13 @@ Tamén ter en conta os criterios de usabilidade para deseñara a aplicación:
  
  [ ] xestión e prevención de erros, etc.
 
-###Base de datos
+### Base de datos
 A aplicación haberá usar unha base de datos e conectarnos a ela. Mellor usar SQLite en modo local, pero tendo en conta as súas limitacións (si alguén quere utilizar outra base de datos, non hai problema).
 
  [x] sqlite
 
 
-###Informes
+### Informes
 O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os informes terá que xeralos a aplicación dende o programa cos datos da base de datos. O tipo de informe poderá ser un listado, factura, ficha cliente, etc. A xeración dos informes se fará a través dalgunha acción nalgún control.
  
  [ ] Factura
@@ -60,13 +60,13 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
  [ ] reporte mes
 
 
-###Documentacion:
+### Documentacion:
 
  [ ] funcionamento e uso da aplicación, ademáis do 
 
  [ ] código da aplicación, mediante Sphinx.
 
-###Entregarase a aplicación:
+### Entregarase a aplicación:
  
  [ ] empaquetada e 
  
@@ -75,11 +75,11 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
  [ ] preparada para instalar nun linux ubuntu.
 
 
-###Data tope de entrega do traballo 15 marzo.
+### Data tope de entrega do traballo 15 marzo.
 
-##Prof. Manuel Guimarey
+## Prof. Manuel Guimarey
 
-#Comandos linux env:
+# Comandos linux env:
  
 sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev  glade
 
