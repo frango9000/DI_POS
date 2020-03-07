@@ -1,13 +1,11 @@
 import sqlite3
 
+from app import Globals
 from app.model.Vendido import Vendido
-
-dbsrc = '../../res/pos.db'
-
 
 def get_all() -> list:
     vendidos = []
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM vendidos")
     for row in cursor:
         vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
@@ -18,7 +16,7 @@ def get_all() -> list:
 
 def get_id_venta(id_venta) -> list:
     vendidos = []
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM vendidos where id_venta = ?", (str(id_venta),))
     for row in cursor:
         vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
@@ -28,7 +26,7 @@ def get_id_venta(id_venta) -> list:
 
 
 def get_id(idd) -> Vendido:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM vendidos where id = ?", (str(idd),))
     row = cursor.fetchone()
     vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
@@ -36,7 +34,7 @@ def get_id(idd) -> Vendido:
 
 
 def insert(vendido) -> int:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.cursor()
     sql = 'INSERT INTO vendidos(id_venta, id_producto, cantidad, precio_unidad) VALUES (?,?,?,?)'
     values = (int(vendido.id_venta), str(vendido.id_producto), int(vendido.cantidad), str(vendido.precio_unidad))
@@ -48,7 +46,7 @@ def insert(vendido) -> int:
 
 
 def remove_id(idd) -> bool:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("DELETE FROM vendidos where id = ?", (str(idd),))
     conn.commit()
     print('Vendido eliminado: ' + str(cursor.rowcount))
@@ -60,7 +58,7 @@ def remove(vendido) -> bool:
 
 
 def update(vendido) -> bool:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.cursor()
     sql = 'UPDATE vendidos SET id_venta=?, id_producto=?,cantidad=?, precio_unidad=? WHERE id = ?'
     values = (vendido.id_venta, vendido.id_producto, vendido.cantidad, vendido.precio_unidad, vendido.idd)

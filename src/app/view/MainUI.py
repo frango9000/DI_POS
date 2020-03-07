@@ -2,6 +2,7 @@ import gi
 
 from app.view.ClientesUI import ClientesUI
 from app.view.ProductosUI import ProductosUI
+from app.view.ReportesUI import ReportesUI
 from app.view.VentasUI import VentasUI
 from app.view.VendidosUI import VendidosUI
 from app.view.CajaUI import CajaUI
@@ -29,16 +30,20 @@ class MainUi(Gtk.Window):
             "btn_productos_act": self.on_btn_productos,
             "btn_ventas_act": self.on_btn_ventas,
             "btn_vendidos_act": self.on_btn_vendidos,
-            "btn_reportes_act": self.on_btn_activate,
-            "btn_documentacion_act": self.on_btn_activate,
+            "btn_reportes_act": self.on_btn_reportes,
+            "btn_documentacion_act": self.on_btn_documentacion,
             "btn_salir_act": Gtk.main_quit
         }
         builder.connect_signals(signals)
         self.show_all()
         self.connect("destroy", Gtk.main_quit)
 
-    def on_btn_activate(self, button):
-        print("Click" + self.label)
+    def on_btn_reportes(self, button):
+        reportes_ui = ReportesUI()
+        self.set_active_pane(reportes_ui)
+
+    def on_btn_documentacion(self, button):
+        pass
 
     def on_btn_clientes(self, button):
         clientes_ui = ClientesUI(self)

@@ -1,13 +1,12 @@
 import sqlite3
 
+from app import Globals
 from app.model.Venta import Venta
-
-dbsrc = '../../res/pos.db'
 
 
 def get_all() -> list:
     ventas = []
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM ventas")
     for row in cursor:
         venta = Venta(row[1], row[2], row[0])
@@ -17,7 +16,7 @@ def get_all() -> list:
 
 
 def get_id(idd) -> Venta:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM ventas where id = ?", (str(idd),))
     row = cursor.fetchone()
     venta = Venta(row[1], row[2], row[0])
@@ -25,7 +24,7 @@ def get_id(idd) -> Venta:
 
 
 def insert(venta) -> int:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.cursor()
     sql = 'INSERT INTO ventas(id_cliente) VALUES (?)'
     values = (int(venta.id_cliente),)
@@ -37,7 +36,7 @@ def insert(venta) -> int:
 
 
 def remove_id(idd) -> bool:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("DELETE FROM ventas where id = ?", (str(idd),))
     conn.commit()
     print('Venta eliminada: ' + str(cursor.rowcount))
@@ -49,7 +48,7 @@ def remove(venta) -> bool:
 
 
 def update(venta) -> bool:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.cursor()
     sql = 'UPDATE ventas SET id_cliente=?, fecha_hora=? WHERE id = ?'
     values = (venta.id_cliente, venta.fecha_hora, venta.idd)

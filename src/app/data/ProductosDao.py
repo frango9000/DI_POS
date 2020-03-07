@@ -1,5 +1,6 @@
 import sqlite3
 
+from app import Globals
 from app.model.Producto import Producto
 
 dbsrc = '../../res/pos.db'
@@ -7,7 +8,7 @@ dbsrc = '../../res/pos.db'
 
 def get_all() -> list:
     productos = []
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM productos")
     for row in cursor:
         producto = Producto(row[1], row[2], row[3], row[4], row[0])
@@ -16,8 +17,16 @@ def get_all() -> list:
     return productos
 
 
+def get_mapped() -> dict:
+    mapped = dict()
+    productos = get_all()
+    for producto in productos:
+        mapped[producto.idd] = producto.nombre
+    return mapped
+
+
 def get_id(idd) -> Producto:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("SELECT * FROM productos where id = ?", (str(idd),))
     row = cursor.fetchone()
     producto = Producto(row[1], row[2], row[3], row[4], row[0])
@@ -25,7 +34,7 @@ def get_id(idd) -> Producto:
 
 
 def insert(producto) -> int:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.cursor()
     sql = 'INSERT INTO productos(nombre, descripcion, precio, stock) VALUES (?,?,?,?)'
     values = (producto.nombre, producto.descripcion, int(producto.precio), int(producto.stock))
@@ -37,7 +46,7 @@ def insert(producto) -> int:
 
 
 def remove_id(idd) -> bool:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.execute("DELETE FROM productos where id = ?", (str(idd),))
     conn.commit()
     print('Producto eliminado: ' + str(cursor.rowcount))
@@ -49,7 +58,7 @@ def remove(producto) -> bool:
 
 
 def update(producto) -> bool:
-    conn = sqlite3.connect(dbsrc)
+    conn = sqlite3.connect(Globals.db_src)
     cursor = conn.cursor()
     sql = 'UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id = ?'
     values = (producto.nombre, producto.descripcion, producto.precio, producto.stock, producto.idd)
