@@ -12,8 +12,18 @@ from gi.repository import Gtk
 
 
 class CajaUI(Gtk.Box):
+    """
+    Clase que genera y controla la interfaz grafica de la caja
+    """
 
     def __init__(self, parent=None, venta: Venta = None):
+        """
+
+        :param parent: ventana padre
+        :type parent: MainUI
+        :param venta: venta que se mostrara o que sera generada
+        :type venta: Venta
+        """
         Gtk.Box.__init__(self)
         self.parent = parent
         self.creating: bool = venta is None
@@ -86,24 +96,28 @@ class CajaUI(Gtk.Box):
         self.show_all()
 
     def refrescar_clientes(self):
+        """refresca la tabla de clientes desde base de datos"""
         clientes = ClientesDao.get_all()
         for cliente in clientes:
             self.combo_box_cliente.append_text(
                 str(cliente.idd) + " - " + cliente.dni + " - " + cliente.nombre + " - " + cliente.apellido)
 
     def refrescar_productos(self):
+        """refresca la tabla de productoss desde base de datos"""
         productos = ProductosDao.get_all()
         for producto in productos:
             self.combo_box_producto.append_text(
                 str(producto.idd) + " - " + producto.nombre + " - " + str(producto.precio))
 
     def refrescar_total(self):
+        """recalcula el total de la venta actual"""
         sum: int = 0
         for row in self.liststore:
             sum += row[2]
         self.field_total.set_text(str(sum))
 
     def on_btn_agregar(self, btn):
+        """agrega el producto seleccionado a la venta"""
         text = self.combo_box_producto.get_active_text()
         if text is not None:
             id_producto = int(text.split(' - ')[0])
@@ -112,19 +126,26 @@ class CajaUI(Gtk.Box):
             self.refrescar_total()
 
     def on_btn_limpiar(self, btn):
+        """vacia la lista de compra"""
         self.liststore.clear()
         self.refrescar_total()
 
     def on_btn_eliminar(self, btn):
+        """elimina el producto seleccionado de la lista de compras"""
         model, treeiter = self.treeview.get_selection().get_selected()
         if treeiter is not None:
             self.liststore.remove(treeiter)
         self.refrescar_total()
 
     def on_btn_cancelar(self, btn):
+        """vuelve al menu principal"""
         self.parent.show_main_menu()
 
     def on_btn_guardar(self, btn):
+        """
+        verifica los datos de la venta antes de intentar insertarla junto su
+        contenido (vendidos) a la base de datos
+        """
         if self.combo_box_cliente.get_active_text() is None:
             self.info_dialog("Debes elegir un cliente", "Venta Incompleta")
         elif len(self.liststore) == 0:
@@ -142,13 +163,11 @@ class CajaUI(Gtk.Box):
             self.edicion(False)
             self.info_dialog("Venta Guardada", 'Venta Guardada')
 
-    def info_dialog(self, msg, title):
-        dialog1 = Gtk.MessageDialog(self.parent, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, title)
-        dialog1.format_secondary_text(msg)
-        dialog1.run()
-        dialog1.destroy()
-
     def get_selected_id(self) -> int:
+        """
+        :return: id de producto seleccionado o 0 si no hay ninguno seleccionado
+        :rtype: int
+        """
         model, treeiter = self.treeview.get_selection().get_selected()
         if treeiter is not None:
             selected_id = model[treeiter][0]
@@ -156,6 +175,13 @@ class CajaUI(Gtk.Box):
         return 0
 
     def edicion(self, b: bool):
+        """
+        alterna entre modo generacion y modo visualizacion de facturas
+        :param b:
+        :type b:
+        :return:
+        :rtype:
+        """
         self.combo_box_cliente.set_sensitive(b)
         self.combo_box_producto.set_sensitive(b)
         self.field_total.set_sensitive(b)
@@ -168,6 +194,14 @@ class CajaUI(Gtk.Box):
         self.btn_pdf.set_sensitive(not b)
 
     def on_btn_pdf(self, btn):
+        """
+        genera un pdf con la factura actual como contenido
+
+        :param btn:
+        :type btn:
+        :return:
+        :rtype:
+        """
         dlg = Gtk.FileChooserDialog("Guardar en...", self.parent, Gtk.FileChooserAction.SAVE,
                                     (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
         dlg.set_current_name('Factura-' + str(self.venta.idd) + '.pdf')

@@ -8,16 +8,32 @@ from app.model.Venta import Venta
 
 
 def mock_clientes():
+    """
+    genera 999 clientes con datos incrementales
+    :return:
+    :rtype:
+    """
     for i in range(1, 1000):
         Cliente('DNI' + str(i), "Cliente " + str(i), "Apellido " + str(i), i * 555, 'Direccion ' + str(i)).insert()
 
 
 def mock_productos():
+    """
+    genera 999 productoss con datos incrementales
+    :return:
+    :rtype:
+    """
     for i in range(1, 1000):
         Producto('Producto ' + str(i), 'Descripcion ' + str(i), i).insert()
 
 
 def mock_ventas():
+    """
+    determinando el rango en :for year in range(2019, 2020):
+    genera 5 ventas con 5 productos cada una, por cada dia de cada año
+    :return:
+    :rtype:
+    """
     vendidos = list()
     for year in range(2019, 2020):
         print("Start year " + str(year))

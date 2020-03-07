@@ -7,6 +7,9 @@ from gi.repository import Gtk
 
 
 class ClienteEditor(Gtk.Window):
+    """
+    clase que genera y controla el editor de clientes
+    """
 
     def __init__(self, parent, cliente: Cliente = None):
         Gtk.Window.__init__(self)
@@ -44,9 +47,18 @@ class ClienteEditor(Gtk.Window):
         self.show_all()
 
     def on_btn_cancelar_act(self, button):
+        """volver a la lista"""
         self.parent.return_from_child()
 
     def on_btn_guardar_act(self, button):
+        """
+        guardar los datos introducidos ya sea creando e
+        insertando un nuevo objeto o actualizandolo
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         self.cliente.dni = self.field_cliente_dni.get_text()
         self.cliente.nombre = self.field_cliente_nombre.get_text()
         self.cliente.apellido = self.field_cliente_apellido.get_text()

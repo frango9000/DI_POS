@@ -5,6 +5,18 @@ from gi.repository import Gtk
 
 
 def show_info_dialog(parent, title, message):
+    """
+    dialogo informativo
+
+    :param parent:
+    :type parent:
+    :param title:
+    :type title:
+    :param message:
+    :type message:
+    :return:
+    :rtype:
+    """
     dialog = Gtk.MessageDialog(parent, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, title)
     dialog.format_secondary_text(message)
     dialog.run()
@@ -12,6 +24,17 @@ def show_info_dialog(parent, title, message):
 
 
 def show_error_dialog(parent, title, message):
+    """
+    dialogo de error
+    :param parent:
+    :type parent:
+    :param title:
+    :type title:
+    :param message:
+    :type message:
+    :return:
+    :rtype:
+    """
     dialog = Gtk.MessageDialog(parent, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.CANCEL, title)
     dialog.format_secondary_text(message)
     dialog.run()
@@ -19,6 +42,17 @@ def show_error_dialog(parent, title, message):
 
 
 def show_warn_confirm_dialog(parent, title, message) -> bool:
+    """
+    dialogo de confirmacion
+    :param parent:
+    :type parent:
+    :param title:
+    :type title:
+    :param message:
+    :type message:
+    :return: confirmacion de usuario
+    :rtype: bool
+    """
     dialog = Gtk.MessageDialog(parent, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK_CANCEL, title)
     dialog.format_secondary_text(message)
     response = dialog.run()
@@ -27,6 +61,17 @@ def show_warn_confirm_dialog(parent, title, message) -> bool:
 
 
 def show_question_dialog(parent, title, message) -> bool:
+    """
+    dialogo de confirmacion
+    :param parent:
+    :type parent:
+    :param title:
+    :type title:
+    :param message:
+    :type message:
+    :return:  confirmacion de usuario
+    :rtype: bool
+    """
     dialog = Gtk.MessageDialog(parent, 0, Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO, title)
     dialog.format_secondary_text(message)
     response = dialog.run()
@@ -35,6 +80,20 @@ def show_question_dialog(parent, title, message) -> bool:
 
 
 def show_input_dialog(parent, title, message, entry_label):
+    """
+    dialogo de entrada de texto
+
+    :param parent:
+    :type parent:
+    :param title:
+    :type title:
+    :param message:
+    :type message:
+    :param entry_label:
+    :type entry_label:
+    :return: texto introducido por el usuario
+    :rtype: str
+    """
     # base this on a message dialog
     dialog = Gtk.MessageDialog(
         parent,
@@ -63,4 +122,5 @@ def show_input_dialog(parent, title, message, entry_label):
 
 
 def responseToDialog(entry, dialog, response):
+    """metodo de ayuda de show_input_dialog"""
     dialog.response(response)

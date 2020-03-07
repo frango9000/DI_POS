@@ -1,18 +1,18 @@
 // generatedy by JSX compiler 0.9.89 (2014-05-20 06:01:03 +0900; 8e8c6105f36f3dfe440ea026a3c93a3444977102)
 var JSX = {};
 (function (JSX) {
-	/**
-	 * extends the class
-	 */
-	function $__jsx_extend(derivations, base) {
-		var ctor = function () {
-		};
-		ctor.prototype = base.prototype;
-		var proto = new ctor();
-		for (var i in derivations) {
-			derivations[i].prototype = proto;
-		}
+/**
+ * extends the class
+ */
+function $__jsx_extend(derivations, base) {
+	var ctor = function () {
+	};
+	ctor.prototype = base.prototype;
+	var proto = new ctor();
+	for (var i in derivations) {
+		derivations[i].prototype = proto;
 	}
+}
 
 	/**
 	 * copies the implementations from source interface to target

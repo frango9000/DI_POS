@@ -7,6 +7,9 @@ from gi.repository import Gtk
 
 
 class VentaEditor(Gtk.Window):
+    """
+    clase que genera y controla el editor de Ventas
+    """
 
     def __init__(self, parent, venta: Venta = None):
         Gtk.Window.__init__(self)
@@ -39,12 +42,21 @@ class VentaEditor(Gtk.Window):
         self.show_all()
 
     def on_btn_cancelar_act(self, button):
+        """volver a la lista"""
         self.parent.return_from_child()
 
     def on_btn_abrir_act(self, button):
         self.parent.return_from_child()
 
     def on_btn_guardar_act(self, button):
+        """
+        guardar los datos introducidos ya sea creando e
+        insertando un nuevo objeto o actualizandolo
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         self.venta.id_cliente = self.field_venta_id_cliente.get_text()
         self.venta.fecha_hora = self.field_venta_fecha_hora.get_text()
         if self.creating:

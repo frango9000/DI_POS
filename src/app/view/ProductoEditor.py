@@ -7,6 +7,9 @@ from gi.repository import Gtk
 
 
 class ProductoEditor(Gtk.Window):
+    """
+    clase que genera y controla el editor de Productos
+    """
 
     def __init__(self, parent, producto: Producto = None):
         Gtk.Window.__init__(self)
@@ -42,9 +45,18 @@ class ProductoEditor(Gtk.Window):
         self.show_all()
 
     def on_btn_cancelar_act(self, button):
+        """volver a la lista"""
         self.parent.return_from_child()
 
     def on_btn_guardar_act(self, button):
+        """
+        guardar los datos introducidos ya sea creando e
+        insertando un nuevo objeto o actualizandolo
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         self.producto.nombre = self.field_producto_nombre.get_text()
         self.producto.precio = int(self.field_producto_precio.get_text())
         self.producto.stock = int(self.field_producto_stock.get_text())

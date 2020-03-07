@@ -12,6 +12,9 @@ from gi.repository import Gtk
 
 
 class MainUi(Gtk.Window):
+    """
+    clase que genera y controla la el menu principal de la applicacion
+    """
 
     def __init__(self):
         Gtk.Window.__init__(self)
@@ -39,6 +42,13 @@ class MainUi(Gtk.Window):
         self.connect("destroy", Gtk.main_quit)
 
     def on_btn_reportes(self, button):
+        """
+        abre el menu de reportes
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         reportes_ui = ReportesUI(self)
         self.set_active_pane(reportes_ui)
 
@@ -46,26 +56,68 @@ class MainUi(Gtk.Window):
         pass
 
     def on_btn_clientes(self, button):
+        """
+        abre el editor de clientes
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         clientes_ui = ClientesUI(self)
         self.set_active_pane(clientes_ui)
 
     def on_btn_productos(self, button):
+        """
+        abre el editor de productos
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         productos_ui = ProductosUI(self)
         self.set_active_pane(productos_ui)
 
     def on_btn_ventas(self, button):
+        """
+        abre el editor de ventas
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         ventas_ui = VentasUI(self)
         self.set_active_pane(ventas_ui)
 
     def on_btn_vendidos(self, button):
+        """
+        abre el editor de vendidos
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         vendidos_ui = VendidosUI(self)
         self.set_active_pane(vendidos_ui)
 
     def on_btn_caja(self, button):
+        """
+        abre la caja en modo generacion de ventas
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         caja_ui = CajaUI(self, None)
         self.set_active_pane(caja_ui)
 
     def set_active_pane(self, pane):
+        """
+        metodo que amuestra en la ventana principal un Gtk.Widget recibido como parametro
+        :param pane:
+        :type pane:
+        :return:
+        :rtype:
+        """
         if self.active_pane is not None:
             self.remove(self.active_pane)
         self.active_pane = pane
@@ -73,4 +125,11 @@ class MainUi(Gtk.Window):
             self.add(self.active_pane)
 
     def show_main_menu(self):
+        """
+        muestra el menu principal
+
+        este metodo sera llamado por todos los hijos de esta ventana para volver al menu principal
+        :return:
+        :rtype:
+        """
         self.set_active_pane(self.box_ui)

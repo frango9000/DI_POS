@@ -10,6 +10,10 @@ from gi.repository import Gtk
 
 
 class ReportesUI(Gtk.Box):
+    """
+    clase que genera y controla el menu de reportes dando opcion a elegir un dia o mes,
+    elegir una ubicacion y un nombre de archivo, generara el reporte solicitado y lo guardara
+    """
 
     def __init__(self, parent=None):
         Gtk.Box.__init__(self)
@@ -39,12 +43,33 @@ class ReportesUI(Gtk.Box):
         self.show_all()
 
     def on_tgl_dia(self, button):
+        """
+        activa opcion reporte diario
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         self.tgl_btn_mes.set_active(not self.tgl_btn_dia.get_active())
 
     def on_tgl_mes(self, button):
+        """
+        activa opcion reporte mensual
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         self.tgl_btn_dia.set_active(not self.tgl_btn_mes.get_active())
 
     def on_btn_guardar(self, button):
+        """
+        verifica los datos y genera el reporte solicitado
+        :param button:
+        :type button:
+        :return:
+        :rtype:
+        """
         if len(self.entry_nombre_archivo.get_text()) > 0 and self.folder_chooser.get_filename() is not None:
             ano = self.calendar.get_date()[0]
             mes = self.calendar.get_date()[1] + 1
@@ -62,4 +87,5 @@ class ReportesUI(Gtk.Box):
             PyDialogs.show_error_dialog(self.parent, "Error", "Nombre de archivo o ruta erronea")
 
     def on_btn_volver(self, button):
+        """vuelve al menu principal"""
         self.parent.show_main_menu()
