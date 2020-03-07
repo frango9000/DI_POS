@@ -1,10 +1,3 @@
-import app.data.ClientesDao as Db
-from app.model.Cliente import Cliente
+from app.view import PyDialogs
 
-cliente1 = Cliente('53K', 'Francisco', 'Sanchez', 123456, 'Vigo')
-cliente1.insert()
-
-# Db.db_insert_cliente(cliente1)
-
-
-str(Db.get_all())
+print(PyDialogs.show_input_dialog(None, "Title", "msg", "entry"))

@@ -53,7 +53,7 @@ class ProductosUI(Gtk.Box):
         self.productos_liststore.clear()
         productos = ProductosDao.get_all()
         for producto in productos:
-            producto_detalles = [producto.idd, producto.nombre, producto.descripcion, producto.precio, producto.stock]
+            producto_detalles = [producto.idd, producto.nombre, producto.precio, producto.stock, producto.descripcion]
             self.productos_liststore.append(producto_detalles)
 
     def on_btn_volver(self, button):
