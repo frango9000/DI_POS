@@ -1,10 +1,10 @@
 README.md
 setup.py
-Punto_de_Venta.egg-info/PKG-INFO
-Punto_de_Venta.egg-info/SOURCES.txt
-Punto_de_Venta.egg-info/dependency_links.txt
-Punto_de_Venta.egg-info/entry_points.txt
-Punto_de_Venta.egg-info/top_level.txt
+MyPos.egg-info/PKG-INFO
+MyPos.egg-info/SOURCES.txt
+MyPos.egg-info/dependency_links.txt
+MyPos.egg-info/entry_points.txt
+MyPos.egg-info/top_level.txt
 res/CajaUI.glade
 res/CajaUI.glade~
 res/ClienteUI.glade

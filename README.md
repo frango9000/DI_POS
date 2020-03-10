@@ -70,11 +70,11 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
 
 ### Entregarase a aplicación:
  
- [ ] empaquetada e 
+ [x] empaquetada e 
  
  [x] funcional, 
  
- [ ] preparada para instalar nun linux ubuntu.
+ [x] preparada para instalar nun linux ubuntu.
 
 
 ### Data tope de entrega do traballo 15 marzo.
@@ -94,9 +94,11 @@ sphinx-quickstart
 make html
  
  
- #packaging
- python3 setup.py sdist
+### packaging
+python3 setup.py sdist
  
- pip install --editable .
+### instalacion
+pip install dist/MyPos-0.0.1.tar.gz 
 
-
+### ejecucion
+mypos
