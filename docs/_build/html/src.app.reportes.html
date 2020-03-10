@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.reportes package &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: './',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Índice" href="genindex.html"/>
+    <link rel="search" title="Búsqueda" href="search.html"/>
+    <link rel="next" title="src.app.sandbox package" href="src.app.sandbox.html"/>
+    <link rel="prev" title="src.app.model package" href="src.app.model.html"/>
+
+    <link rel="stylesheet" href="_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <div class="section" id="src-app-reportes-package">
+                    <h1>src.app.reportes package<a class="headerlink" href="#src-app-reportes-package"
+                                                   title="Enlazar permanentemente con este título">¶</a></h1>
+                    <div class="section" id="submodules">
+                        <h2>Submodules<a class="headerlink" href="#submodules"
+                                         title="Enlazar permanentemente con este título">¶</a></h2>
+                    </div>
+                    <div class="section" id="module-src.app.reportes.MassReportGenerator">
+                        <span id="src-app-reportes-massreportgenerator-module"></span>
+                        <h2>src.app.reportes.MassReportGenerator module<a class="headerlink"
+                                                                          href="#module-src.app.reportes.MassReportGenerator"
+                                                                          title="Enlazar permanentemente con este título">¶</a>
+                        </h2>
+                        <dl class="function">
+                            <dt id="src.app.reportes.MassReportGenerator.generador_de_facturas">
+                                <code class="descclassname">src.app.reportes.MassReportGenerator.</code><code
+                                    class="descname">generador_de_facturas</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/app/reportes/MassReportGenerator.html#generador_de_facturas"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.reportes.MassReportGenerator.generador_de_facturas"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd></dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.app.reportes.MassReportGenerator.reporte_anual">
+                                <code class="descclassname">src.app.reportes.MassReportGenerator.</code><code
+                                    class="descname">reporte_anual</code><span class="sig-paren">(</span><em>ano:
+                                int</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                           href="_modules/src/app/reportes/MassReportGenerator.html#reporte_anual"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.reportes.MassReportGenerator.reporte_anual"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd></dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.app.reportes.Reportes">
+                        <span id="src-app-reportes-reportes-module"></span>
+                        <h2>src.app.reportes.Reportes module<a class="headerlink"
+                                                               href="#module-src.app.reportes.Reportes"
+                                                               title="Enlazar permanentemente con este título">¶</a>
+                        </h2>
+                        <dl class="function">
+                            <dt id="src.app.reportes.Reportes.generar_factura">
+                                <code class="descclassname">src.app.reportes.Reportes.</code><code class="descname">generar_factura</code><span
+                                    class="sig-paren">(</span><em>id_venta: int</em>, <em>nombre_archivo: str</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/app/reportes/Reportes.html#generar_factura"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.reportes.Reportes.generar_factura"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>recibe el id de venta y busca el obj en base de datos, y genera una
+                                factura con los datos de la tienda y del cliente, todos los cargos
+                                de la factura y el total y la guarda en la ubicacion suministrada en pdf</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parámetros:</th>
+                                        <td class="field-body">
+                                            <ul class="first simple">
+                                                <li><strong>id_venta</strong> –</li>
+                                                <li><strong>nombre_archivo</strong> –</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-even field">
+                                        <th class="field-name">Devuelve:</th>
+                                        <td class="field-body"><p class="first"></p>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-odd field">
+                                        <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                    </tr>
+                                    <tr class="field-odd field">
+                                        <td>&#160;</td>
+                                        <td class="field-body"><p class="first last"></p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.app.reportes.Reportes.generar_reporte_diario">
+                                <code class="descclassname">src.app.reportes.Reportes.</code><code class="descname">generar_reporte_diario</code><span
+                                    class="sig-paren">(</span><em>dia: int</em>, <em>mes: int</em>, <em>ano: int</em>,
+                                <em>nombre_archivo: str</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="_modules/src/app/reportes/Reportes.html#generar_reporte_diario"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.reportes.Reportes.generar_reporte_diario"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>recibe el dia, mes y año, busca la lista de ventas de ese dia en
+                                base de datos, y genera una lista resumida de dichas ventas
+                                y su suma total y la guarda en la ubicacion suministrada en pdf</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parámetros:</th>
+                                        <td class="field-body">
+                                            <ul class="first simple">
+                                                <li><strong>dia</strong> –</li>
+                                                <li><strong>mes</strong> –</li>
+                                                <li><strong>ano</strong> –</li>
+                                                <li><strong>nombre_archivo</strong> –</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-even field">
+                                        <th class="field-name">Devuelve:</th>
+                                        <td class="field-body"><p class="first"></p>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-odd field">
+                                        <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                    </tr>
+                                    <tr class="field-odd field">
+                                        <td>&#160;</td>
+                                        <td class="field-body"><p class="first last"></p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="src.app.reportes.Reportes.generar_reporte_mensual">
+                                <code class="descclassname">src.app.reportes.Reportes.</code><code class="descname">generar_reporte_mensual</code><span
+                                    class="sig-paren">(</span><em>mes: int</em>, <em>ano: int</em>, <em>nombre_archivo:
+                                str</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                           href="_modules/src/app/reportes/Reportes.html#generar_reporte_mensual"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.reportes.Reportes.generar_reporte_mensual"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>recibe el mes y año, busca la lista de ventas de ese mes en
+                                base de datos, y genera una lista resumida de dichas ventas
+                                y su suma total y la guarda en la ubicacion suministrada en pdf</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parámetros:</th>
+                                        <td class="field-body">
+                                            <ul class="first simple">
+                                                <li><strong>mes</strong> –</li>
+                                                <li><strong>ano</strong> –</li>
+                                                <li><strong>nombre_archivo</strong> –</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-even field">
+                                        <th class="field-name">Devuelve:</th>
+                                        <td class="field-body"><p class="first"></p>
+                                        </td>
+                                    </tr>
+                                    <tr class="field-odd field">
+                                        <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                    </tr>
+                                    <tr class="field-odd field">
+                                        <td>&#160;</td>
+                                        <td class="field-body"><p class="first last"></p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.app.reportes">
+                        <span id="module-contents"></span>
+                        <h2>Module contents<a class="headerlink" href="#module-src.app.reportes"
+                                              title="Enlazar permanentemente con este título">¶</a></h2>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="modules.html">src</a>
+                                <ul>
+                                    <li><a href="src.html">src package</a>
+                                        <ul>
+                                            <li><a href="src.app.html">src.app package</a>
+                                                <ul>
+                                                    <li>Previous: <a href="src.app.model.html"
+                                                                     title="capítulo anterior">src.app.model package</a>
+                                                    </li>
+                                                    <li>Next: <a href="src.app.sandbox.html" title="próximo capítulo">src.app.sandbox
+                                                        package</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+    |
+    <a href="_sources/src.app.reportes.rst.txt"
+       rel="nofollow">Page source</a>
+</div>
+
+
+</body>
+</html>

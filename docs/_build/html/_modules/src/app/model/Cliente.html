@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.model.Cliente &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: '../../../../',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../../../../genindex.html"/>
+    <link rel="search" title="Búsqueda" href="../../../../search.html"/>
+
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Código fuente para src.app.model.Cliente</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span
+                        class="n">ClientesDao</span>
+
+
+
+<div class="viewcode-block" id="Cliente"><a class="viewcode-back"
+                                            href="../../../../src.app.model.html#src.app.model.Cliente.Cliente">[documentos]</a><span
+        class="k">class</span> <span class="nc">Cliente</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clase modelo cliente</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">dni</span><span class="p">,</span> <span class="n">nombre</span><span
+            class="p">,</span> <span class="n">apellido</span><span class="p">,</span> <span
+            class="n">telefono</span><span class="p">,</span> <span class="n">direccion</span><span
+            class="p">,</span> <span class="n">idd</span><span class="o">=</span><span class="mi">0</span><span
+            class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor unico, un objeto de este tipo ser inicializara</span>
+<span class="sd">        con id 0 y al insertarse en sqlite se le asigna un id</span>
+
+<span class="sd">        :param self:</span>
+<span class="sd">        :type self:</span>
+<span class="sd">        :param dni:</span>
+<span class="sd">        :type dni:</span>
+<span class="sd">        :param nombre:</span>
+<span class="sd">        :type nombre:</span>
+<span class="sd">        :param apellido:</span>
+<span class="sd">        :type apellido:</span>
+<span class="sd">        :param telefono:</span>
+<span class="sd">        :type telefono:</span>
+<span class="sd">        :param direccion:</span>
+<span class="sd">        :type direccion:</span>
+<span class="sd">        :param idd:</span>
+<span class="sd">        :type idd:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idd</span> <span class="o">=</span> <span
+            class="n">idd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span
+            class="n">dni</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span
+            class="n">nombre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apellido</span> <span
+            class="o">=</span> <span class="n">apellido</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">telefono</span> <span
+            class="o">=</span> <span class="n">telefono</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">direccion</span> <span
+            class="o">=</span> <span class="n">direccion</span>
+
+<div class="viewcode-block" id="Cliente.insert"><a class="viewcode-back"
+                                                   href="../../../../src.app.model.html#src.app.model.Cliente.Cliente.insert">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        insertar en base de datos</span>
+<span class="sd">        :param self:</span>
+<span class="sd">        :type self:</span>
+<span class="sd">        :return: id asignado</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ClientesDao</span><span class="o">.</span><span
+            class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Cliente.remove"><a class="viewcode-back"
+                                                   href="../../../../src.app.model.html#src.app.model.Cliente.Cliente.remove">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        eliminar de la base de datos</span>
+<span class="sd">        :param self:</span>
+<span class="sd">        :type self:</span>
+<span class="sd">        :return: confirmacion de eliminacion</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ClientesDao</span><span class="o">.</span><span
+            class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Cliente.update"><a class="viewcode-back"
+                                                   href="../../../../src.app.model.html#src.app.model.Cliente.Cliente.update">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        actualizar en base de datos</span>
+
+<span class="sd">        :param self:</span>
+<span class="sd">        :type self:</span>
+<span class="sd">        :return: confirmacion de actualizacion</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ClientesDao</span><span class="o">.</span><span
+            class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Cliente { &#39;</span> <span class="o">+</span> \
+               <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">)</span> <span class="o">+</span> <span
+            class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+               <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span
+            class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+               <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span
+            class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+               <span class="bp">self</span><span class="o">.</span><span class="n">apellido</span> <span
+            class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+               <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">telefono</span><span class="p">)</span> <span class="o">+</span> <span
+            class="s1">&#39;, &#39;</span> <span class="o">+</span> \
+               <span class="bp">self</span><span class="o">.</span><span class="n">direccion</span> <span
+            class="o">+</span> <span class="s1">&#39; };&#39;</span></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../../../index.html">Código de módulo</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="../../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+</div>
+
+
+</body>
+</html>

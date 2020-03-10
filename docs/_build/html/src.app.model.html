@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.model package &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: './',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Índice" href="genindex.html"/>
+    <link rel="search" title="Búsqueda" href="search.html"/>
+    <link rel="next" title="src.app.reportes package" href="src.app.reportes.html"/>
+    <link rel="prev" title="src.app.data package" href="src.app.data.html"/>
+
+    <link rel="stylesheet" href="_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <div class="section" id="src-app-model-package">
+                    <h1>src.app.model package<a class="headerlink" href="#src-app-model-package"
+                                                title="Enlazar permanentemente con este título">¶</a></h1>
+                    <div class="section" id="submodules">
+                        <h2>Submodules<a class="headerlink" href="#submodules"
+                                         title="Enlazar permanentemente con este título">¶</a></h2>
+                    </div>
+                    <div class="section" id="module-src.app.model.Cliente">
+                        <span id="src-app-model-cliente-module"></span>
+                        <h2>src.app.model.Cliente module<a class="headerlink" href="#module-src.app.model.Cliente"
+                                                           title="Enlazar permanentemente con este título">¶</a></h2>
+                        <dl class="class">
+                            <dt id="src.app.model.Cliente.Cliente">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.app.model.Cliente.</code><code
+                                    class="descname">Cliente</code><span class="sig-paren">(</span><em>dni</em>, <em>nombre</em>,
+                                <em>apellido</em>, <em>telefono</em>, <em>direccion</em>, <em>idd=0</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/app/model/Cliente.html#Cliente"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.model.Cliente.Cliente"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>Bases: <code class="xref py py-class docutils literal"><span
+                                    class="pre">object</span></code></p>
+                                <p>Clase modelo cliente</p>
+                                <dl class="method">
+                                    <dt id="src.app.model.Cliente.Cliente.insert">
+                                        <code class="descname">insert</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Cliente.html#Cliente.insert"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Cliente.Cliente.insert"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>insertar en base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: id asignado
+                                        :rtype: int</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Cliente.Cliente.remove">
+                                        <code class="descname">remove</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Cliente.html#Cliente.remove"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Cliente.Cliente.remove"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>eliminar de la base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: confirmacion de eliminacion
+                                        :rtype: bool</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Cliente.Cliente.update">
+                                        <code class="descname">update</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Cliente.html#Cliente.update"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Cliente.Cliente.update"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>actualizar en base de datos</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parámetros:</th>
+                                                <td class="field-body"><strong>self</strong> –</td>
+                                            </tr>
+                                            <tr class="field-even field">
+                                                <th class="field-name">Devuelve:</th>
+                                                <td class="field-body">confirmacion de actualizacion</td>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <td>&#160;</td>
+                                                <td class="field-body">bool</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.app.model.Producto">
+                        <span id="src-app-model-producto-module"></span>
+                        <h2>src.app.model.Producto module<a class="headerlink" href="#module-src.app.model.Producto"
+                                                            title="Enlazar permanentemente con este título">¶</a></h2>
+                        <dl class="class">
+                            <dt id="src.app.model.Producto.Producto">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.app.model.Producto.</code><code
+                                    class="descname">Producto</code><span class="sig-paren">(</span><em>nombre</em>,
+                                <em>descripcion</em>, <em>precio=0</em>, <em>stock=0</em>, <em>idd=0</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/app/model/Producto.html#Producto"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.model.Producto.Producto"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>Bases: <code class="xref py py-class docutils literal"><span
+                                    class="pre">object</span></code></p>
+                                <p>Clase modelo Producto</p>
+                                <dl class="method">
+                                    <dt id="src.app.model.Producto.Producto.insert">
+                                        <code class="descname">insert</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Producto.html#Producto.insert"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Producto.Producto.insert"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>insertar en base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: id asignado
+                                        :rtype: int</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Producto.Producto.remove">
+                                        <code class="descname">remove</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Producto.html#Producto.remove"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Producto.Producto.remove"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>eliminar de la base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: confirmacion de eliminacion
+                                        :rtype: bool</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Producto.Producto.update">
+                                        <code class="descname">update</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Producto.html#Producto.update"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Producto.Producto.update"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>actualizar en base de datos</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parámetros:</th>
+                                                <td class="field-body"><strong>self</strong> –</td>
+                                            </tr>
+                                            <tr class="field-even field">
+                                                <th class="field-name">Devuelve:</th>
+                                                <td class="field-body">confirmacion de actualizacion</td>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <td>&#160;</td>
+                                                <td class="field-body">bool</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.app.model.Vendido">
+                        <span id="src-app-model-vendido-module"></span>
+                        <h2>src.app.model.Vendido module<a class="headerlink" href="#module-src.app.model.Vendido"
+                                                           title="Enlazar permanentemente con este título">¶</a></h2>
+                        <dl class="class">
+                            <dt id="src.app.model.Vendido.Vendido">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.app.model.Vendido.</code><code
+                                    class="descname">Vendido</code><span class="sig-paren">(</span><em>id_venta</em>,
+                                <em>id_producto</em>, <em>cantidad</em>, <em>precio_unidad</em>, <em>idd=0</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="_modules/src/app/model/Vendido.html#Vendido"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.model.Vendido.Vendido"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>Bases: <code class="xref py py-class docutils literal"><span
+                                    class="pre">object</span></code></p>
+                                <p>Clase modelo de cada producto vendido</p>
+                                <dl class="method">
+                                    <dt id="src.app.model.Vendido.Vendido.insert">
+                                        <code class="descname">insert</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Vendido.html#Vendido.insert"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Vendido.Vendido.insert"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>insertar en base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: id asignado
+                                        :rtype: int</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Vendido.Vendido.remove">
+                                        <code class="descname">remove</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Vendido.html#Vendido.remove"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Vendido.Vendido.remove"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>eliminar de la base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: confirmacion de eliminacion
+                                        :rtype: bool</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Vendido.Vendido.update">
+                                        <code class="descname">update</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Vendido.html#Vendido.update"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Vendido.Vendido.update"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>actualizar en base de datos</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parámetros:</th>
+                                                <td class="field-body"><strong>self</strong> –</td>
+                                            </tr>
+                                            <tr class="field-even field">
+                                                <th class="field-name">Devuelve:</th>
+                                                <td class="field-body">confirmacion de actualizacion</td>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <td>&#160;</td>
+                                                <td class="field-body">bool</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.app.model.Venta">
+                        <span id="src-app-model-venta-module"></span>
+                        <h2>src.app.model.Venta module<a class="headerlink" href="#module-src.app.model.Venta"
+                                                         title="Enlazar permanentemente con este título">¶</a></h2>
+                        <dl class="class">
+                            <dt id="src.app.model.Venta.Venta">
+                                <em class="property">class </em><code
+                                    class="descclassname">src.app.model.Venta.</code><code class="descname">Venta</code><span
+                                    class="sig-paren">(</span><em>id_cliente</em>, <em>fecha_hora=None</em>,
+                                <em>idd=0</em><span class="sig-paren">)</span><a class="reference internal"
+                                                                                 href="_modules/src/app/model/Venta.html#Venta"><span
+                                    class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                href="#src.app.model.Venta.Venta"
+                                                                                title="Enlazar permanentemente con esta definición">¶</a>
+                            </dt>
+                            <dd><p>Bases: <code class="xref py py-class docutils literal"><span
+                                    class="pre">object</span></code></p>
+                                <p>Clase modelo Venta</p>
+                                <dl class="method">
+                                    <dt id="src.app.model.Venta.Venta.insert">
+                                        <code class="descname">insert</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Venta.html#Venta.insert"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Venta.Venta.insert"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>insertar en base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: id asignado
+                                        :rtype: int</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Venta.Venta.remove">
+                                        <code class="descname">remove</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Venta.html#Venta.remove"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Venta.Venta.remove"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>eliminar de la base de datos
+                                        :param self:
+                                        :type self:
+                                        :return: confirmacion de eliminacion
+                                        :rtype: bool</p>
+                                    </dd>
+                                </dl>
+
+                                <dl class="method">
+                                    <dt id="src.app.model.Venta.Venta.update">
+                                        <code class="descname">update</code><span class="sig-paren">(</span><span
+                                            class="sig-paren">)</span><a class="reference internal"
+                                                                         href="_modules/src/app/model/Venta.html#Venta.update"><span
+                                            class="viewcode-link">[fuente]</span></a><a class="headerlink"
+                                                                                        href="#src.app.model.Venta.Venta.update"
+                                                                                        title="Enlazar permanentemente con esta definición">¶</a>
+                                    </dt>
+                                    <dd><p>actualizar en base de datos</p>
+                                        <table class="docutils field-list" frame="void" rules="none">
+                                            <col class="field-name"/>
+                                            <col class="field-body"/>
+                                            <tbody valign="top">
+                                            <tr class="field-odd field">
+                                                <th class="field-name">Parámetros:</th>
+                                                <td class="field-body"><strong>self</strong> –</td>
+                                            </tr>
+                                            <tr class="field-even field">
+                                                <th class="field-name">Devuelve:</th>
+                                                <td class="field-body">confirmacion de actualizacion</td>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <th class="field-name" colspan="2">Tipo del valor devuelto:</th>
+                                            </tr>
+                                            <tr class="field-odd field">
+                                                <td>&#160;</td>
+                                                <td class="field-body">bool</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                </dl>
+
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-src.app.model">
+                        <span id="module-contents"></span>
+                        <h2>Module contents<a class="headerlink" href="#module-src.app.model"
+                                              title="Enlazar permanentemente con este título">¶</a></h2>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="modules.html">src</a>
+                                <ul>
+                                    <li><a href="src.html">src package</a>
+                                        <ul>
+                                            <li><a href="src.app.html">src.app package</a>
+                                                <ul>
+                                                    <li>Previous: <a href="src.app.data.html" title="capítulo anterior">src.app.data
+                                                        package</a></li>
+                                                    <li>Next: <a href="src.app.reportes.html" title="próximo capítulo">src.app.reportes
+                                                        package</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+    |
+    <a href="_sources/src.app.model.rst.txt"
+       rel="nofollow">Page source</a>
+</div>
+
+
+</body>
+</html>

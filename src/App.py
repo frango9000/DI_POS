@@ -21,6 +21,6 @@ def main_func():
     Gtk.main()
 
 
-main_func()
+# main_func()
 
 # main_func()

@@ -66,7 +66,7 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
 
  Sphinx:
  
- [ ] modulos y paquetes 
+ [x] modulos y paquetes 
  
  [x] funcionamento e uso da aplicación
  
@@ -86,7 +86,7 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
 
 # Comandos linux env:
  
-sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev glade python-sphinx
+sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev glade python3-sphinx
 
 pip install
         pycairo
