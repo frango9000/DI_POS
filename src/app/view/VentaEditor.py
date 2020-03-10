@@ -1,5 +1,6 @@
 import gi
 
+from app import Globals
 from app.model.Venta import Venta
 
 gi.require_version('Gtk', '3.0')
@@ -21,7 +22,7 @@ class VentaEditor(Gtk.Window):
             self.venta = venta
 
         builder = Gtk.Builder()
-        builder.add_from_file("../../res/VentaUI.glade")
+        builder.add_from_file(Globals.path_res + "VentaUI.glade")
         signals = {
             "btn_cancelar_act": self.on_btn_cancelar_act,
             "btn_guardar_act": self.on_btn_guardar_act,

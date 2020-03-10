@@ -1,11 +1,12 @@
 import gi
 
+from app import Globals
+from app.view.CajaUI import CajaUI
 from app.view.ClientesUI import ClientesUI
 from app.view.ProductosUI import ProductosUI
 from app.view.ReportesUI import ReportesUI
-from app.view.VentasUI import VentasUI
 from app.view.VendidosUI import VendidosUI
-from app.view.CajaUI import CajaUI
+from app.view.VentasUI import VentasUI
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -23,7 +24,7 @@ class MainUi(Gtk.Window):
         self.active_pane = None
 
         builder = Gtk.Builder()
-        builder.add_from_file("../../res/MainUI.glade")
+        builder.add_from_file(Globals.path_res + "MainUI.glade")
         self.box_ui = builder.get_object("box_ui")
         self.show_main_menu()
 

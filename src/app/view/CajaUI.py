@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import gi
-from gi.repository.Gio import File
 
+from app import Globals
 from app.data import ClientesDao, ProductosDao, VendidosDao
 from app.model.Venta import Venta
 from app.reportes import Reportes
@@ -29,7 +29,7 @@ class CajaUI(Gtk.Box):
         self.creating: bool = venta is None
 
         builder = Gtk.Builder()
-        builder.add_from_file("../../res/CajaUI.glade")
+        builder.add_from_file(Globals.path_res + "CajaUI.glade")
         signals = {
             "btn_agregar": self.on_btn_agregar,
             "btn_limpiar": self.on_btn_limpiar,

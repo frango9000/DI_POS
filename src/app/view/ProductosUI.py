@@ -1,5 +1,6 @@
 import gi
 
+from app import Globals
 from app.data import ProductosDao
 from app.view import PyDialogs
 from app.view.ProductoEditor import ProductoEditor
@@ -18,7 +19,7 @@ class ProductosUI(Gtk.Box):
         self.parent = parent
         self.editor_ui: ProductoEditor = None
         builder = Gtk.Builder()
-        builder.add_from_file("../../res/ListaUI.glade")
+        builder.add_from_file(Globals.path_res + "ListaUI.glade")
         signals = {
             "btn_agregar": self.on_btn_agregar,
             "btn_editar": self.on_btn_editar,
