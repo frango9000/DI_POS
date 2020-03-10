@@ -68,7 +68,7 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
  
  [ ] modulos y paquetes 
  
- [ ] funcionamento e uso da aplicación
+ [x] funcionamento e uso da aplicación
  
 
 ### Entregarase a aplicación:

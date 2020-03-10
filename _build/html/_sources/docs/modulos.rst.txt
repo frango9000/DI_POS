@@ -1,0 +1,7 @@
+project MyPos
+=============
+
+.. toctree::
+    :maxdepth: 4
+
+    mypos
