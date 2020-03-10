@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.view.PyDialogs &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: '../../../../',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../../../../genindex.html"/>
+    <link rel="search" title="Búsqueda" href="../../../../search.html"/>
+
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Código fuente para src.app.view.PyDialogs</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">gi</span>
+
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span
+                        class="s1">&#39;Gtk&#39;</span><span class="p">,</span> <span
+                        class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="k">import</span> <span
+                        class="n">Gtk</span>
+
+
+<div class="viewcode-block" id="show_info_dialog"><a class="viewcode-back"
+                                                     href="../../../../src.app.view.html#src.app.view.PyDialogs.show_info_dialog">[documentos]</a><span
+        class="k">def</span> <span class="nf">show_info_dialog</span><span class="p">(</span><span
+        class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span
+        class="n">message</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    dialogo informativo</span>
+
+<span class="sd">    :param parent:</span>
+<span class="sd">    :type parent:</span>
+<span class="sd">    :param title:</span>
+<span class="sd">    :type title:</span>
+<span class="sd">    :param message:</span>
+<span class="sd">    :type message:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span
+            class="mi">0</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageType</span><span class="o">.</span><span class="n">INFO</span><span
+            class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span
+            class="o">.</span><span class="n">OK</span><span class="p">,</span> <span class="n">title</span><span
+            class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">format_secondary_text</span><span
+            class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="show_error_dialog"><a class="viewcode-back"
+                                                      href="../../../../src.app.view.html#src.app.view.PyDialogs.show_error_dialog">[documentos]</a><span
+        class="k">def</span> <span class="nf">show_error_dialog</span><span class="p">(</span><span
+        class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span
+        class="n">message</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    dialogo de error</span>
+<span class="sd">    :param parent:</span>
+<span class="sd">    :type parent:</span>
+<span class="sd">    :param title:</span>
+<span class="sd">    :type title:</span>
+<span class="sd">    :param message:</span>
+<span class="sd">    :type message:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span
+            class="mi">0</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageType</span><span class="o">.</span><span class="n">ERROR</span><span
+            class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span
+            class="o">.</span><span class="n">CANCEL</span><span class="p">,</span> <span class="n">title</span><span
+            class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">format_secondary_text</span><span
+            class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="show_warn_confirm_dialog"><a class="viewcode-back"
+                                                             href="../../../../src.app.view.html#src.app.view.PyDialogs.show_warn_confirm_dialog">[documentos]</a><span
+        class="k">def</span> <span class="nf">show_warn_confirm_dialog</span><span class="p">(</span><span class="n">parent</span><span
+        class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">message</span><span
+        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    dialogo de confirmacion</span>
+<span class="sd">    :param parent:</span>
+<span class="sd">    :type parent:</span>
+<span class="sd">    :param title:</span>
+<span class="sd">    :type title:</span>
+<span class="sd">    :param message:</span>
+<span class="sd">    :type message:</span>
+<span class="sd">    :return: confirmacion de usuario</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span
+            class="mi">0</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageType</span><span class="o">.</span><span class="n">WARNING</span><span
+            class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span
+            class="o">.</span><span class="n">OK_CANCEL</span><span class="p">,</span> <span class="n">title</span><span
+            class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">format_secondary_text</span><span
+            class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span
+            class="n">run</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">response</span> <span class="o">==</span> <span
+            class="n">Gtk</span><span class="o">.</span><span class="n">ResponseType</span><span class="o">.</span><span
+            class="n">OK</span></div>
+
+
+<div class="viewcode-block" id="show_question_dialog"><a class="viewcode-back"
+                                                         href="../../../../src.app.view.html#src.app.view.PyDialogs.show_question_dialog">[documentos]</a><span
+        class="k">def</span> <span class="nf">show_question_dialog</span><span class="p">(</span><span
+        class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span
+        class="n">message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span
+        class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    dialogo de confirmacion</span>
+<span class="sd">    :param parent:</span>
+<span class="sd">    :type parent:</span>
+<span class="sd">    :param title:</span>
+<span class="sd">    :type title:</span>
+<span class="sd">    :param message:</span>
+<span class="sd">    :type message:</span>
+<span class="sd">    :return:  confirmacion de usuario</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageDialog</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span
+            class="mi">0</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageType</span><span class="o">.</span><span class="n">QUESTION</span><span class="p">,</span> <span
+            class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span class="o">.</span><span
+            class="n">YES_NO</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">format_secondary_text</span><span
+            class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span
+            class="n">run</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">response</span> <span class="o">==</span> <span
+            class="n">Gtk</span><span class="o">.</span><span class="n">ResponseType</span><span class="o">.</span><span
+            class="n">YES</span></div>
+
+
+<div class="viewcode-block" id="show_input_dialog"><a class="viewcode-back"
+                                                      href="../../../../src.app.view.html#src.app.view.PyDialogs.show_input_dialog">[documentos]</a><span
+        class="k">def</span> <span class="nf">show_input_dialog</span><span class="p">(</span><span
+        class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span
+        class="n">message</span><span class="p">,</span> <span class="n">entry_label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    dialogo de entrada de texto</span>
+
+<span class="sd">    :param parent:</span>
+<span class="sd">    :type parent:</span>
+<span class="sd">    :param title:</span>
+<span class="sd">    :type title:</span>
+<span class="sd">    :param message:</span>
+<span class="sd">    :type message:</span>
+<span class="sd">    :param entry_label:</span>
+<span class="sd">    :type entry_label:</span>
+<span class="sd">    :return: texto introducido por el usuario</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># base this on a message dialog</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">MessageDialog</span><span class="p">(</span>
+        <span class="n">parent</span><span class="p">,</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">DialogFlags</span><span
+            class="o">.</span><span class="n">MODAL</span> <span class="o">|</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">DialogFlags</span><span class="o">.</span><span class="n">DESTROY_WITH_PARENT</span><span
+            class="p">,</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">MessageType</span><span
+            class="o">.</span><span class="n">QUESTION</span><span class="p">,</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">ButtonsType</span><span
+            class="o">.</span><span class="n">OK</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">)</span>
+    <span class="c1"># create the text input field</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">Entry</span><span class="p">()</span>
+    <span class="c1"># allow the user to press enter to do ok</span>
+    <span class="n">entry</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span
+            class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="n">responseToDialog</span><span
+            class="p">,</span> <span class="n">dialog</span><span class="p">,</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">OK</span><span
+            class="p">)</span>
+    <span class="c1"># create a horizontal box to pack the entry and a label</span>
+    <span class="n">hbox</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">HBox</span><span class="p">()</span>
+    <span class="n">hbox</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span
+            class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span
+            class="n">entry_label</span><span class="p">),</span> <span class="kc">False</span><span class="p">,</span> <span
+            class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">hbox</span><span class="o">.</span><span class="n">pack_end</span><span class="p">(</span><span
+            class="n">entry</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span
+            class="kc">True</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="c1"># some secondary text</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">format_secondary_text</span><span
+            class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="c1"># add it and show it</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">vbox</span><span class="o">.</span><span
+            class="n">pack_end</span><span class="p">(</span><span class="n">hbox</span><span class="p">,</span> <span
+            class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span
+            class="mi">0</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
+    <span class="c1"># go go go</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span
+            class="n">get_text</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">text</span></div>
+
+
+<div class="viewcode-block" id="responseToDialog"><a class="viewcode-back"
+                                                     href="../../../../src.app.view.html#src.app.view.PyDialogs.responseToDialog">[documentos]</a><span
+        class="k">def</span> <span class="nf">responseToDialog</span><span class="p">(</span><span
+        class="n">entry</span><span class="p">,</span> <span class="n">dialog</span><span class="p">,</span> <span
+        class="n">response</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;metodo de ayuda de show_input_dialog&quot;&quot;&quot;</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">response</span><span class="p">(</span><span
+            class="n">response</span><span class="p">)</span></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../../../index.html">Código de módulo</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="../../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+</div>
+
+
+</body>
+</html>

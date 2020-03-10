@@ -1,0 +1,495 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.reportes.Reportes &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: '../../../../',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../../../../genindex.html"/>
+    <link rel="search" title="Búsqueda" href="../../../../search.html"/>
+
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Código fuente para src.app.reportes.Reportes</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">reportlab.lib.pagesizes</span> <span class="k">import</span> <span
+                        class="n">A4</span>
+<span class="kn">from</span> <span class="nn">reportlab.lib.styles</span> <span class="k">import</span> <span class="n">getSampleStyleSheet</span>
+<span class="kn">from</span> <span class="nn">reportlab.platypus</span> <span class="k">import</span> <span class="n">Image</span><span
+                        class="p">,</span> <span class="n">Paragraph</span><span class="p">,</span> <span class="n">Spacer</span><span
+                        class="p">,</span> <span class="n">SimpleDocTemplate</span><span class="p">,</span> <span
+                        class="n">Table</span>
+
+<span class="kn">from</span> <span class="nn">src.app</span> <span class="k">import</span> <span
+                        class="n">Globals</span>
+<span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span class="n">VentasDao</span><span
+                        class="p">,</span> <span class="n">ClientesDao</span><span class="p">,</span> <span class="n">ProductosDao</span><span
+                        class="p">,</span> <span class="n">VendidosDao</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Scripts de generacion de reportes</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="generar_factura"><a class="viewcode-back"
+                                                    href="../../../../src.app.reportes.html#src.app.reportes.Reportes.generar_factura">[documentos]</a><span
+        class="k">def</span> <span class="nf">generar_factura</span><span class="p">(</span><span
+        class="n">id_venta</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span
+        class="n">nombre_archivo</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    recibe el id de venta y busca el obj en base de datos, y genera una</span>
+<span class="sd">    factura con los datos de la tienda y del cliente, todos los cargos</span>
+<span class="sd">    de la factura y el total y la guarda en la ubicacion suministrada en pdf</span>
+
+<span class="sd">    :param id_venta:</span>
+<span class="sd">    :type id_venta:</span>
+<span class="sd">    :param nombre_archivo:</span>
+<span class="sd">    :type nombre_archivo:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">venta</span> <span class="o">=</span> <span class="n">VentasDao</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">(</span><span class="n">id_venta</span><span class="p">)</span>
+    <span class="n">cliente</span> <span class="o">=</span> <span class="n">ClientesDao</span><span
+            class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">id_cliente</span><span class="p">)</span>
+    <span class="n">vendidos</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">get_id_venta</span><span class="p">(</span><span class="n">id_venta</span><span
+            class="p">)</span>
+    <span class="n">productos_map</span> <span class="o">=</span> <span class="n">ProductosDao</span><span
+            class="o">.</span><span class="n">get_mapped</span><span class="p">()</span>
+
+    <span class="n">hoja_estilo</span> <span class="o">=</span> <span class="n">getSampleStyleSheet</span><span
+            class="p">()</span>
+    <span class="n">guion</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">logo_img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span
+            class="n">Globals</span><span class="o">.</span><span class="n">logo_src</span><span
+            class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span
+            class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span
+            class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">logo_img</span><span class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="o">-</span><span class="mi">100</span><span class="p">))</span>
+
+    <span class="n">heading</span> <span class="o">=</span> <span class="n">hoja_estilo</span><span
+            class="p">[</span><span class="s1">&#39;Heading3&#39;</span><span class="p">]</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;NIF: B1327869&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Tienda SL&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Vigo&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;986424242&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">40</span><span class="p">))</span>
+
+    <span class="n">div_cliente</span> <span class="o">=</span> <span class="n">hoja_estilo</span><span
+            class="p">[</span><span class="s1">&#39;BodyText&#39;</span><span class="p">]</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Factura # &quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">),</span> <span
+            class="n">div_cliente</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Fecha  &quot;</span> <span
+            class="o">+</span> <span class="n">venta</span><span class="o">.</span><span
+            class="n">fecha_hora</span><span class="p">,</span> <span class="n">div_cliente</span><span
+            class="p">))</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">20</span><span class="p">))</span>
+
+    <span class="n">cliente_dni</span> <span class="o">=</span> <span class="n">Paragraph</span><span class="p">(</span><span
+            class="s2">&quot;Cliente: &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">div_cliente</span><span
+            class="p">)</span>
+    <span class="n">cliente_nombre</span> <span class="o">=</span> <span class="n">Paragraph</span><span
+            class="p">(</span><span class="s2">&quot;Nombre: &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">nombre</span> <span class="o">+</span> <span
+            class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">apellido</span><span class="p">,</span> <span class="n">div_cliente</span><span
+            class="p">)</span>
+    <span class="n">cliente_telefono</span> <span class="o">=</span> <span class="n">Paragraph</span><span
+            class="p">(</span><span class="s2">&quot;Telefono: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">telefono</span><span
+            class="p">),</span> <span class="n">div_cliente</span><span class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">cliente_dni</span><span class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">cliente_nombre</span><span class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">cliente_telefono</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">40</span><span class="p">))</span>
+
+    <span class="n">datos</span> <span class="o">=</span> <span class="p">[[</span><span
+            class="s1">&#39;Id Vendido&#39;</span><span class="p">,</span> <span
+            class="s1">&#39;Producto&#39;</span><span class="p">,</span> <span class="s1">&#39;Cantidad&#39;</span><span
+            class="p">,</span> <span class="s1">&#39;Precio Unidad&#39;</span><span class="p">]]</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">vendido</span> <span class="ow">in</span> <span class="n">vendidos</span><span
+            class="p">:</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="p">(</span><span
+            class="n">vendido</span><span class="o">.</span><span class="n">cantidad</span> <span
+            class="o">*</span> <span class="n">vendido</span><span class="o">.</span><span
+            class="n">precio_unidad</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">vendido</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">,</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">productos_map</span><span class="p">[</span><span class="n">vendido</span><span
+            class="o">.</span><span class="n">id_producto</span><span class="p">]),</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">vendido</span><span class="o">.</span><span
+            class="n">cantidad</span><span class="p">),</span>
+               <span class="nb">str</span><span class="p">(</span><span class="n">vendido</span><span class="o">.</span><span
+            class="n">precio_unidad</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;€&quot;</span><span
+            class="p">]</span>
+        <span class="n">datos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">row</span><span class="p">)</span>
+    <span class="n">tabla</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span
+            class="n">datos</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">tabla</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">80</span><span class="p">))</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Total :                                 &quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sum</span><span
+            class="p">)</span> <span class="o">+</span> <span class="s2">&quot;€&quot;</span><span
+            class="p">,</span> <span class="n">hoja_estilo</span><span class="p">[</span><span class="s1">&#39;BodyText&#39;</span><span
+            class="p">]))</span>
+
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">SimpleDocTemplate</span><span class="p">(</span><span
+            class="n">nombre_archivo</span><span class="p">,</span> <span class="n">pagesize</span><span
+            class="o">=</span><span class="n">A4</span><span class="p">,</span> <span class="n">showBoundary</span><span
+            class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">doc</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span
+            class="n">guion</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generar_reporte_diario"><a class="viewcode-back"
+                                                           href="../../../../src.app.reportes.html#src.app.reportes.Reportes.generar_reporte_diario">[documentos]</a><span
+        class="k">def</span> <span class="nf">generar_reporte_diario</span><span class="p">(</span><span
+        class="n">dia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span
+        class="n">mes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span
+        class="n">ano</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span
+        class="n">nombre_archivo</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    recibe el dia, mes y año, busca la lista de ventas de ese dia en</span>
+<span class="sd">    base de datos, y genera una lista resumida de dichas ventas</span>
+<span class="sd">    y su suma total y la guarda en la ubicacion suministrada en pdf</span>
+
+<span class="sd">    :param dia:</span>
+<span class="sd">    :type dia:</span>
+<span class="sd">    :param mes:</span>
+<span class="sd">    :type mes:</span>
+<span class="sd">    :param ano:</span>
+<span class="sd">    :type ano:</span>
+<span class="sd">    :param nombre_archivo:</span>
+<span class="sd">    :type nombre_archivo:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ventas</span> <span class="o">=</span> <span class="n">VentasDao</span><span class="o">.</span><span
+            class="n">get_dia</span><span class="p">(</span><span class="n">dia</span><span class="p">,</span> <span
+            class="n">mes</span><span class="p">,</span> <span class="n">ano</span><span class="p">)</span>
+
+    <span class="n">hoja_estilo</span> <span class="o">=</span> <span class="n">getSampleStyleSheet</span><span
+            class="p">()</span>
+    <span class="n">guion</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">logo_img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span
+            class="n">Globals</span><span class="o">.</span><span class="n">logo_src</span><span
+            class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span
+            class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span
+            class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">logo_img</span><span class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="o">-</span><span class="mi">100</span><span class="p">))</span>
+
+    <span class="n">heading</span> <span class="o">=</span> <span class="n">hoja_estilo</span><span
+            class="p">[</span><span class="s1">&#39;Heading3&#39;</span><span class="p">]</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;NIF: B1327869&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Tienda SL&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Vigo&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;986424242&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">40</span><span class="p">))</span>
+
+    <span class="n">div_cliente</span> <span class="o">=</span> <span class="n">hoja_estilo</span><span
+            class="p">[</span><span class="s1">&#39;BodyText&#39;</span><span class="p">]</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span
+            class="s2">&quot;Resumen de ventas del: &quot;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">dia</span><span class="p">)</span> <span
+            class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">mes</span><span class="p">)</span> <span
+            class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">ano</span><span class="p">),</span> <span
+            class="n">div_cliente</span><span class="p">))</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">40</span><span class="p">))</span>
+
+    <span class="n">datos</span> <span class="o">=</span> <span class="p">[[</span><span
+            class="s1">&#39;Id Venta&#39;</span><span class="p">,</span> <span
+            class="s1">&#39;ID cliente&#39;</span><span class="p">,</span> <span
+            class="s1">&#39;Fecha Hora&#39;</span><span class="p">,</span> <span class="s1">&#39;Total venta&#39;</span><span
+            class="p">]]</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">venta</span> <span class="ow">in</span> <span
+            class="n">ventas</span><span class="p">:</span>
+        <span class="n">venta_total</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">get_total</span><span class="p">(</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">)</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">venta_total</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">,</span> <span class="n">venta</span><span
+            class="o">.</span><span class="n">id_cliente</span><span class="p">,</span> <span
+            class="n">venta</span><span class="o">.</span><span class="n">fecha_hora</span><span
+            class="p">,</span> <span class="nb">str</span><span class="p">(</span><span
+            class="n">venta_total</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; €&quot;</span><span
+            class="p">]</span>
+        <span class="n">datos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">row</span><span class="p">)</span>
+
+    <span class="n">tabla</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span
+            class="n">datos</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">tabla</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">80</span><span class="p">))</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Total dia:                                 &quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sum</span><span
+            class="p">)</span> <span class="o">+</span> <span class="s2">&quot;€&quot;</span><span
+            class="p">,</span> <span class="n">hoja_estilo</span><span class="p">[</span><span class="s1">&#39;BodyText&#39;</span><span
+            class="p">]))</span>
+
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">SimpleDocTemplate</span><span class="p">(</span><span
+            class="n">nombre_archivo</span><span class="p">,</span> <span class="n">pagesize</span><span
+            class="o">=</span><span class="n">A4</span><span class="p">,</span> <span class="n">showBoundary</span><span
+            class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">doc</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span
+            class="n">guion</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generar_reporte_mensual"><a class="viewcode-back"
+                                                            href="../../../../src.app.reportes.html#src.app.reportes.Reportes.generar_reporte_mensual">[documentos]</a><span
+        class="k">def</span> <span class="nf">generar_reporte_mensual</span><span class="p">(</span><span
+        class="n">mes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span
+        class="n">ano</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span
+        class="n">nombre_archivo</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    recibe el mes y año, busca la lista de ventas de ese mes en</span>
+<span class="sd">    base de datos, y genera una lista resumida de dichas ventas</span>
+<span class="sd">    y su suma total y la guarda en la ubicacion suministrada en pdf</span>
+
+<span class="sd">    :param mes:</span>
+<span class="sd">    :type mes:</span>
+<span class="sd">    :param ano:</span>
+<span class="sd">    :type ano:</span>
+<span class="sd">    :param nombre_archivo:</span>
+<span class="sd">    :type nombre_archivo:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ventas</span> <span class="o">=</span> <span class="n">VentasDao</span><span class="o">.</span><span
+            class="n">get_mes</span><span class="p">(</span><span class="n">mes</span><span class="p">,</span> <span
+            class="n">ano</span><span class="p">)</span>
+
+    <span class="n">hoja_estilo</span> <span class="o">=</span> <span class="n">getSampleStyleSheet</span><span
+            class="p">()</span>
+    <span class="n">guion</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">logo_img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span
+            class="n">Globals</span><span class="o">.</span><span class="n">logo_src</span><span
+            class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span
+            class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span
+            class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">logo_img</span><span class="p">)</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="o">-</span><span class="mi">100</span><span class="p">))</span>
+
+    <span class="n">heading</span> <span class="o">=</span> <span class="n">hoja_estilo</span><span
+            class="p">[</span><span class="s1">&#39;Heading3&#39;</span><span class="p">]</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;NIF: B1327869&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Tienda SL&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Vigo&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;986424242&quot;</span><span
+            class="p">,</span> <span class="n">heading</span><span class="p">))</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">40</span><span class="p">))</span>
+
+    <span class="n">div_cliente</span> <span class="o">=</span> <span class="n">hoja_estilo</span><span
+            class="p">[</span><span class="s1">&#39;BodyText&#39;</span><span class="p">]</span>
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span
+            class="s2">&quot;Resumen de ventas del: &quot;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">mes</span><span class="p">)</span> <span
+            class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">ano</span><span class="p">),</span> <span
+            class="n">div_cliente</span><span class="p">))</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">40</span><span class="p">))</span>
+
+    <span class="n">datos</span> <span class="o">=</span> <span class="p">[[</span><span
+            class="s1">&#39;Id Venta&#39;</span><span class="p">,</span> <span
+            class="s1">&#39;ID cliente&#39;</span><span class="p">,</span> <span
+            class="s1">&#39;Fecha Hora&#39;</span><span class="p">,</span> <span class="s1">&#39;Total venta&#39;</span><span
+            class="p">]]</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">venta</span> <span class="ow">in</span> <span
+            class="n">ventas</span><span class="p">:</span>
+        <span class="n">venta_total</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">get_total</span><span class="p">(</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">)</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">venta_total</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">,</span> <span class="n">venta</span><span
+            class="o">.</span><span class="n">id_cliente</span><span class="p">,</span> <span
+            class="n">venta</span><span class="o">.</span><span class="n">fecha_hora</span><span
+            class="p">,</span> <span class="nb">str</span><span class="p">(</span><span
+            class="n">venta_total</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; €&quot;</span><span
+            class="p">]</span>
+        <span class="n">datos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">row</span><span class="p">)</span>
+
+    <span class="n">tabla</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span
+            class="n">datos</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">tabla</span><span class="p">)</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Spacer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span
+            class="mi">80</span><span class="p">))</span>
+
+    <span class="n">guion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">Paragraph</span><span class="p">(</span><span class="s2">&quot;Total mes:                                 &quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sum</span><span
+            class="p">)</span> <span class="o">+</span> <span class="s2">&quot;€&quot;</span><span
+            class="p">,</span> <span class="n">hoja_estilo</span><span class="p">[</span><span class="s1">&#39;BodyText&#39;</span><span
+            class="p">]))</span>
+
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">SimpleDocTemplate</span><span class="p">(</span><span
+            class="n">nombre_archivo</span><span class="p">,</span> <span class="n">pagesize</span><span
+            class="o">=</span><span class="n">A4</span><span class="p">,</span> <span class="n">showBoundary</span><span
+            class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">doc</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span
+            class="n">guion</span><span class="p">)</span></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../../../index.html">Código de módulo</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="../../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+</div>
+
+
+</body>
+</html>

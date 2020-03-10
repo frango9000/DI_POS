@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.view.CajaUI &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: '../../../../',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../../../../genindex.html"/>
+    <link rel="search" title="Búsqueda" href="../../../../search.html"/>
+
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Código fuente para src.app.view.CajaUI</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">gi</span>
+
+<span class="kn">from</span> <span class="nn">src.app</span> <span class="k">import</span> <span
+                        class="n">Globals</span>
+<span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span class="n">ClientesDao</span><span
+                        class="p">,</span> <span class="n">ProductosDao</span><span class="p">,</span> <span class="n">VendidosDao</span>
+<span class="kn">from</span> <span class="nn">src.app.model.Venta</span> <span class="k">import</span> <span class="n">Venta</span>
+<span class="kn">from</span> <span class="nn">src.app.reportes</span> <span class="k">import</span> <span class="n">Reportes</span>
+
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span
+                        class="s1">&#39;Gtk&#39;</span><span class="p">,</span> <span
+                        class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="k">import</span> <span
+                        class="n">Gtk</span>
+
+
+<div class="viewcode-block" id="CajaUI"><a class="viewcode-back"
+                                           href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI">[documentos]</a><span
+        class="k">class</span> <span class="nc">CajaUI</span><span class="p">(</span><span class="n">Gtk</span><span
+        class="o">.</span><span class="n">Box</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clase que genera y controla la interfaz grafica de la caja</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span
+            class="p">,</span> <span class="n">venta</span><span class="p">:</span> <span class="n">Venta</span> <span
+            class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param parent: ventana padre</span>
+<span class="sd">        :type parent: MainUI</span>
+<span class="sd">        :param venta: venta que se mostrara o que sera generada</span>
+<span class="sd">        :type venta: Venta</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">Box</span><span class="o">.</span><span
+            class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span
+            class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creating</span><span
+            class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">venta</span> <span
+            class="ow">is</span> <span class="kc">None</span>
+
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">Builder</span><span class="p">()</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">add_from_file</span><span
+            class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
+            class="n">path_res</span> <span class="o">+</span> <span class="s2">&quot;/CajaUI.glade&quot;</span><span
+            class="p">)</span>
+        <span class="n">signals</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;btn_agregar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_agregar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_limpiar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_limpiar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_eliminar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_eliminar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_cancelar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_cancelar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_guardar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_guardar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_pdf&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_pdf</span>
+        <span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">connect_signals</span><span
+            class="p">(</span><span class="n">signals</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_ui</span> <span class="o">=</span> <span
+            class="n">builder</span><span class="o">.</span><span class="n">get_object</span><span
+            class="p">(</span><span class="s2">&quot;box_ui&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span
+            class="bp">self</span><span class="o">.</span><span class="n">box_ui</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_cliente</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">ComboBoxText</span> <span class="o">=</span> <span class="n">builder</span><span
+            class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="s2">&quot;combo_box_cliente&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_producto</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">ComboBoxText</span> <span class="o">=</span> <span class="n">builder</span><span
+            class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="s2">&quot;combo_box_producto&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_total</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Entry</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span class="s2">&quot;field_total&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabla_vendidos</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Box</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span class="s2">&quot;tabla_vendidos&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_id</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span class="s2">&quot;label_id&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_limpiar</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span class="s2">&quot;btn_limpiar&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_eliminar</span><span class="p">:</span> <span
+            class="n">Gtk</span><span class="o">.</span><span class="n">Button</span> <span class="o">=</span> <span
+            class="n">builder</span><span class="o">.</span><span class="n">get_object</span><span
+            class="p">(</span><span class="s2">&quot;btn_eliminar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_agregar</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span class="s2">&quot;btn_agregar&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_guardar</span><span
+            class="p">:</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Button</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span class="s2">&quot;btn_guardar&quot;</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_pdf</span><span class="p">:</span> <span
+            class="n">Gtk</span><span class="o">.</span><span class="n">Button</span> <span class="o">=</span> <span
+            class="n">builder</span><span class="o">.</span><span class="n">get_object</span><span
+            class="p">(</span><span class="s2">&quot;btn_pdf&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_cliente</span><span
+            class="o">.</span><span class="n">set_entry_text_column</span><span class="p">(</span><span
+            class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_producto</span><span
+            class="o">.</span><span class="n">set_entry_text_column</span><span class="p">(</span><span
+            class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Creating the ListStore model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liststore</span> <span
+            class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListStore</span><span
+            class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span
+            class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span> <span
+            class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeView</span><span
+            class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">liststore</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column_title</span> <span
+            class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;ID&quot;</span><span
+            class="p">,</span> <span class="s2">&quot;Producto&quot;</span><span class="p">,</span> <span class="s2">&quot;Precio&quot;</span><span
+            class="p">]):</span>
+            <span class="n">renderer</span> <span class="o">=</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">CellRendererText</span><span class="p">()</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">TreeViewColumn</span><span class="p">(</span><span
+            class="n">column_title</span><span class="p">,</span> <span class="n">renderer</span><span
+            class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">i</span><span
+            class="p">)</span>
+            <span class="n">column</span><span class="o">.</span><span class="n">set_resizable</span><span
+            class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">column_title</span> <span class="o">==</span> <span class="s2">&quot;Producto&quot;</span><span
+            class="p">:</span>
+                <span class="n">column</span><span class="o">.</span><span class="n">set_min_width</span><span
+            class="p">(</span><span class="mi">300</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span
+            class="o">.</span><span class="n">append_column</span><span class="p">(</span><span
+            class="n">column</span><span class="p">)</span>
+
+        <span class="c1"># setting up the layout, putting the treeview in a scrollwindow, and the buttons in a row</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollable_treelist</span> <span
+            class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">ScrolledWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollable_treelist</span><span
+            class="o">.</span><span class="n">set_vexpand</span><span class="p">(</span><span
+            class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollable_treelist</span><span
+            class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">treeview</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabla_vendidos</span><span
+            class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">scrollable_treelist</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span
+            class="n">creating</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">venta</span> <span
+            class="o">=</span> <span class="n">Venta</span><span class="p">(</span><span class="mi">0</span><span
+            class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edicion</span><span
+            class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_clientes</span><span
+            class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_productos</span><span
+            class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">venta</span> <span
+            class="o">=</span> <span class="n">venta</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">label_id</span><span
+            class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="nb">str</span><span
+            class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">))</span>
+            <span class="n">cliente</span> <span class="o">=</span> <span class="n">ClientesDao</span><span
+            class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">venta</span><span class="o">.</span><span class="n">id_cliente</span><span
+            class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_cliente</span><span class="o">.</span><span
+            class="n">append_text</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">cliente</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">)</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">nombre</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">apellido</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_cliente</span><span class="o">.</span><span
+            class="n">set_active</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">vendidos</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">get_id_venta</span><span class="p">(</span><span
+            class="n">venta</span><span class="o">.</span><span class="n">idd</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">vendido</span> <span class="ow">in</span> <span class="n">vendidos</span><span
+            class="p">:</span>
+                <span class="n">producto</span> <span class="o">=</span> <span class="n">ProductosDao</span><span
+            class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">vendido</span><span
+            class="o">.</span><span class="n">id_producto</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">liststore</span><span
+            class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">producto</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">,</span> <span class="n">producto</span><span
+            class="o">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">vendido</span><span
+            class="o">.</span><span class="n">precio_unidad</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_total</span><span
+            class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edicion</span><span
+            class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CajaUI.refrescar_clientes"><a class="viewcode-back"
+                                                              href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.refrescar_clientes">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">refrescar_clientes</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;refresca la tabla de clientes desde base de datos&quot;&quot;&quot;</span>
+        <span class="n">clientes</span> <span class="o">=</span> <span class="n">ClientesDao</span><span
+            class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">cliente</span> <span class="ow">in</span> <span
+            class="n">clientes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_cliente</span><span class="o">.</span><span
+            class="n">append_text</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">cliente</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">)</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">nombre</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span
+            class="o">.</span><span class="n">apellido</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CajaUI.refrescar_productos"><a class="viewcode-back"
+                                                               href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.refrescar_productos">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">refrescar_productos</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;refresca la tabla de productoss desde base de datos&quot;&quot;&quot;</span>
+        <span class="n">productos</span> <span class="o">=</span> <span class="n">ProductosDao</span><span
+            class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">producto</span> <span class="ow">in</span> <span
+            class="n">productos</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_producto</span><span
+            class="o">.</span><span class="n">append_text</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">producto</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">)</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">producto</span><span
+            class="o">.</span><span class="n">nombre</span> <span class="o">+</span> <span
+            class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">producto</span><span class="o">.</span><span class="n">precio</span><span
+            class="p">))</span></div>
+
+<div class="viewcode-block" id="CajaUI.refrescar_total"><a class="viewcode-back"
+                                                           href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.refrescar_total">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">refrescar_total</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;recalcula el total de la venta actual&quot;&quot;&quot;</span>
+        <span class="nb">sum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span
+            class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span
+            class="bp">self</span><span class="o">.</span><span class="n">liststore</span><span class="p">:</span>
+            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">row</span><span
+            class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_total</span><span
+            class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="nb">str</span><span
+            class="p">(</span><span class="nb">sum</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="CajaUI.on_btn_agregar"><a class="viewcode-back"
+                                                          href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.on_btn_agregar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_agregar</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;agrega el producto seleccionado a la venta&quot;&quot;&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span
+            class="n">combo_box_producto</span><span class="o">.</span><span class="n">get_active_text</span><span
+            class="p">()</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span
+            class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">id_producto</span> <span class="o">=</span> <span class="nb">int</span><span
+            class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span
+            class="p">(</span><span class="s1">&#39; - &#39;</span><span class="p">)[</span><span
+            class="mi">0</span><span class="p">])</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">ProductosDao</span><span class="o">.</span><span
+            class="n">get_id</span><span class="p">(</span><span class="n">id_producto</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">liststore</span><span class="o">.</span><span
+            class="n">append</span><span class="p">([</span><span class="n">producto</span><span class="o">.</span><span
+            class="n">idd</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span
+            class="n">nombre</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span
+            class="n">precio</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_total</span><span
+            class="p">()</span></div>
+
+<div class="viewcode-block" id="CajaUI.on_btn_limpiar"><a class="viewcode-back"
+                                                          href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.on_btn_limpiar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_limpiar</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;vacia la lista de compra&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liststore</span><span
+            class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_total</span><span
+            class="p">()</span></div>
+
+<div class="viewcode-block" id="CajaUI.on_btn_eliminar"><a class="viewcode-back"
+                                                           href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.on_btn_eliminar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_eliminar</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;elimina el producto seleccionado de la lista de compras&quot;&quot;&quot;</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">treeiter</span> <span
+            class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span
+            class="o">.</span><span class="n">get_selection</span><span class="p">()</span><span class="o">.</span><span
+            class="n">get_selected</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">treeiter</span> <span class="ow">is</span> <span class="ow">not</span> <span
+            class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">liststore</span><span class="o">.</span><span
+            class="n">remove</span><span class="p">(</span><span class="n">treeiter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_total</span><span
+            class="p">()</span></div>
+
+<div class="viewcode-block" id="CajaUI.on_btn_cancelar"><a class="viewcode-back"
+                                                           href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.on_btn_cancelar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_cancelar</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;vuelve al menu principal&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span
+            class="n">show_main_menu</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CajaUI.on_btn_guardar"><a class="viewcode-back"
+                                                          href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.on_btn_guardar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_guardar</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        verifica los datos de la venta antes de intentar insertarla junto su</span>
+<span class="sd">        contenido (vendidos) a la base de datos</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span
+            class="n">combo_box_cliente</span><span class="o">.</span><span class="n">get_active_text</span><span
+            class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span><span
+            class="p">(</span><span class="s2">&quot;Debes elegir un cliente&quot;</span><span class="p">,</span> <span
+            class="s2">&quot;Venta Incompleta&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">liststore</span><span class="p">)</span> <span class="o">==</span> <span
+            class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span><span
+            class="p">(</span><span class="s2">&quot;Nada que vender&quot;</span><span class="p">,</span> <span
+            class="s1">&#39;Venta Incompleta&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">creating</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span><span
+            class="p">(</span><span class="s2">&quot;Esta venta esta cerrada&quot;</span><span class="p">,</span> <span
+            class="s2">&quot;Venta Cerrada&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">id_cliente</span> <span class="o">=</span> <span class="nb">int</span><span
+            class="p">(</span><span class="bp">self</span><span class="o">.</span><span
+            class="n">combo_box_cliente</span><span class="o">.</span><span class="n">get_active_text</span><span
+            class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span
+            class="s1">&#39; - &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">id_cliente</span> <span class="o">=</span> <span
+            class="n">id_cliente</span>
+            <span class="n">id_venta</span> <span class="o">=</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">venta</span><span class="o">.</span><span class="n">insert</span><span
+            class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">label_id</span><span
+            class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="nb">str</span><span
+            class="p">(</span><span class="n">id_venta</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span
+            class="bp">self</span><span class="o">.</span><span class="n">liststore</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">src.app.model.Vendido</span> <span class="k">import</span> <span
+            class="n">Vendido</span>
+                <span class="n">Vendido</span><span class="p">(</span><span class="n">id_venta</span><span
+            class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span
+            class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span
+            class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">insert</span><span
+            class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edicion</span><span
+            class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info_dialog</span><span
+            class="p">(</span><span class="s2">&quot;Venta Guardada&quot;</span><span class="p">,</span> <span
+            class="s1">&#39;Venta Guardada&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CajaUI.get_selected_id"><a class="viewcode-back"
+                                                           href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.get_selected_id">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">get_selected_id</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: id de producto seleccionado o 0 si no hay ninguno seleccionado</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">treeiter</span> <span
+            class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span
+            class="o">.</span><span class="n">get_selection</span><span class="p">()</span><span class="o">.</span><span
+            class="n">get_selected</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">treeiter</span> <span class="ow">is</span> <span class="ow">not</span> <span
+            class="kc">None</span><span class="p">:</span>
+            <span class="n">selected_id</span> <span class="o">=</span> <span class="n">model</span><span
+            class="p">[</span><span class="n">treeiter</span><span class="p">][</span><span class="mi">0</span><span
+            class="p">]</span>
+            <span class="k">return</span> <span class="n">selected_id</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="CajaUI.edicion"><a class="viewcode-back"
+                                                   href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.edicion">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">edicion</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        alterna entre modo generacion y modo visualizacion de facturas</span>
+<span class="sd">        :param b:</span>
+<span class="sd">        :type b:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_cliente</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo_box_producto</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_total</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabla_vendidos</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_id</span><span class="o">.</span><span
+            class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_limpiar</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_eliminar</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_agregar</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_guardar</span><span
+            class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span class="n">b</span><span
+            class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_pdf</span><span class="o">.</span><span
+            class="n">set_sensitive</span><span class="p">(</span><span class="ow">not</span> <span
+            class="n">b</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CajaUI.on_btn_pdf"><a class="viewcode-back"
+                                                      href="../../../../src.app.view.html#src.app.view.CajaUI.CajaUI.on_btn_pdf">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_pdf</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        genera un pdf con la factura actual como contenido</span>
+
+<span class="sd">        :param btn:</span>
+<span class="sd">        :type btn:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dlg</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">FileChooserDialog</span><span class="p">(</span><span
+            class="s2">&quot;Guardar en...&quot;</span><span class="p">,</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">FileChooserAction</span><span class="o">.</span><span
+            class="n">SAVE</span><span class="p">,</span>
+                                    <span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span
+            class="n">STOCK_CANCEL</span><span class="p">,</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">ResponseType</span><span class="o">.</span><span
+            class="n">CANCEL</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">STOCK_OPEN</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">ResponseType</span><span class="o">.</span><span class="n">OK</span><span class="p">))</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">set_current_name</span><span
+            class="p">(</span><span class="s1">&#39;Factura-&#39;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span
+            class="n">venta</span><span class="o">.</span><span class="n">idd</span><span class="p">)</span> <span
+            class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">set_filename</span><span
+            class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span
+            class="o">.</span><span class="n">home</span><span class="p">()))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span
+            class="n">run</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">response</span> <span class="o">==</span> <span
+            class="n">Gtk</span><span class="o">.</span><span class="n">ResponseType</span><span class="o">.</span><span
+            class="n">OK</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">dlg</span><span
+            class="o">.</span><span class="n">get_filename</span><span class="p">()</span>
+            <span class="n">Reportes</span><span class="o">.</span><span class="n">generar_factura</span><span
+            class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">venta</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">,</span> <span class="n">filename</span><span
+            class="p">)</span>
+        <span class="n">dlg</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../../../index.html">Código de módulo</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="../../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.view.VendidosUI &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: '../../../../',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../../../../genindex.html"/>
+    <link rel="search" title="Búsqueda" href="../../../../search.html"/>
+
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Código fuente para src.app.view.VendidosUI</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">gi</span>
+
+<span class="kn">from</span> <span class="nn">src.app</span> <span class="k">import</span> <span
+                        class="n">Globals</span>
+<span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span class="n">VendidosDao</span>
+<span class="kn">from</span> <span class="nn">src.app.view</span> <span class="k">import</span> <span class="n">PyDialogs</span>
+<span class="kn">from</span> <span class="nn">src.app.view.VendidoEditor</span> <span class="k">import</span> <span
+                        class="n">VendidoEditor</span>
+
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span
+                        class="s1">&#39;Gtk&#39;</span><span class="p">,</span> <span
+                        class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="k">import</span> <span
+                        class="n">Gtk</span>
+
+
+<div class="viewcode-block" id="VendidosUI"><a class="viewcode-back"
+                                               href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI">[documentos]</a><span
+        class="k">class</span> <span class="nc">VendidosUI</span><span class="p">(</span><span class="n">Gtk</span><span
+        class="o">.</span><span class="n">Box</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    clase que genera y controla el navegador de productos vendidos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span
+            class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span
+            class="p">):</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">Box</span><span class="o">.</span><span
+            class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span
+            class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span><span
+            class="p">:</span> <span class="n">VendidoEditor</span> <span class="o">=</span> <span
+            class="kc">None</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">Builder</span><span class="p">()</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">add_from_file</span><span
+            class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
+            class="n">path_res</span> <span class="o">+</span> <span class="s2">&quot;/ListaUI.glade&quot;</span><span
+            class="p">)</span>
+        <span class="n">signals</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;btn_agregar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_agregar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_editar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_editar</span><span class="p">,</span>
+            <span class="s2">&quot;btn_remover&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_remover</span><span class="p">,</span>
+            <span class="s2">&quot;btn_volver&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_volver</span><span class="p">,</span>
+            <span class="s2">&quot;btn_refrescar&quot;</span><span class="p">:</span> <span class="bp">self</span><span
+            class="o">.</span><span class="n">on_btn_refrescar</span>
+        <span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">connect_signals</span><span
+            class="p">(</span><span class="n">signals</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_ui</span> <span class="o">=</span> <span
+            class="n">builder</span><span class="o">.</span><span class="n">get_object</span><span
+            class="p">(</span><span class="s2">&quot;box_ui&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span
+            class="bp">self</span><span class="o">.</span><span class="n">box_ui</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeview_container</span> <span
+            class="o">=</span> <span class="n">builder</span><span class="o">.</span><span
+            class="n">get_object</span><span class="p">(</span><span
+            class="s2">&quot;tree_view_container&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Creating the ListStore model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vendidos_liststore</span> <span
+            class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListStore</span><span
+            class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span
+            class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span
+            class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_tabla</span><span
+            class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span> <span
+            class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeView</span><span
+            class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">vendidos_liststore</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column_title</span> <span
+            class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;ID&quot;</span><span
+            class="p">,</span> <span class="s2">&quot;ID Venta&quot;</span><span class="p">,</span> <span class="s2">&quot;ID Producto&quot;</span><span
+            class="p">,</span> <span class="s2">&quot;Cantidad&quot;</span><span class="p">,</span> <span class="s2">&quot;Precio Unidad&quot;</span><span
+            class="p">]):</span>
+            <span class="n">renderer</span> <span class="o">=</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">CellRendererText</span><span class="p">()</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="n">Gtk</span><span
+            class="o">.</span><span class="n">TreeViewColumn</span><span class="p">(</span><span
+            class="n">column_title</span><span class="p">,</span> <span class="n">renderer</span><span
+            class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">i</span><span
+            class="p">)</span>
+            <span class="n">column</span><span class="o">.</span><span class="n">set_resizable</span><span
+            class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">column_title</span> <span class="o">==</span> <span class="s2">&quot;Precio Unidad&quot;</span><span
+            class="p">:</span>
+                <span class="n">column</span><span class="o">.</span><span class="n">set_min_width</span><span
+            class="p">(</span><span class="mi">900</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span
+            class="o">.</span><span class="n">append_column</span><span class="p">(</span><span
+            class="n">column</span><span class="p">)</span>
+
+        <span class="c1"># setting up the layout, putting the treeview in a scrollwindow, and the buttons in a row</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollable_treelist</span> <span
+            class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span
+            class="n">ScrolledWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollable_treelist</span><span
+            class="o">.</span><span class="n">set_vexpand</span><span class="p">(</span><span
+            class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeview_container</span><span
+            class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">scrollable_treelist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollable_treelist</span><span
+            class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">treeview</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span>
+
+<div class="viewcode-block" id="VendidosUI.refrescar_tabla"><a class="viewcode-back"
+                                                               href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.refrescar_tabla">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">refrescar_tabla</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;limpia la tabla y busca en base de datos para rellenarla&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vendidos_liststore</span><span
+            class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">vendidos</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">vendido</span> <span class="ow">in</span> <span
+            class="n">vendidos</span><span class="p">:</span>
+            <span class="n">vendido_detalles</span> <span class="o">=</span> <span class="p">[</span><span class="n">vendido</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">,</span> <span class="n">vendido</span><span
+            class="o">.</span><span class="n">id_venta</span><span class="p">,</span> <span
+            class="n">vendido</span><span class="o">.</span><span class="n">id_producto</span><span
+            class="p">,</span> <span class="n">vendido</span><span class="o">.</span><span
+            class="n">cantidad</span><span class="p">,</span>
+                                <span class="n">vendido</span><span class="o">.</span><span
+            class="n">precio_unidad</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vendidos_liststore</span><span
+            class="o">.</span><span class="n">append</span><span class="p">(</span><span
+            class="n">vendido_detalles</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VendidosUI.on_btn_volver"><a class="viewcode-back"
+                                                             href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.on_btn_volver">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_volver</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;vuelve al menu principal&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span
+            class="n">show_main_menu</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="VendidosUI.on_btn_agregar"><a class="viewcode-back"
+                                                              href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.on_btn_agregar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_agregar</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        abre el editor de vendidos en modo generacion</span>
+<span class="sd">        :param button:</span>
+<span class="sd">        :type button:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span
+            class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span> <span
+            class="o">=</span> <span class="n">VendidoEditor</span><span class="p">(</span><span
+            class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span><span
+            class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="VendidosUI.on_btn_editar"><a class="viewcode-back"
+                                                             href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.on_btn_editar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_editar</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        abre el editor de vendidos en modo edicion con el id del cliente seleccionado</span>
+<span class="sd">        :param button:</span>
+<span class="sd">        :type button:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span
+            class="n">get_selected_id</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">selected_id</span> <span class="o">&gt;</span> <span
+            class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_sensitive</span><span
+            class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">selected_object</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="nb">int</span><span
+            class="p">(</span><span class="n">selected_id</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span> <span
+            class="o">=</span> <span class="n">VendidoEditor</span><span class="p">(</span><span
+            class="bp">self</span><span class="p">,</span> <span class="n">selected_object</span><span
+            class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span><span class="o">.</span><span
+            class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="VendidosUI.on_btn_remover"><a class="viewcode-back"
+                                                              href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.on_btn_remover">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_remover</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        solicita confirmacion al usuario antes de eliminar el vendidos seleccionado</span>
+<span class="sd">        :param button:</span>
+<span class="sd">        :type button:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span
+            class="n">get_selected_id</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">selected_id</span> <span class="o">&gt;</span> <span
+            class="mi">0</span><span class="p">:</span>
+            <span class="n">confirm</span> <span class="o">=</span> <span class="n">PyDialogs</span><span
+            class="o">.</span><span class="n">show_warn_confirm_dialog</span><span class="p">(</span><span class="bp">self</span><span
+            class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;Eliminando Vendido&quot;</span><span
+            class="p">,</span>
+                                                         <span class="s2">&quot;Estas seguro que deseas eliminar el vendido con id: &quot;</span>
+                                                         <span class="o">+</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">selected_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">confirm</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span
+            class="s2">&quot;Eliminando vendido &quot;</span> <span class="o">+</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">selected_id</span><span class="p">))</span>
+                <span class="n">eliminado</span> <span class="o">=</span> <span class="n">VendidosDao</span><span
+            class="o">.</span><span class="n">remove_id</span><span class="p">(</span><span class="n">selected_id</span><span
+            class="p">)</span>
+                <span class="n">elim</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span
+            class="k">if</span> <span class="n">eliminado</span> <span class="k">else</span> <span class="s2">&quot; no &quot;</span>
+                <span class="n">PyDialogs</span><span class="o">.</span><span class="n">show_info_dialog</span><span
+            class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span
+            class="p">,</span> <span class="s2">&quot;Eliminando Vendido&quot;</span><span class="p">,</span> <span
+            class="s2">&quot;Vendido&quot;</span> <span class="o">+</span> <span class="n">elim</span> <span
+            class="o">+</span> <span class="s2">&quot;eliminado.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_tabla</span><span
+            class="p">()</span></div>
+
+<div class="viewcode-block" id="VendidosUI.on_btn_refrescar"><a class="viewcode-back"
+                                                                href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.on_btn_refrescar">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">on_btn_refrescar</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;accion del boton refrescar tabla&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_tabla</span><span
+            class="p">()</span></div>
+
+<div class="viewcode-block" id="VendidosUI.return_from_child"><a class="viewcode-back"
+                                                                 href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.return_from_child">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">return_from_child</span><span class="p">(</span><span
+        class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        metodo que reactiva la ventana al cerrar una ventana secundaria (ej. editor )</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sensitive</span><span class="p">(</span><span
+            class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refrescar_tabla</span><span
+            class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span><span
+            class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editor_ui</span> <span
+            class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="VendidosUI.get_selected_id"><a class="viewcode-back"
+                                                               href="../../../../src.app.view.html#src.app.view.VendidosUI.VendidosUI.get_selected_id">[documentos]</a>    <span
+        class="k">def</span> <span class="nf">get_selected_id</span><span class="p">(</span><span class="bp">self</span><span
+        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;retorna el id del objeto seleccionado&quot;&quot;&quot;</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">treeiter</span> <span
+            class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span
+            class="o">.</span><span class="n">get_selection</span><span class="p">()</span><span class="o">.</span><span
+            class="n">get_selected</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">treeiter</span> <span class="ow">is</span> <span class="ow">not</span> <span
+            class="kc">None</span><span class="p">:</span>
+            <span class="n">selected_id</span> <span class="o">=</span> <span class="n">model</span><span
+            class="p">[</span><span class="n">treeiter</span><span class="p">][</span><span class="mi">0</span><span
+            class="p">]</span>
+            <span class="k">return</span> <span class="n">selected_id</span>
+        <span class="k">return</span> <span class="mi">0</span></div></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../../../index.html">Código de módulo</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="../../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+</div>
+
+
+</body>
+</html>

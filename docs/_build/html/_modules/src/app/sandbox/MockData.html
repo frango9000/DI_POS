@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>src.app.sandbox.MockData &#8212; documentación de MyPos - 0.0.1</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT: '../../../../',
+            VERSION: '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE: true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../../../../genindex.html"/>
+    <link rel="search" title="Búsqueda" href="../../../../search.html"/>
+
+    <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9"/>
+
+</head>
+<body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Código fuente para src.app.sandbox.MockData</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">random</span><span
+                        class="p">,</span> <span class="n">randint</span>
+
+<span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span class="n">ClientesDao</span><span
+                        class="p">,</span> <span class="n">ProductosDao</span><span class="p">,</span> <span class="n">VentasDao</span><span
+                        class="p">,</span> <span class="n">VendidosDao</span>
+<span class="kn">from</span> <span class="nn">src.app.model.Cliente</span> <span class="k">import</span> <span
+                        class="n">Cliente</span>
+<span class="kn">from</span> <span class="nn">src.app.model.Producto</span> <span class="k">import</span> <span
+                        class="n">Producto</span>
+<span class="kn">from</span> <span class="nn">src.app.model.Vendido</span> <span class="k">import</span> <span
+                        class="n">Vendido</span>
+<span class="kn">from</span> <span class="nn">src.app.model.Venta</span> <span class="k">import</span> <span class="n">Venta</span>
+
+
+<div class="viewcode-block" id="mock_clientes"><a class="viewcode-back"
+                                                  href="../../../../src.app.sandbox.html#src.app.sandbox.MockData.mock_clientes">[documentos]</a><span
+        class="k">def</span> <span class="nf">mock_clientes</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    genera 999 clientes con datos incrementales</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span
+            class="p">):</span>
+        <span class="n">Cliente</span><span class="p">(</span><span class="s1">&#39;DNI&#39;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span
+            class="p">),</span> <span class="s2">&quot;Cliente &quot;</span> <span class="o">+</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">i</span><span class="p">),</span> <span
+            class="s2">&quot;Apellido &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span
+            class="n">i</span><span class="p">),</span> <span class="n">i</span> <span class="o">*</span> <span
+            class="mi">555</span><span class="p">,</span> <span class="s1">&#39;Direccion &#39;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span
+            class="p">))</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="mock_productos"><a class="viewcode-back"
+                                                   href="../../../../src.app.sandbox.html#src.app.sandbox.MockData.mock_productos">[documentos]</a><span
+        class="k">def</span> <span class="nf">mock_productos</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    genera 999 productoss con datos incrementales</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span
+            class="p">):</span>
+        <span class="n">Producto</span><span class="p">(</span><span class="s1">&#39;Producto &#39;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span
+            class="p">),</span> <span class="s1">&#39;Descripcion &#39;</span> <span class="o">+</span> <span
+            class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span
+            class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">insert</span><span
+            class="p">()</span></div>
+
+
+<div class="viewcode-block" id="mock_ventas"><a class="viewcode-back"
+                                                href="../../../../src.app.sandbox.html#src.app.sandbox.MockData.mock_ventas">[documentos]</a><span
+        class="k">def</span> <span class="nf">mock_ventas</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    determinando el rango en :for year in range(2019, 2020):</span>
+<span class="sd">    genera 5 ventas con 5 productos cada una, por cada dia de cada año</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vendidos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span
+            class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start year &quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span
+            class="p">))</span>
+        <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span
+            class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start month &quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">month</span><span
+            class="p">))</span>
+            <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span
+            class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span
+            class="mi">29</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span
+            class="s2">&quot;Start day &quot;</span> <span class="o">+</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">day</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span
+            class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span
+            class="mi">6</span><span class="p">):</span>
+                    <span class="n">month_str</span> <span class="o">=</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="k">if</span> <span
+            class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
+            class="n">month</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span> <span
+            class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span
+            class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span
+            class="n">month</span><span class="p">)</span>
+                    <span class="n">day_str</span> <span class="o">=</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">day</span><span class="p">)</span> <span class="k">if</span> <span
+            class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
+            class="n">day</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span> <span
+            class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span
+            class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span
+            class="n">day</span><span class="p">)</span>
+                    <span class="n">id_venta</span> <span class="o">=</span> <span class="n">Venta</span><span
+            class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span
+            class="p">,</span> <span class="mi">999</span><span class="p">),</span> <span class="nb">str</span><span
+            class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span
+            class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">month_str</span> <span
+            class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span
+            class="n">day_str</span><span class="p">)</span><span class="o">.</span><span class="n">insert</span><span
+            class="p">()</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span
+            class="p">):</span>
+                        <span class="n">vendidos</span><span class="o">.</span><span class="n">append</span><span
+            class="p">(</span><span class="n">Vendido</span><span class="p">(</span><span class="n">id_venta</span><span
+            class="p">,</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span
+            class="p">,</span> <span class="mi">999</span><span class="p">),</span> <span class="mi">1</span><span
+            class="p">,</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span
+            class="p">,</span> <span class="mi">8</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;insertando &#39;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span
+            class="p">(</span><span class="n">vendidos</span><span class="p">))</span> <span class="o">+</span> <span
+            class="s1">&#39; vendidos&#39;</span><span class="p">)</span>
+    <span class="n">VendidosDao</span><span class="o">.</span><span class="n">insert_list</span><span class="p">(</span><span
+            class="n">vendidos</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;insercion terminada&#39;</span><span
+            class="p">)</span></div>
+
+<span class="c1"># mock_clientes()</span>
+<span class="c1"># mock_productos()</span>
+<span class="c1"># mock_ventas()</span>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div class="relations">
+                <h3>Related Topics</h3>
+                <ul>
+                    <li><a href="../../../../index.html">Documentation overview</a>
+                        <ul>
+                            <li><a href="../../../index.html">Código de módulo</a>
+                                <ul>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Búsqueda rápida</h3>
+                <form class="search" action="../../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Ir a"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2020, Francisco Javier Sanchez Temprano.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+
+</div>
+
+
+</body>
+</html>

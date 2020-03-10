@@ -19,7 +19,8 @@ entrypoint de la app
 def main_func():
     MainUi()
     Gtk.main()
-#
+
+
 # main_func()
 
 # main_func()
