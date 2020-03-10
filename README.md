@@ -62,11 +62,14 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
 
 ### Documentacion:
 
- [ ] funcionamento e uso da aplicación, ademáis do 
-
  [x] código da aplicación, 
+
+ Sphinx:
  
- [ ] mediante Sphinx.
+ [ ] modulos y paquetes 
+ 
+ [ ] funcionamento e uso da aplicación
+ 
 
 ### Entregarase a aplicación:
  
