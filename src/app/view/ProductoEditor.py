@@ -22,7 +22,7 @@ class ProductoEditor(Gtk.Window):
             self.producto = producto
 
         builder = Gtk.Builder()
-        builder.add_from_file(Globals.path_res + "ProductoUI.glade")
+        builder.add_from_file(Globals.path_res + "/ProductoUI.glade")
         signals = {
             "btn_cancelar_act": self.on_btn_cancelar_act,
             "btn_guardar_act": self.on_btn_guardar_act

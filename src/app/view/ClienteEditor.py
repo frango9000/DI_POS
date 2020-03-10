@@ -22,7 +22,7 @@ class ClienteEditor(Gtk.Window):
             self.cliente = cliente
 
         builder = Gtk.Builder()
-        builder.add_from_file(Globals.path_res + "ClienteUI.glade")
+        builder.add_from_file(Globals.path_res + "/ClienteUI.glade")
         signals = {
             "btn_cancelar_act": self.on_btn_cancelar_act,
             "btn_guardar_act": self.on_btn_guardar_act

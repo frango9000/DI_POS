@@ -20,7 +20,7 @@ class ReportesUI(Gtk.Box):
         Gtk.Box.__init__(self)
         self.parent = parent
         builder = Gtk.Builder()
-        builder.add_from_file(Globals.path_res + "ReportesUI.glade")
+        builder.add_from_file(Globals.path_res + "/ReportesUI.glade")
         signals = {
             "tgl_dia": self.on_tgl_dia,
             "tgl_mes": self.on_tgl_mes,

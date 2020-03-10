@@ -22,7 +22,7 @@ class VentaEditor(Gtk.Window):
             self.venta = venta
 
         builder = Gtk.Builder()
-        builder.add_from_file(Globals.path_res + "VentaUI.glade")
+        builder.add_from_file(Globals.path_res + "/VentaUI.glade")
         signals = {
             "btn_cancelar_act": self.on_btn_cancelar_act,
             "btn_guardar_act": self.on_btn_guardar_act,

@@ -29,7 +29,7 @@ class CajaUI(Gtk.Box):
         self.creating: bool = venta is None
 
         builder = Gtk.Builder()
-        builder.add_from_file(Globals.path_res + "CajaUI.glade")
+        builder.add_from_file(Globals.path_res + "/CajaUI.glade")
         signals = {
             "btn_agregar": self.on_btn_agregar,
             "btn_limpiar": self.on_btn_limpiar,

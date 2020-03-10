@@ -19,7 +19,7 @@ class ClientesUI(Gtk.Box):
         self.parent = parent
         self.editor_ui: ClienteEditor = None
         builder = Gtk.Builder()
-        builder.add_from_file(Globals.path_res + "ListaUI.glade")
+        builder.add_from_file(Globals.path_res + "/ListaUI.glade")
         signals = {
             "btn_agregar": self.on_btn_agregar,
             "btn_editar": self.on_btn_editar,

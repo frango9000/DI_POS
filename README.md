@@ -92,3 +92,11 @@ pip install
         
 sphinx-quickstart
 make html
+ 
+ 
+ #packaging
+ python3 setup.py sdist
+ 
+ pip install --editable .
+
+
