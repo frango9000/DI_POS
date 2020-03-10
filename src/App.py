@@ -1,6 +1,7 @@
 import gi
+from src import app
 
-from app.view.MainUI import MainUi
+from src.app.view.MainUI import MainUi
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -18,6 +19,7 @@ entrypoint de la app
 def main_func():
     MainUi()
     Gtk.main()
+#
+# main_func()
 
-
-main_func()
+# main_func()
