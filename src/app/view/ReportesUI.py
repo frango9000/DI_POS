@@ -71,19 +71,23 @@ class ReportesUI(Gtk.Box):
         :return:
         :rtype:
         """
-        if len(self.entry_nombre_archivo.get_text()) > 0 and self.folder_chooser.get_filename() is not None:
+        if len(self.entry_nombre_archivo.get_text().strip()) > 0 and self.folder_chooser.get_filename() is not None:
             ano = self.calendar.get_date()[0]
             mes = self.calendar.get_date()[1] + 1
-            if self.tgl_btn_dia.get_active():
-                dia = self.calendar.get_date()[2]
-                Reportes.generar_reporte_diario(dia, mes, ano, os.path.join(self.folder_chooser.get_filename(),
+            try:
+                if self.tgl_btn_dia.get_active():
+                    dia = self.calendar.get_date()[2]
+                    Reportes.generar_reporte_diario(dia, mes, ano, os.path.join(self.folder_chooser.get_filename(),
+                                                                                self.entry_nombre_archivo.get_text()) + '.pdf')
+                else:
+                    Reportes.generar_reporte_mensual(mes, ano, os.path.join(self.folder_chooser.get_filename(),
                                                                             self.entry_nombre_archivo.get_text()) + '.pdf')
-            else:
-                Reportes.generar_reporte_mensual(mes, ano, os.path.join(self.folder_chooser.get_filename(),
-                                                                        self.entry_nombre_archivo.get_text()) + '.pdf')
-            PyDialogs.show_info_dialog(self.parent, "Informacion",
-                                       "Reporte guardado en " + os.path.join(self.folder_chooser.get_filename(),
-                                                                             self.entry_nombre_archivo.get_text()) + '.pdf')
+                PyDialogs.show_info_dialog(self.parent, "Informacion",
+                                           "Reporte guardado en " + os.path.join(self.folder_chooser.get_filename(),
+                                                                                 self.entry_nombre_archivo.get_text()) + '.pdf')
+            except Exception:
+                PyDialogs.show_info_dialog(self.parent, "Error",
+                                           "Error guardando reporte. Revisa tus permisos sobre la carpeta seleccionada.")
         else:
             PyDialogs.show_error_dialog(self.parent, "Error", "Nombre de archivo o ruta erronea")
 

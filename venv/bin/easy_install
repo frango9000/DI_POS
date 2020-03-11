@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/narf/Documents/Pycharm Projects/DI_POS/venv/bin/python" "$0" "$@"
-' '''
+#!/home/local/DANIELCASTELAO/fsancheztemprano/PycharmProjects/DI_POS/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

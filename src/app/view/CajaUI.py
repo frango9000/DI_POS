@@ -6,6 +6,7 @@ from src.app import Globals
 from src.app.data import ClientesDao, ProductosDao, VendidosDao
 from src.app.model.Venta import Venta
 from src.app.reportes import Reportes
+from src.app.view import PyDialogs
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -147,11 +148,11 @@ class CajaUI(Gtk.Box):
         contenido (vendidos) a la base de datos
         """
         if self.combo_box_cliente.get_active_text() is None:
-            self.info_dialog("Debes elegir un cliente", "Venta Incompleta")
+            PyDialogs.show_info_dialog(self.parent, "Debes elegir un cliente", "Venta Incompleta")
         elif len(self.liststore) == 0:
-            self.info_dialog("Nada que vender", 'Venta Incompleta')
+            PyDialogs.show_info_dialog(self.parent, "Nada que vender", 'Venta Incompleta')
         elif not self.creating:
-            self.info_dialog("Esta venta esta cerrada", "Venta Cerrada")
+            PyDialogs.show_info_dialog(self.parent, "Esta venta esta cerrada", "Venta Cerrada")
         else:
             id_cliente = int(self.combo_box_cliente.get_active_text().split(' - ')[0])
             self.venta.id_cliente = id_cliente
@@ -161,7 +162,7 @@ class CajaUI(Gtk.Box):
                 from src.app.model.Vendido import Vendido
                 Vendido(id_venta, row[0], 1, row[2]).insert()
             self.edicion(False)
-            self.info_dialog("Venta Guardada", 'Venta Guardada')
+            PyDialogs.show_info_dialog(self.parent, "Venta Guardada", 'Venta Guardada')
 
     def get_selected_id(self) -> int:
         """

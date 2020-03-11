@@ -1,5 +1,4 @@
 import gi
-from src import app
 
 from src.app.view.MainUI import MainUi
 
@@ -23,4 +22,4 @@ def main_func():
 
 # main_func()
 
-# main_func()
+main_func()
