@@ -105,3 +105,9 @@ pip install dist/MyPos-0.0.1.tar.gz
 
 ### ejecucion
 mypos
+
+
+Otros comandos:
+
+autogeneracion de modules.rst:
+sphinx-apidoc -o . docs/
