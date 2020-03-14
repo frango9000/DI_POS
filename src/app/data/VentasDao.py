@@ -1,7 +1,4 @@
-import sqlite3
-
-from app.data import GenericDao
-from src.app import Globals
+from src.app.data import GenericDao
 from src.app.model.Venta import Venta
 
 debug: bool = GenericDao.debug

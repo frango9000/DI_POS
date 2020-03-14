@@ -88,9 +88,13 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
  
 sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev glade python3-sphinx
 
+### verificacion de entorno virtual:
+
+pip -V
+
 ### instalacion de dependencias en entorno virtual 
 
-python3 -m pip install pycairo pygobject reportlab
+pip install pycairo pygobject reportlab
         
 ### generacion de documentacion
 sphinx-quickstart

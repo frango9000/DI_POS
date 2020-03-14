@@ -1,6 +1,6 @@
 import sqlite3
 
-from app import Globals
+from src.app import Globals
 
 """
 variable que determina si se imprimen las sentencias sql (debugging)

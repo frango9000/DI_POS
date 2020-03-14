@@ -3,14 +3,21 @@ sphinx-quickstart on Tue Mar 10 18:34:21 2020.
 You can adapt this file completely to your liking, but it should at least
 contain the root `toctree` directive.
 
-Welcome to MyPos's documentation!
+Documentacion de MyPos!
 =================================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 8
    :caption: Contents:
 
    mypos
+
+Modulos y Paquetes!
+=================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
 
    modules
 

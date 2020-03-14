@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -39,25 +40,27 @@
 
                 <h1>Código fuente para src.app.data.ProductosDao</h1>
                 <div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
-
-<span class="kn">from</span> <span class="nn">src.app</span> <span class="k">import</span> <span
-                        class="n">Globals</span>
+<span></span><span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span
+                        class="n">GenericDao</span>
 <span class="kn">from</span> <span class="nn">src.app.model.Producto</span> <span class="k">import</span> <span
                         class="n">Producto</span>
 
 <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span
-                        class="kc">False</span>
+                        class="n">GenericDao</span><span class="o">.</span><span class="n">debug</span>
 
 
 <div class="viewcode-block" id="get_all"><a class="viewcode-back"
                                             href="../../../../src.app.data.html#src.app.data.ProductosDao.get_all">[documentos]</a><span
         class="k">def</span> <span class="nf">get_all</span><span class="p">()</span> <span class="o">-&gt;</span> <span
         class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtiene una lista con todos los productos existentes en la base de datos</span>
+<span class="sd">    :return: lista de Productos</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">productos</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span
             class="s2">&quot;SELECT * FROM productos&quot;</span><span class="p">)</span>
@@ -78,27 +81,20 @@
     <span class="k">return</span> <span class="n">productos</span></div>
 
 
-<div class="viewcode-block" id="get_mapped"><a class="viewcode-back"
-                                               href="../../../../src.app.data.html#src.app.data.ProductosDao.get_mapped">[documentos]</a><span
-        class="k">def</span> <span class="nf">get_mapped</span><span class="p">()</span> <span
-        class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="n">mapped</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">productos</span> <span class="o">=</span> <span class="n">get_all</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">producto</span> <span class="ow">in</span> <span
-            class="n">productos</span><span class="p">:</span>
-        <span class="n">mapped</span><span class="p">[</span><span class="n">producto</span><span
-            class="o">.</span><span class="n">idd</span><span class="p">]</span> <span class="o">=</span> <span
-            class="n">producto</span><span class="o">.</span><span class="n">nombre</span>
-    <span class="k">return</span> <span class="n">mapped</span></div>
-
-
 <div class="viewcode-block" id="get_id"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ProductosDao.get_id">[documentos]</a><span
         class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="n">idd</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="n">Producto</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="n">Producto</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Buscar 1 producto en la base de datos proporcionando el id</span>
+<span class="sd">    :param idd: id del producto</span>
+<span class="sd">    :type idd: int</span>
+<span class="sd">    :return: Producto con idd, si existe</span>
+<span class="sd">    :rtype: Producto</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM productos where id = ?&quot;</span><span
             class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
@@ -123,10 +119,17 @@
 <div class="viewcode-block" id="insert"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ProductosDao.insert">[documentos]</a><span
         class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">producto</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="n">Producto</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inserta un nuevo producto en la base de datos</span>
+<span class="sd">    :param producto: el producto a insertar</span>
+<span class="sd">    :type producto: Producto</span>
+<span class="sd">    :return: el id generado para el producto insertado</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">cursor</span><span class="p">()</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO productos(nombre, descripcion, precio, stock) VALUES (?,?,?,?)&#39;</span>
@@ -154,10 +157,17 @@
 <div class="viewcode-block" id="remove_id"><a class="viewcode-back"
                                               href="../../../../src.app.data.html#src.app.data.ProductosDao.remove_id">[documentos]</a><span
         class="k">def</span> <span class="nf">remove_id</span><span class="p">(</span><span class="n">idd</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un producto de la base de datos en por su id</span>
+<span class="sd">    :param idd: id del producto a eliminar</span>
+<span class="sd">    :type idd: int</span>
+<span class="sd">    :return: True si fue eliminado</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM productos where id = ?&quot;</span><span
             class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
@@ -176,7 +186,15 @@
 <div class="viewcode-block" id="remove"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ProductosDao.remove">[documentos]</a><span
         class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">producto</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        class="p">:</span> <span class="n">Producto</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un producto de la base de datos en por su objeto</span>
+<span class="sd">    :param producto: producto a eliminar</span>
+<span class="sd">    :type producto: Producto</span>
+<span class="sd">    :return: True si fue eliminado</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">remove_id</span><span class="p">(</span><span
             class="n">producto</span><span class="o">.</span><span class="n">idd</span><span class="p">)</span></div>
 
@@ -184,10 +202,17 @@
 <div class="viewcode-block" id="update"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ProductosDao.update">[documentos]</a><span
         class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">producto</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="n">Producto</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Actualiza los datos de un objeto Producto a la representación en base de datos</span>
+<span class="sd">    :param producto: producto a actualizar</span>
+<span class="sd">    :type producto: Producto</span>
+<span class="sd">    :return: True si hubo modificaciones</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">cursor</span><span class="p">()</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id = ?&#39;</span>
@@ -207,6 +232,25 @@
             class="p">))</span>
     <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span
             class="n">rowcount</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="get_mapped"><a class="viewcode-back"
+                                               href="../../../../src.app.data.html#src.app.data.ProductosDao.get_mapped">[documentos]</a><span
+        class="k">def</span> <span class="nf">get_mapped</span><span class="p">()</span> <span
+        class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un mapa de id =&gt; Producto con todos los productos en la base de datos</span>
+<span class="sd">    :return: Mapa de Productos</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mapped</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">productos</span> <span class="o">=</span> <span class="n">get_all</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">producto</span> <span class="ow">in</span> <span
+            class="n">productos</span><span class="p">:</span>
+        <span class="n">mapped</span><span class="p">[</span><span class="n">producto</span><span
+            class="o">.</span><span class="n">idd</span><span class="p">]</span> <span class="o">=</span> <span
+            class="n">producto</span><span class="o">.</span><span class="n">nombre</span>
+    <span class="k">return</span> <span class="n">mapped</span></div>
 </pre>
                 </div>
 
