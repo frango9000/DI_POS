@@ -1,14 +1,17 @@
-import sqlite3
-
-from src.app import Globals
+from src.app.data import GenericDao
 from src.app.model.Producto import Producto
 
-debug: bool = False
+debug: bool = GenericDao.debug
 
 
 def get_all() -> list:
+    """
+    Obtiene una lista con todos los productos existentes en la base de datos
+    :return: lista de Productos
+    :rtype: list
+    """
     productos = []
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM productos")
     for row in cursor:
         producto = Producto(row[1], row[2], row[3], row[4], row[0])
@@ -19,16 +22,15 @@ def get_all() -> list:
     return productos
 
 
-def get_mapped() -> dict:
-    mapped = dict()
-    productos = get_all()
-    for producto in productos:
-        mapped[producto.idd] = producto.nombre
-    return mapped
-
-
-def get_id(idd) -> Producto:
-    conn = sqlite3.connect(Globals.db_src)
+def get_id(idd: int) -> Producto:
+    """
+    Buscar 1 producto en la base de datos proporcionando el id
+    :param idd: id del producto
+    :type idd: int
+    :return: Producto con idd, si existe
+    :rtype: Producto
+    """
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM productos where id = ?", (str(idd),))
     row = cursor.fetchone()
     producto = Producto(row[1], row[2], row[3], row[4], row[0])
@@ -39,8 +41,15 @@ def get_id(idd) -> Producto:
     return producto
 
 
-def insert(producto) -> int:
-    conn = sqlite3.connect(Globals.db_src)
+def insert(producto: Producto) -> int:
+    """
+    Inserta un nuevo producto en la base de datos
+    :param producto: el producto a insertar
+    :type producto: Producto
+    :return: el id generado para el producto insertado
+    :rtype: int
+    """
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'INSERT INTO productos(nombre, descripcion, precio, stock) VALUES (?,?,?,?)'
     values = (producto.nombre, producto.descripcion, int(producto.precio), int(producto.stock))
@@ -54,8 +63,15 @@ def insert(producto) -> int:
     return producto.idd
 
 
-def remove_id(idd) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+def remove_id(idd: int) -> bool:
+    """
+    Elimina un producto de la base de datos en por su id
+    :param idd: id del producto a eliminar
+    :type idd: int
+    :return: True si fue eliminado
+    :rtype: bool
+    """
+    conn = GenericDao.connect()
     cursor = conn.execute("DELETE FROM productos where id = ?", (str(idd),))
     conn.commit()
     conn.close()
@@ -64,12 +80,26 @@ def remove_id(idd) -> bool:
     return cursor.rowcount > 0
 
 
-def remove(producto) -> bool:
+def remove(producto: Producto) -> bool:
+    """
+    Elimina un producto de la base de datos en por su objeto
+    :param producto: producto a eliminar
+    :type producto: Producto
+    :return: True si fue eliminado
+    :rtype: bool
+    """
     return remove_id(producto.idd)
 
 
-def update(producto) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+def update(producto: Producto) -> bool:
+    """
+    Actualiza los datos de un objeto Producto a la representación en base de datos
+    :param producto: producto a actualizar
+    :type producto: Producto
+    :return: True si hubo modificaciones
+    :rtype: bool
+    """
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id = ?'
     values = (producto.nombre, producto.descripcion, producto.precio, producto.stock, producto.idd)
@@ -79,3 +109,16 @@ def update(producto) -> bool:
     if debug:
         print("Producto actualizado: " + str(producto))
     return cursor.rowcount > 0
+
+
+def get_mapped() -> dict:
+    """
+    Genera un mapa de id => Producto con todos los productos en la base de datos
+    :return: Mapa de Productos
+    :rtype: dict
+    """
+    mapped = dict()
+    productos = get_all()
+    for producto in productos:
+        mapped[producto.idd] = producto.nombre
+    return mapped

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -39,24 +40,26 @@
 
                 <h1>Código fuente para src.app.data.VentasDao</h1>
                 <div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
-
-<span class="kn">from</span> <span class="nn">src.app</span> <span class="k">import</span> <span
-                        class="n">Globals</span>
+<span></span><span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span
+                        class="n">GenericDao</span>
 <span class="kn">from</span> <span class="nn">src.app.model.Venta</span> <span class="k">import</span> <span class="n">Venta</span>
 
 <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span
-                        class="kc">False</span>
+                        class="n">GenericDao</span><span class="o">.</span><span class="n">debug</span>
 
 
 <div class="viewcode-block" id="get_all"><a class="viewcode-back"
                                             href="../../../../src.app.data.html#src.app.data.VentasDao.get_all">[documentos]</a><span
         class="k">def</span> <span class="nf">get_all</span><span class="p">()</span> <span class="o">-&gt;</span> <span
         class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtiene una lista con todos los ventas existentes en la base de datos</span>
+<span class="sd">    :return: lista de Ventas</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ventas</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span
             class="s2">&quot;SELECT * FROM ventas&quot;</span><span class="p">)</span>
@@ -79,10 +82,17 @@
 <div class="viewcode-block" id="get_id"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.VentasDao.get_id">[documentos]</a><span
         class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="n">idd</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="n">Venta</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="n">Venta</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Buscar 1 venta en la base de datos proporcionando el id</span>
+<span class="sd">    :param idd: id del venta</span>
+<span class="sd">    :type idd: int</span>
+<span class="sd">    :return: Venta con idd, si existe</span>
+<span class="sd">    :rtype: Venta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM ventas where id = ?&quot;</span><span
             class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
@@ -104,10 +114,17 @@
 <div class="viewcode-block" id="insert"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.VentasDao.insert">[documentos]</a><span
         class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">venta</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="n">Venta</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inserta un nuevo venta en la base de datos</span>
+<span class="sd">    :param venta: el venta a insertar</span>
+<span class="sd">    :type venta: Venta</span>
+<span class="sd">    :return: el id generado para el venta insertado</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">cursor</span><span class="p">()</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">venta</span><span class="o">.</span><span
@@ -138,10 +155,17 @@
 <div class="viewcode-block" id="remove_id"><a class="viewcode-back"
                                               href="../../../../src.app.data.html#src.app.data.VentasDao.remove_id">[documentos]</a><span
         class="k">def</span> <span class="nf">remove_id</span><span class="p">(</span><span class="n">idd</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un venta de la base de datos en por su id</span>
+<span class="sd">    :param idd: id del venta a eliminar</span>
+<span class="sd">    :type idd: int</span>
+<span class="sd">    :return: True si fue eliminado</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span
             class="s2">&quot;DELETE FROM ventas where id = ?&quot;</span><span class="p">,</span> <span
@@ -160,7 +184,15 @@
 <div class="viewcode-block" id="remove"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.VentasDao.remove">[documentos]</a><span
         class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">venta</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        class="p">:</span> <span class="n">Venta</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un venta de la base de datos en por su objeto</span>
+<span class="sd">    :param venta: venta a eliminar</span>
+<span class="sd">    :type venta: Venta</span>
+<span class="sd">    :return: True si fue eliminado</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">remove_id</span><span class="p">(</span><span
             class="n">venta</span><span class="o">.</span><span class="n">idd</span><span class="p">)</span></div>
 
@@ -168,10 +200,17 @@
 <div class="viewcode-block" id="update"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.VentasDao.update">[documentos]</a><span
         class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">venta</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="n">Venta</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Actualiza los datos de un objeto Venta a la representación en base de datos</span>
+<span class="sd">    :param venta: venta a actualizar</span>
+<span class="sd">    :type venta: Venta</span>
+<span class="sd">    :return: True si hubo modificaciones</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">cursor</span><span class="p">()</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;UPDATE ventas SET id_cliente=?, fecha_hora=? WHERE id = ?&#39;</span>
@@ -199,10 +238,20 @@
         class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ano</span><span
         class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
         class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera una lista con todas las ventas de el dia/mes/año seleccionado</span>
+<span class="sd">    :param dia: dia</span>
+<span class="sd">    :type dia: int</span>
+<span class="sd">    :param mes: mes</span>
+<span class="sd">    :type mes: int</span>
+<span class="sd">    :param ano: año</span>
+<span class="sd">    :type ano: int</span>
+<span class="sd">    :return: lista de Ventas filtradas por dia</span>
+<span class="sd">    :rtype: list&lt;Venta&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ventas</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">month_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span
             class="n">mes</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span
             class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mes</span><span
@@ -246,10 +295,18 @@
         class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ano</span><span
         class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
         class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera una lista con todas las ventas de el mes/año seleccionado</span>
+<span class="sd">    :param mes: mes</span>
+<span class="sd">    :type mes: int</span>
+<span class="sd">    :param ano: año</span>
+<span class="sd">    :type ano: int</span>
+<span class="sd">    :return: lista de ventas filtradas por mes</span>
+<span class="sd">    :rtype: list&lt;Venta&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ventas</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;select * from ventas where date(fecha_hora) &gt;= date(?) and date(fecha_hora) &lt; date(?, &#39;start of month&#39;, &#39;+1 months&#39;, &#39;start of month&#39;)&quot;</span>
     <span class="n">month_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span
             class="n">mes</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span

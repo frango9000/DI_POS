@@ -15,5 +15,6 @@ setup(
         "gui_scripts": [
             "mypos = src.App:main_func"
         ]
-    }
+    },
+    install_requires=['PyGObject', 'pycairo']
 )

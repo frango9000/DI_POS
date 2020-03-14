@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -39,25 +40,27 @@
 
                 <h1>Código fuente para src.app.data.ClientesDao</h1>
                 <div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
-
-<span class="kn">from</span> <span class="nn">src.app</span> <span class="k">import</span> <span
-                        class="n">Globals</span>
+<span></span><span class="kn">from</span> <span class="nn">src.app.data</span> <span class="k">import</span> <span
+                        class="n">GenericDao</span>
 <span class="kn">from</span> <span class="nn">src.app.model.Cliente</span> <span class="k">import</span> <span
                         class="n">Cliente</span>
 
 <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span
-                        class="kc">False</span>
+                        class="n">GenericDao</span><span class="o">.</span><span class="n">debug</span>
 
 
 <div class="viewcode-block" id="get_all"><a class="viewcode-back"
                                             href="../../../../src.app.data.html#src.app.data.ClientesDao.get_all">[documentos]</a><span
         class="k">def</span> <span class="nf">get_all</span><span class="p">()</span> <span class="o">-&gt;</span> <span
         class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtiene una lista con todos los clientes existentes en la base de datos</span>
+<span class="sd">    :return: lista de Clientes</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">clientes</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span
             class="s2">&quot;SELECT * FROM clientes&quot;</span><span class="p">)</span>
@@ -83,10 +86,17 @@
 <div class="viewcode-block" id="get_id"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ClientesDao.get_id">[documentos]</a><span
         class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="n">idd</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cliente</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="n">Cliente</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Buscar 1 cliente en la base de datos proporcionando el id</span>
+<span class="sd">    :param idd: id del cliente</span>
+<span class="sd">    :type idd: int</span>
+<span class="sd">    :return: Cliente con idd, si existe</span>
+<span class="sd">    :rtype: Cliente</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM clientes where id = ?&quot;</span><span
             class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
@@ -110,10 +120,17 @@
 <div class="viewcode-block" id="insert"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ClientesDao.insert">[documentos]</a><span
         class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">cliente</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="n">Cliente</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inserta un nuevo cliente en la base de datos</span>
+<span class="sd">    :param cliente: el cliente a insertar</span>
+<span class="sd">    :type cliente: Cliente</span>
+<span class="sd">    :return: el id generado para el cliente insertado</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">cursor</span><span class="p">()</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO clientes(dni, nombre, apellido, telefono, direccion) VALUES ( ?,?,?,?,?)&#39;</span>
@@ -140,10 +157,17 @@
 <div class="viewcode-block" id="remove_id"><a class="viewcode-back"
                                               href="../../../../src.app.data.html#src.app.data.ClientesDao.remove_id">[documentos]</a><span
         class="k">def</span> <span class="nf">remove_id</span><span class="p">(</span><span class="n">idd</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un cliente de la base de datos en por su id</span>
+<span class="sd">    :param idd: id del cliente a eliminar</span>
+<span class="sd">    :type idd: int</span>
+<span class="sd">    :return: True si fue eliminado</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM clientes where id = ?&quot;</span><span
             class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span
@@ -161,7 +185,15 @@
 <div class="viewcode-block" id="remove"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ClientesDao.remove">[documentos]</a><span
         class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">cliente</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        class="p">:</span> <span class="n">Cliente</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un cliente de la base de datos en por su objeto</span>
+<span class="sd">    :param cliente: cliente a eliminar</span>
+<span class="sd">    :type cliente: Cliente</span>
+<span class="sd">    :return: True si fue eliminado</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">remove_id</span><span class="p">(</span><span class="n">cliente</span><span
             class="o">.</span><span class="n">idd</span><span class="p">)</span></div>
 
@@ -169,10 +201,17 @@
 <div class="viewcode-block" id="update"><a class="viewcode-back"
                                            href="../../../../src.app.data.html#src.app.data.ClientesDao.update">[documentos]</a><span
         class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">cliente</span><span
-        class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span
-            class="n">connect</span><span class="p">(</span><span class="n">Globals</span><span class="o">.</span><span
-            class="n">db_src</span><span class="p">)</span>
+        class="p">:</span> <span class="n">Cliente</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+        class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Actualiza los datos de un objeto Cliente a la representación en base de datos</span>
+<span class="sd">    :param cliente: cliente a actualizar</span>
+<span class="sd">    :type cliente: Cliente</span>
+<span class="sd">    :return: True si hubo modificaciones</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">GenericDao</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">()</span>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
             class="n">cursor</span><span class="p">()</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;UPDATE clientes SET dni=?, nombre=?, apellido=?, telefono=?, direccion=? WHERE id = ?&#39;</span>

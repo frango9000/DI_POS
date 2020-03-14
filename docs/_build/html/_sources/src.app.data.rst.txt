@@ -12,6 +12,14 @@ src\.app\.data\.ClientesDao module
     :undoc-members:
     :show-inheritance:
 
+src\.app\.data\.GenericDao module
+---------------------------------
+
+.. automodule:: src.app.data.GenericDao
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 src\.app\.data\.ProductosDao module
 -----------------------------------
 

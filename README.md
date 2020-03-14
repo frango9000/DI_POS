@@ -88,12 +88,17 @@ O proxecto ten que xerar polo menos dous informes realizados con Reportlab. Os i
  
 sudo apt install build-essential libcairo2-dev pkg-config python3-dev libgtk-3-dev glade python3-sphinx
 
-pip install
-        pycairo
-        pygobject
-        reportlab
+### verificacion de entorno virtual:
+
+pip -V
+
+### instalacion de dependencias en entorno virtual 
+
+pip install pycairo pygobject reportlab
         
+### generacion de documentacion
 sphinx-quickstart
+sphinx-apidoc -o . docs/
 make html
  
  
@@ -105,9 +110,3 @@ pip install dist/MyPos-0.0.1.tar.gz
 
 ### ejecucion
 mypos
-
-
-Otros comandos:
-
-autogeneracion de modules.rst:
-sphinx-apidoc -o . docs/
