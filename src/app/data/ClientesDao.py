@@ -1,14 +1,15 @@
 import sqlite3
 
+from app.data import GenericDao
 from src.app import Globals
 from src.app.model.Cliente import Cliente
 
-debug: bool = False
+debug: bool = GenericDao.debug
 
 
 def get_all() -> list:
     clientes = []
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM clientes")
     for row in cursor:
         cliente = Cliente(row[1], row[2], row[3], row[4], row[5], row[0])
@@ -20,7 +21,7 @@ def get_all() -> list:
 
 
 def get_id(idd) -> Cliente:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM clientes where id = ?", (str(idd),))
     row = cursor.fetchone()
     cliente = Cliente(row[1], row[2], row[3], row[4], row[5], row[0])
@@ -31,7 +32,7 @@ def get_id(idd) -> Cliente:
 
 
 def insert(cliente) -> int:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'INSERT INTO clientes(dni, nombre, apellido, telefono, direccion) VALUES ( ?,?,?,?,?)'
     values = (cliente.dni, cliente.nombre, cliente.apellido, int(cliente.telefono), cliente.direccion)
@@ -45,7 +46,7 @@ def insert(cliente) -> int:
 
 
 def remove_id(idd) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("DELETE FROM clientes where id = ?", (str(idd),))
     conn.commit()
     conn.close()
@@ -59,7 +60,7 @@ def remove(cliente) -> bool:
 
 
 def update(cliente) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'UPDATE clientes SET dni=?, nombre=?, apellido=?, telefono=?, direccion=? WHERE id = ?'
     values = (cliente.dni, cliente.nombre, cliente.apellido, cliente.telefono, cliente.direccion, cliente.idd)

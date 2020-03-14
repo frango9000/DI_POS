@@ -1,14 +1,15 @@
 import sqlite3
 
+from app.data import GenericDao
 from src.app import Globals
 from src.app.model.Producto import Producto
 
-debug: bool = False
+debug: bool = GenericDao.debug
 
 
 def get_all() -> list:
     productos = []
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM productos")
     for row in cursor:
         producto = Producto(row[1], row[2], row[3], row[4], row[0])
@@ -28,7 +29,7 @@ def get_mapped() -> dict:
 
 
 def get_id(idd) -> Producto:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM productos where id = ?", (str(idd),))
     row = cursor.fetchone()
     producto = Producto(row[1], row[2], row[3], row[4], row[0])
@@ -40,7 +41,7 @@ def get_id(idd) -> Producto:
 
 
 def insert(producto) -> int:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'INSERT INTO productos(nombre, descripcion, precio, stock) VALUES (?,?,?,?)'
     values = (producto.nombre, producto.descripcion, int(producto.precio), int(producto.stock))
@@ -55,7 +56,7 @@ def insert(producto) -> int:
 
 
 def remove_id(idd) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("DELETE FROM productos where id = ?", (str(idd),))
     conn.commit()
     conn.close()
@@ -69,7 +70,7 @@ def remove(producto) -> bool:
 
 
 def update(producto) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id = ?'
     values = (producto.nombre, producto.descripcion, producto.precio, producto.stock, producto.idd)

@@ -1,14 +1,15 @@
 import sqlite3
 
+from app.data import GenericDao
 from src.app import Globals
 from src.app.model.Vendido import Vendido
 
-debug: bool = False
+debug: bool = GenericDao.debug
 
 
 def get_all() -> list:
     vendidos = []
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM vendidos")
     for row in cursor:
         vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
@@ -21,7 +22,7 @@ def get_all() -> list:
 
 def get_id_venta(id_venta) -> list:
     vendidos = []
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM vendidos where id_venta = ?", (str(id_venta),))
     for row in cursor:
         vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
@@ -34,7 +35,7 @@ def get_id_venta(id_venta) -> list:
 
 
 def get_id(idd) -> Vendido:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT * FROM vendidos where id = ?", (str(idd),))
     row = cursor.fetchone()
     vendido = Vendido(row[1], row[2], row[3], row[4], row[0])
@@ -45,7 +46,7 @@ def get_id(idd) -> Vendido:
 
 
 def insert(vendido) -> int:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'INSERT INTO vendidos(id_venta, id_producto, cantidad, precio_unidad) VALUES (?,?,?,?)'
     values = (int(vendido.id_venta), str(vendido.id_producto), int(vendido.cantidad), str(vendido.precio_unidad))
@@ -59,7 +60,7 @@ def insert(vendido) -> int:
 
 
 def insert_list(vendidos: list):
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     sum = 0
     for vendido in vendidos:
         cursor = conn.cursor()
@@ -75,7 +76,7 @@ def insert_list(vendidos: list):
 
 
 def remove_id(idd) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("DELETE FROM vendidos where id = ?", (str(idd),))
     conn.commit()
     conn.close()
@@ -89,7 +90,7 @@ def remove(vendido) -> bool:
 
 
 def update(vendido) -> bool:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.cursor()
     sql = 'UPDATE vendidos SET id_venta=?, id_producto=?,cantidad=?, precio_unidad=? WHERE id = ?'
     values = (vendido.id_venta, vendido.id_producto, vendido.cantidad, vendido.precio_unidad, vendido.idd)
@@ -102,7 +103,7 @@ def update(vendido) -> bool:
 
 
 def get_total(id_venta) -> int:
-    conn = sqlite3.connect(Globals.db_src)
+    conn = GenericDao.connect()
     cursor = conn.execute("SELECT sum(v.cantidad*v.precio_unidad) FROM vendidos v where id_venta = ?", (str(id_venta),))
     total: int = cursor.fetchone()[0]
     conn.close()
