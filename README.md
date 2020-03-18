@@ -1,6 +1,6 @@
 # DI_POS
 
-##<a href="https://github.com/fsancheztemprano/DI_POS/blob/master/docs/mypos.rst">Guia de Usuario</a>
+## <a href="https://github.com/fsancheztemprano/DI_POS/blob/master/docs/mypos.rst">Guia de Usuario</a>
 
 ## Descrición do proxecto:
 
