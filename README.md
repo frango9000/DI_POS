@@ -1,5 +1,7 @@
 # DI_POS
 
+##<a href="https://github.com/fsancheztemprano/DI_POS/blob/master/docs/mypos.rst">Guia de Usuario</a>
+
 ## Descrición do proxecto:
 
 ### Realizar unha aplicación 
@@ -42,7 +44,7 @@ Tamén ter en conta os criterios de usabilidade para deseñara a aplicación:
  
  [x] facilidade de uso, 
  
- [ ] xestión e prevención de erros, etc.
+ [x] xestión e prevención de erros, etc.
 
 ### Base de datos
 A aplicación haberá usar unha base de datos e conectarnos a ela. Mellor usar SQLite en modo local, pero tendo en conta as súas limitacións (si alguén quere utilizar outra base de datos, non hai problema).
